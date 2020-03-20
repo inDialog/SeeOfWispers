@@ -20,7 +20,11 @@ public class MoveII : MonoBehaviour
 	{
 		_rigidbody.freezeRotation = true;
 	}
-
+    private void Update()
+    {
+        
+		transform.Rotate(new Vector3(0, Input.GetAxis("Horizontal") * 2, 0));
+	}
 	void FixedUpdate()
 	{
 		Vector3 targetVelocity = new Vector3(0, 0, Input.GetAxis("Vertical"));
@@ -33,20 +37,23 @@ public class MoveII : MonoBehaviour
 		velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
 		velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 		velocityChange.y = 0;
-		transform.Rotate(new Vector3(0, Input.GetAxis("Horizontal") * 2, 0));
 		_rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
 		// Jump or fall
-		if (canJump && Input.GetButton("Jump"))
+		if ( Input.GetButton("Jump"))
 			_rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
-		else
+		else if(grounded)
 			GetComponent<Rigidbody>().AddForce(new Vector3(0, -gravity * GetComponent<Rigidbody>().mass, 0));
+		grounded = false;
+		_rigidbody.isKinematic = false; 
+
 	}
 
-	//void OnCollisionStay()
-	//{
-	//	grounded = true;
-	//}
+
+	void OnCollisionStay()
+	{
+		grounded = true;
+	}
 
 	float CalculateJumpVerticalSpeed()
 	{

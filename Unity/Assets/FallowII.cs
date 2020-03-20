@@ -5,14 +5,13 @@ using UnityEngine;
 public class FallowII : MonoBehaviour
 {
     public GameObject master;
+    Vector3 origin;
     public bool moveble;
     public Color _color;
     public Rigidbody rg;
-    bool onTarget;
     bool playClip;
     bool locked;
-
-
+   public bool singleAction = true;
     int nr;
     // Start is called before the first frame update
     void Start()
@@ -24,32 +23,34 @@ public class FallowII : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<MeshRenderer>().material.color = _color;
-        _color = Color.black;
+        GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", _color);
+
+        _color = Color.white;
         rg.mass = 1;
         Vector3 scaleSize = Vector3.one;
         if (locked)
         {
             if (playClip)
+            {
                 _color = Color.cyan;
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(0).localScale = new Vector3(1, 0.1f, 1);
+            }
             else
-                _color = Color.green;
-
-            rg.velocity = Vector3.zero;
-            rg.angularVelocity = Vector3.zero;
-            rg.mass = 100;
-            scaleSize = new Vector3(1, 10, 1);
-            transform.position = new Vector3(transform.position.x, 5, transform.position.z);
-            transform.localScale = scaleSize;
-            if (transform.rotation != new Quaternion(0, 0, 0, 1))
-                transform.rotation = new Quaternion(0, 0, 0, 1);
+            {
+                _color = Color.black;
+                transform.GetChild(0).gameObject.SetActive(false);
+            }
+            LockBox(scaleSize);
             return;
         }
-        transform.localScale = scaleSize;
-
+        else
+        {
+            playClip = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
         if (master != null)
         {
-            //transform.Translate((master.transform.position - transform.position) * Time.deltaTime * 11);
             float dist = Vector3.Distance(master.transform.position - master.transform.forward * nr, transform.position) / 100;
             _color = Color.yellow;
             GetComponent<BoxCollider>().enabled = false;
@@ -69,55 +70,63 @@ public class FallowII : MonoBehaviour
             }
             master = null;
         }
-
-
+        
+        transform.localScale = scaleSize;
     }
 
-
+    void LockBox(Vector3 scaleSize)
+    {
+        rg.velocity = Vector3.zero;
+        rg.angularVelocity = Vector3.zero;
+        rg.mass = 100;
+        scaleSize = new Vector3(1, 10, 1);
+        transform.position = new Vector3(origin.x, origin.y+ 5, origin.z);
+        transform.localScale = scaleSize;
+        if (transform.rotation != new Quaternion(0, 0, 0, 1))
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "ground")
+            origin = collision.collider.ClosestPoint(transform.position);
 
         if (collision.gameObject.tag == "Player")
         {
-            if(targetHit())
-            playClip = !playClip;
-
             if((Input.GetKey(KeyCode.K) || Input.GetMouseButtonDown(0)))
             {
                 locked = !locked;
             }
-            if (locked) return;
+
+            if (targetHit() & locked)
+            {
+                playClip = !playClip;
+                return;
+            }
             if (Input.GetKey(KeyCode.L) || Input.GetMouseButtonDown(0))
             {
                 master = collision.gameObject;
                 collision.gameObject.GetComponent<MoveII>().numberOfFallowers++;
                 nr = collision.gameObject.GetComponent<MoveII>().numberOfFallowers;
             }
-        }
+            //collision.rigidbody.AddForce(collision.rigidbody.velocity*-2, ForceMode.VelocityChange);
 
+        }
     }
-    private void OnCollisionExit(Collision collision)
+   
+    void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            moveble = false;
-        }
+        if (collision.gameObject.tag == "ground")
+            origin = collision.collider.ClosestPoint(transform.position);
     }
-
     bool targetHit()
     {
-
         RaycastHit hit;
         Ray ray = new Ray(this.transform.position, transform.up);
         if (Physics.Raycast(ray, out hit))
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
-
     }
+
 }
