@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Fallow : MonoBehaviour
 {
-  public  GameObject master;
-   public bool moveble;
+    public GameObject master;
+    public bool moveble;
     public Color _color;
     public Rigidbody rg;
     bool onTarget;
@@ -14,7 +14,7 @@ public class Fallow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            _color = Color.black;
+        _color = Color.black;
     }
 
     public bool OnTarget
@@ -22,6 +22,18 @@ public class Fallow : MonoBehaviour
         set
         {
             onTarget = value;
+        }
+    }
+
+    public bool Play
+    {
+        set
+        {
+            palayClip = value;
+        }
+        get
+        {
+            return palayClip;
         }
     }
     // Update is called once per frame
@@ -36,12 +48,12 @@ public class Fallow : MonoBehaviour
         if (onTarget)
             _color = Color.red;
 
-        
+
         if (master != null)
         {
 
-            transform.position = Vector3.MoveTowards(transform.position, master.transform.position - master.transform.forward, 15 * Time.deltaTime);
-            
+            transform.position = Vector3.MoveTowards(transform.position, master.transform.position - master.transform.forward, 11 * Time.deltaTime);
+            transform.rotation = master.transform.rotation;
             _color = Color.yellow;
             GetComponent<BoxCollider>().enabled = false;
             rg.isKinematic = true;
@@ -67,7 +79,7 @@ public class Fallow : MonoBehaviour
 
     public GameObject SetMaster
     {
-       set
+        set
         {
             if (moveble)
                 master = value;
@@ -76,7 +88,7 @@ public class Fallow : MonoBehaviour
         }
     }
 
- 
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -84,7 +96,7 @@ public class Fallow : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             moveble = true;
-            palayClip =! palayClip;
+            palayClip = !palayClip;
         }
         else
         {

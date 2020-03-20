@@ -71,10 +71,13 @@ public class MoveCharacter : MonoBehaviour
 
 				selcted.transform.GetComponent<Fallow>().SetMaster = this.transform.gameObject;
 				selcted.transform.GetComponent<Fallow>().OnTarget = true;
+
 				if (!pastSelcted.Contains(selcted))
 				{
 					pastSelcted.Add(selcted);
 					pastSelcted[0].transform.GetComponent<Fallow>().OnTarget = false;
+					pastSelcted[0].transform.GetComponent<Fallow>().Play = false;
+
 					pastSelcted.Clear();
 					pastSelcted.Add(selcted);
 				}
