@@ -80,9 +80,10 @@ public class FallowII : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
+            if(targetHit())
             playClip = !playClip;
 
-            if((Input.GetKey(KeyCode.K) || Input.GetMouseButtonDown(0))& targetHit())
+            if((Input.GetKey(KeyCode.K) || Input.GetMouseButtonDown(0)))
             {
                 locked = !locked;
             }
