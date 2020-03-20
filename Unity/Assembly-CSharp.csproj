@@ -64,7 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Fallow.cs" />
+    <Compile Include="Assets\FallowII.cs" />
     <Compile Include="Assets\MoveCharacter.cs" />
+    <Compile Include="Assets\MoveII.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/Unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
