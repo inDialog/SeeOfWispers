@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusManager : MonoBehaviour
 {
-   public List<GameObject> selected = new List<GameObject>();
+    public List<GameObject> selected = new List<GameObject>();
     public Mesh tower;
     public Mesh box;
     // Update is called once per frame
@@ -46,6 +46,8 @@ public class StatusManager : MonoBehaviour
                     collision.gameObject.GetComponent<Rigidbody>().freezeRotation = false;
                     collision.gameObject.GetComponent<Rigidbody>().mass = 1;
                     collision.gameObject.GetComponent<Status>().locked = false;
+                    collision.gameObject.GetComponent<Status>()._play = false;
+
                 }
 
             }
@@ -58,14 +60,37 @@ public class StatusManager : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody>().mass = 1000;
             collision.transform.rotation = new Quaternion(0, 0, 0, 1);
             collision.gameObject.GetComponent<Status>().locked = true;
+            collision.gameObject.GetComponent<Status>()._play = false;
+
         }
 
 
 
     }
 
-
-    private void OnCollisionExit (Collision collision)
+    bool targetHit()
     {
+        RaycastHit hit;
+        Ray ray = new Ray(this.transform.position, transform.up * -1);
+        if (Physics.Raycast(ray, out hit))
+            if (hit.collider.tag == "ST")
+                return true;
+            else
+                return false;
+        else
+            return false;
+    } 
+
+    private void OnCollisionEnter (Collision collision)
+    {
+        if (targetHit() & collision.gameObject.tag == "ST")
+        {
+            if(collision.gameObject.GetComponent<Status>().locked)
+                collision.gameObject.GetComponent<Status>()._play=!collision.gameObject.GetComponent<Status>()._play;
+        }
+        //if (targetHit() & collision.gameObject.tag == "ST")
+        //{
+        //    collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        //}
     }
 }
