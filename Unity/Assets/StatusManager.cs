@@ -7,11 +7,12 @@ public class StatusManager : MonoBehaviour
     public List<GameObject> selected = new List<GameObject>();
     public Mesh tower;
     public Mesh box;
+
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyUp(KeyCode.K))
+        if (Input.GetKeyUp(KeyCode.L))
         {
             foreach (var item in selected)
             {
@@ -24,20 +25,35 @@ public class StatusManager : MonoBehaviour
         }
 
     }
-
     private void OnCollisionStay(Collision collision)
     {
+
+        if (Input.GetKey(KeyCode.L) & collision.gameObject.tag == "ST")
+        {
+            if (!collision.gameObject.GetComponent<Status>().locked)
+            {
+                Status st = collision.gameObject.GetComponent<Status>();
+                if (!selected.Contains(collision.gameObject))
+                    selected.Add(collision.gameObject);
+                st.master = this.transform.gameObject;
+                st.nr = selected.Count;
+                collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            }
+
+        }
         if (selected.Count == 0)
             if (Input.GetKey(KeyCode.K) & collision.gameObject.tag == "ST")
             {
-                if (!collision.gameObject.GetComponent<Status>().locked)
+              
+                if (!targetHit())
                 {
-                    Status st = collision.gameObject.GetComponent<Status>();
-                    if (!selected.Contains(collision.gameObject))
-                        selected.Add(collision.gameObject);
-                    st.master = this.transform.gameObject;
-                    st.nr = selected.Count;
-                    collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    collision.gameObject.GetComponent<MeshFilter>().mesh = tower;
+                    collision.gameObject.GetComponent<MeshCollider>().sharedMesh = tower;
+                    collision.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+                    collision.gameObject.GetComponent<Rigidbody>().mass = 1000;
+                    collision.transform.rotation = new Quaternion(0, 0, 0, 1);
+                    collision.gameObject.GetComponent<Status>().locked = true;
+                    collision.gameObject.GetComponent<Status>()._play = false;
                 }
                 else
                 {
@@ -52,22 +68,8 @@ public class StatusManager : MonoBehaviour
 
             }
 
-        if (Input.GetKey(KeyCode.L) & collision.gameObject.tag == "ST")
-        {
-            collision.gameObject.GetComponent<MeshFilter>().mesh = tower;
-            collision.gameObject.GetComponent<MeshCollider>().sharedMesh = tower;
-            collision.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
-            collision.gameObject.GetComponent<Rigidbody>().mass = 1000;
-            collision.transform.rotation = new Quaternion(0, 0, 0, 1);
-            collision.gameObject.GetComponent<Status>().locked = true;
-            collision.gameObject.GetComponent<Status>()._play = false;
-
-        }
-
-
-
     }
-
+    
     bool targetHit()
     {
         RaycastHit hit;
@@ -88,9 +90,6 @@ public class StatusManager : MonoBehaviour
             if(collision.gameObject.GetComponent<Status>().locked)
                 collision.gameObject.GetComponent<Status>()._play=!collision.gameObject.GetComponent<Status>()._play;
         }
-        //if (targetHit() & collision.gameObject.tag == "ST")
-        //{
-        //    collision.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-        //}
+      
     }
 }

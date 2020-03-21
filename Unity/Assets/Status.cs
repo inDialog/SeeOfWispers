@@ -29,9 +29,10 @@ public class Status : MonoBehaviour
             _color = Color.yellow;
         }
         else
+        {
             GetComponent<MeshCollider>().enabled = true;
-        _color = Color.white;
-
+            _color = Color.white;
+        }
         if (locked)
             _color = Color.black;
 
