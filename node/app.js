@@ -9,10 +9,9 @@ var players = {}
 // on new client connect
 wss.on('connection', function connection (client) {
   // on new message recieved
- 	console.log('Client connected');
   client.send("Conceted");
-  var [r,g,b]=[0,0,0];
-  var [udid, x, y, z,] =[0,0,0,0]
+ 	console.log('Client connected');
+ 
   client.on('message', function incoming (data) {
     // get data from string
     var _data = data.toString();
@@ -23,41 +22,32 @@ wss.on('connection', function connection (client) {
     	console.log('Client deisconected');
 		return;
     }
-    else 
-    if(_data.includes('color')){
+     else  if(_data.includes('color')){
        [udid,r,g,b] = data.toString().split('\t');
-      console.log('ID+color bind assinged'  + [r,g,b]);
-       
-    }else
-    {
-      [udid,r,g,b] = data.toString().split('\t');
-      console.log('UpdatePosition');
-    }
-
-
-    // UpdatePosition 
-    var [udid, x, y, z,] = _data.split('\t')
-    // store data to players object
-    players[udid] = {
-      position: {
-        x: parseFloat(x),
-        y: parseFloat(y),
-        z: parseFloat(z)
+         players[udid] = {
+          position: {},
+          color:{
+             r: parseFloat(r),
+             g: parseFloat(g),
+             b: parseFloat(b)
       },
-           color: {
-        x: parseFloat(r),
-        y: parseFloat(g),
-        z: parseFloat(b)
-          },
-      moved : true,
-      timestamp: Date.now(),
-      id : udid
-    }
-
-    // save player udid to the client
+          timestamp: Date.now(),
+          id : udid,
+          moved : true
+        }
       client.udid = udid
-
-    // console.log('Position update,  data:' , data.toString());
+      console.log('ID+color bind assinged'  , players[udid]);
+    return;
+       
+    }
+    // Last option is UpdatePosition 
+    var [udid, X, Y, Z,] =  data.toString().split('\t')
+      players[udid].position = {
+             x: parseFloat(X),
+             y: parseFloat(Y),
+             z: parseFloat(Z)
+      }
+    console.log('Position update,  data:' , players[udid]);
   });
 
 
