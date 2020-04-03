@@ -11,6 +11,7 @@ public class MoveII : MonoBehaviour
 	public float jumpHeight = 2.0f;
 	private bool grounded = false;
 	public Rigidbody _rigidbody;
+	public int[] count;
 
 	//public List<GameObject> pastSelcted = new List<GameObject>();
 
@@ -18,6 +19,7 @@ public class MoveII : MonoBehaviour
 
 	void Awake()
 	{
+      
 		_rigidbody.freezeRotation = true;
 	}
     private void Update()
@@ -36,16 +38,26 @@ public class MoveII : MonoBehaviour
 		Vector3 velocityChange = (targetVelocity - velocity);
 		velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
 		velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-		velocityChange.y = 0;
-		_rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
 		// Jump or fall
-		if ( Input.GetButton("Jump"))
-			_rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
-		else if(grounded)
-			GetComponent<Rigidbody>().AddForce(new Vector3(0, -gravity * GetComponent<Rigidbody>().mass, 0));
-		grounded = false;
-		_rigidbody.isKinematic = false; 
+		if (Input.GetButton("Jump"))
+		{
+			velocityChange.y = CalculateJumpVerticalSpeed() * count[0] ;
+			count[0]++;
+			count[1] = 1;
+		}
+
+		else
+		{
+			velocityChange.y = -gravity * GetComponent<Rigidbody>().mass / count[0] ;
+			count[0]=1;
+			count[1]++;
+		}
+
+
+
+		_rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+		_rigidbody.isKinematic = false;
 
 	}
 
