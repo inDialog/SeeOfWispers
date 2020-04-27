@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/HiResScreenShots.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="110" Column="57" />
+      <File FileName="Assets/ArtistLogIn.cs" Line="1" Column="1" />
+      <File FileName="Assets/AssetManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" Line="1" Column="1" />
+      <File FileName="Assets/CameraMode.cs" Line="140" Column="6" />
+      <File FileName="../../../../../../../Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ToggleGroup.cs" Line="1" Column="1" />
+      <File FileName="Assets/UXManager.cs" Line="141" Column="34" />
+      <File FileName="Assets/Scripts/Utils/HiResScreenShots.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="93cf8566-2558-4689-b899-5d09c0aaa2f2" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
