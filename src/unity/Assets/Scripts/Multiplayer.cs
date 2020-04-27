@@ -87,7 +87,6 @@ public class Multiplayer : MonoBehaviour
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                     assetManager.UpdateArtwork = listArtworks.artWroks;
                     //Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-
                     continue;
                 }
                 if (message.ToString().Contains("players"))
@@ -111,6 +110,7 @@ public class Multiplayer : MonoBehaviour
                         AccountVerified(true);
                     }
                 }
+                continue;
                 //Debug.Log("PlayerCount: " + data.players.Count);
                 //Debug.Log("otherPlayers: " + otherPlayers.Count);
             }

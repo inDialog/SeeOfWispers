@@ -1,6 +1,8 @@
 const WebSocket = require('ws')
 
 const wss = new WebSocket.Server({port: 8000})
+// const wss = new WebSocket.Server({port: 3002})
+
 const path = require('path');
 const fs = require('fs');
 
@@ -23,11 +25,12 @@ wss.on('connection', function connection (client) {
 		var _data = data.toString();
 		// console.log(_data)
 	    // chack for handshake
+
 		if(_data.includes('color'))
 	    {
+			broadcastToMe (client);
 			CreatePlayer (_data,client)
 			broadcastTextMesege ();
-			broadcastArtWork ();
 	 		return;
 	    }
 		if(_data.includes('TextMessage'))
@@ -137,6 +140,34 @@ function ArtWork (data){
 			})
 }
 
+function broadcastToMe (client) {
+   if (client.readyState !== WebSocket.OPEN) 
+    {
+    	console.log('Client deleted');
+    	return
+    }
+    fs.readdir(directoryPath, function (err, files) {
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    } 
+    files.forEach(function (file) {
+    	var [id,type] =file.toString().split('.');
+    	if('json'==type){
+    		    jsonReader('./Save/' +  file, (err, recide) => {
+   					 if (err) {
+       					 console.log(err)
+        				return
+    					}
+    				// console.log("Send" ,recide)
+    				var temp =  Object.keys(recide).map(udid => recide[udid])
+    				client.send(JSON.stringify({artWroks: temp}))
+				})
+        // console.log(file.toString()); 
+    }
+    });
+});
+
+}
 function broadcastArtWork () {
   // broadcast messages to all clients
   wss.clients.forEach(function each (client) {

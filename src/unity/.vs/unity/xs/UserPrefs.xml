@@ -1,15 +1,21 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveII.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AsImpL/Scripts/MultiObjectImporter.cs">
     <Files>
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="110" Column="57" />
-      <File FileName="Assets/ArtistLogIn.cs" />
-      <File FileName="Assets/AssetManager.cs" />
-      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" />
-      <File FileName="Assets/CameraMode.cs" />
-      <File FileName="../../../../../../../Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ToggleGroup.cs" />
-      <File FileName="Assets/UXManager.cs" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="28" Column="8" />
+      <File FileName="Assets/ArtistLogIn.cs" Line="1" Column="1" />
+      <File FileName="Assets/AssetManager.cs" Line="130" Column="39" />
+      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" Line="1" Column="1" />
+      <File FileName="Assets/CameraMode.cs" Line="5" Column="40" />
+      <File FileName="../../../../../../../Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ToggleGroup.cs" Line="1" Column="1" />
+      <File FileName="Assets/UXManager.cs" Line="141" Column="34" />
       <File FileName="Assets/Scripts/Utils/HiResScreenShots.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MoveII.cs" Line="11" Column="29" />
+      <File FileName="Assets/Scripts/MoveII.cs" Line="96" Column="2" />
+      <File FileName="Assets/Scripts/MoveOthers.cs" Line="31" Column="37" />
+      <File FileName="Assets/Scripts/AniMainCharacter.cs" Line="20" Column="22" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="1" Column="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="41" Column="51" />
+      <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" Line="44" Column="60" />
+      <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" Line="61" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

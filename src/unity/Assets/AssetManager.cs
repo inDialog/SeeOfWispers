@@ -127,7 +127,7 @@ public class AssetManager : MonoBehaviour
     {
         if (url == "")
             return false;
-        if (!url.Contains("obj"))
+        if (url.Substring(url.Length-3,3)!="obj")
             return false;
         if (!url.Contains("https://"))
             return false;

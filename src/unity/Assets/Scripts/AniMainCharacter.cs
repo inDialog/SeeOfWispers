@@ -17,7 +17,7 @@ public class AniMainCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (sRigidBody.velocity != Vector3.zero)
         {

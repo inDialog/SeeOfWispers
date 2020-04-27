@@ -40,8 +40,8 @@ namespace AsImpL
         /// <summary>
         /// TODO add more complex cap
         /// </summary>
-        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 65000;
-        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 65000;
+        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 15000;
+        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 15000;
         // maximum number of vertices that can be used for triangles
         private static int MAX_VERT_COUNT = (MAX_VERTICES_LIMIT_FOR_A_MESH - 2) / 3 * 3;
 

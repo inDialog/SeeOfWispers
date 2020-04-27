@@ -18,21 +18,19 @@ public class MoveOthers : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector3 curentP = this.transform.position;
         UpdatePosition();
         pastPosition = this.transform.position;
-
-        if (DistanceToGround() < 20 & DistanceToGround() != 0)
+        float dist = DistanceToGround();
+        if (dist < 20 & dist != 0)
         {
             if (moving)
             {
-                //Debug.Log("Walk");
                 animations.SetTrigger("Walk");
             }
             else
-                //Debug.Log("idlWlak");
                 animations.SetTrigger("idelGround");
 
         }
@@ -41,16 +39,11 @@ public class MoveOthers : MonoBehaviour
 
             if (curentP.y < pastPosition.y)
             {
-               
-                    //Debug.Log("ForwordUp");
-                    animations.SetTrigger("takeoff");
-
+               animations.SetTrigger("takeoff");
             }
             else
             {
-                //Debug.Log("Floating");
-                animations.SetTrigger("ForwordUp");
-
+               animations.SetTrigger("ForwordUp");
             }
         }
     }
@@ -74,9 +67,7 @@ public class MoveOthers : MonoBehaviour
             {
                 float step = 10f * Time.deltaTime; // calculate distance to move
                 transform.position = Vector3.MoveTowards(transform.position, multiplayer.infoPl[this.name].position, step);
-                //transform.position = multiplayer.infoPl[this.name].position;
                 transform.rotation = Quaternion.Euler(multiplayer.infoPl[this.name].rotation);
-                //Debug.Log(multiplayer.infoPl[this.name].rotation);
                 moving = true;
             }
             else
