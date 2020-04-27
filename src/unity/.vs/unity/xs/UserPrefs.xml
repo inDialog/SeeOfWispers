@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/HiResScreenShots.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveII.cs">
     <Files>
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="110" Column="57" />
-      <File FileName="Assets/ArtistLogIn.cs" Line="1" Column="1" />
-      <File FileName="Assets/AssetManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" Line="1" Column="1" />
-      <File FileName="Assets/CameraMode.cs" Line="140" Column="6" />
-      <File FileName="../../../../../../../Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ToggleGroup.cs" Line="1" Column="1" />
-      <File FileName="Assets/UXManager.cs" Line="141" Column="34" />
+      <File FileName="Assets/ArtistLogIn.cs" />
+      <File FileName="Assets/AssetManager.cs" />
+      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" />
+      <File FileName="Assets/CameraMode.cs" />
+      <File FileName="../../../../../../../Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ToggleGroup.cs" />
+      <File FileName="Assets/UXManager.cs" />
       <File FileName="Assets/Scripts/Utils/HiResScreenShots.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MoveII.cs" Line="11" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

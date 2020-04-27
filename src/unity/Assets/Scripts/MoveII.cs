@@ -8,7 +8,7 @@ public class MoveII : MonoBehaviour
 	float speed;
 	public float gravity = 10.0f;
 	static float maxVelocityChange = 100.0f;
-	static float jumpHeight = 0.2f;
+	static float jumpHeight = 1f;
     public Rigidbody _rigidbody;
 	static float jumpTime;
 	public bool stop;

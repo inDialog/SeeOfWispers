@@ -1,0 +1,27 @@
+{
+  "10-107-912-1": {
+    "position": {
+      "x": -1,
+      "y": 0,
+      "z": -3
+    },
+    "artworkScale": {
+      "x": 0.04243519,
+      "y": 0.04243519,
+      "z": 0.04243519
+    },
+    "platform": {
+      "x": -9.565787,
+      "y": 18.93503,
+      "z": 16.42048
+    },
+    "rotation": {
+      "x": 82.49941,
+      "y": 305.1943,
+      "z": 287.2463
+    },
+    "url": "https://raw.githubusercontent.com/alecjacobson/puppet/master/application/examples/centaur/centaur0.obj",
+    "description": "\n\n\n\n",
+    "id": "10-107-912-1"
+  }
+}

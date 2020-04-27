@@ -1,0 +1,20 @@
+{
+  "name": "unity-webgl-multiplayer",
+  "author": "Calin segal",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "line-reader": "^0.4.0",
+    "ws": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "main": "app.js",
+  "keywords": [],
+  "license": "ISC",
+  "description": ""
+}
