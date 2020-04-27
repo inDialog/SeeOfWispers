@@ -73,6 +73,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
+    - UnityEngine.UI.ToggleGroup
   sceneClasses:
     Assets/Scenes/Template.unity:
     - Class: 1
@@ -108,8 +109,6 @@ ScriptsOnlyBuild:
     - Class: 81
       Script: {instanceID: 0}
     - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
       Script: {instanceID: 0}
     - Class: 84
       Script: {instanceID: 0}
@@ -223,6 +222,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 13366}
     - Class: 114
       Script: {instanceID: 13386}
+    - Class: 114
+      Script: {instanceID: 13408}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -308,7 +309,7 @@ ScriptsOnlyBuild:
     className: WebGLInput
   - hash:
       serializedVersion: 2
-      Hash: b932909fb0eecad2a38f7e8517c0d206
+      Hash: 248de80fb5a3afffbc5cc040eb30883e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraMode
@@ -332,7 +333,7 @@ ScriptsOnlyBuild:
     className: MotionBlur
   - hash:
       serializedVersion: 2
-      Hash: 23782a92ea284c546d441e1e90df21ce
+      Hash: 12fb9da0bf8af4e65d65d1209b5bbb9c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UXManager
@@ -1029,4 +1030,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - Assets/Scenes/Template.unity
-  playerPath: /Users/segalcalin/Documents/GitHub/SeeOfWispers/web/EXPORT18
+  playerPath: /Users/segalcalin/Documents/GitHub/Heaven2.0_OpenSource/Export
