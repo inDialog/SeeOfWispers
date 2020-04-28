@@ -1,0 +1,27 @@
+{
+  "4-324-692-1": {
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "artworkScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "platform": {
+      "x": 10.19552,
+      "y": -5.051425,
+      "z": 7.492021
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "url": "https://gist.githubusercontent.com/MaikKlein/0b6d6bb58772c13593d0a0add6004c1c/raw/48cf9c6d1cdd43cc6862d7d34a68114e2b93d497/cube.obj",
+    "description": "\n\n\n\n",
+    "id": "4-324-692-1"
+  }
+}

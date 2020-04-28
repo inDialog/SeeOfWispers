@@ -52,7 +52,6 @@ namespace AsImpL
         {
             objImporter.ImportingComplete -= OnImportComplete;
             objImporter.ImportingStart -= OnImportStart;
-            GeneralState.AceptAssets = false;
 
         }
 
@@ -162,6 +161,10 @@ namespace AsImpL
                 progressImage.fillAmount = 1f;
                 progressImage.gameObject.SetActive(false);
             }
+
+            //GeneralState.AceptAssets = false;
+            Debug.Log(GeneralState.AceptAssets);
+
         }
 
     }

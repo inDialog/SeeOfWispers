@@ -63,7 +63,7 @@ public class Multiplayer : MonoBehaviour
             // check if message is not empty
             if (message != null)
             {
-                //Debug.Log(message.ToString());
+                Debug.Log(message.ToString());
                 if (message.ToString() == "Conceted")
                 {
                     w.SendString(myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
@@ -89,15 +89,17 @@ public class Multiplayer : MonoBehaviour
                 {
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
 
-                    if (GeneralState.AceptAssets)
-                    {
+                    assetManager.UpdateArtwork = listArtworks.artWroks;
 
-                        assetManager.UpdateArtwork = listArtworks.artWroks;
-                    }
-                    else
-                        NewArtwork(true);
-                    //Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-
+                    //if (GeneralState.AceptAssets)
+                    //{
+                    //    Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
+                    //    assetManager.UpdateArtwork = listArtworks.artWroks;
+                    //}
+                    //else
+                    //    NewArtwork(true);
+                    ////Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
+                    //Debug.Log(GeneralState.AceptAssets);
                     continue;
                 }
                 if (message.ToString().Contains("players"))

@@ -63,7 +63,7 @@ public class UXManager : MonoBehaviour
 
         //cm_inspector.transform.GetChild(1).gameObject.SetActive(false);
         //print(Worning.transform.childCount);
-        cm_bird.SetActive(false);
+        //cm_bird.SetActive(false);
         cm_inspector.SetActive(false);
         navigationUI.SetActive(false);
 

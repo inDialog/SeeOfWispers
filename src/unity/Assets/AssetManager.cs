@@ -46,41 +46,40 @@ public class AssetManager : MonoBehaviour
     {
         set
         {
-            Debug.Log(value.Count);
-
-                string _id = value[0].id;
+            for (int i = 0; i < value.Count; i++)
+            {
+                string _id = value[i].id;
 
                 if (!infoArwork.ContainsKey(_id))
                 {
-                        infoArwork.Add(_id, value[0]);
+                        infoArwork.Add(_id, value[i]);
                         infoArwork[_id].@object = Instantiate(prefabBase);
                         infoArwork[_id].@object.name = _id;
-                        infoArwork[_id].@object.transform.position = value[0].platform;
-                        infoArwork[_id].Name = value[0].description.Split('\t')[0];
+                        infoArwork[_id].@object.transform.position = value[i].platform;
+                        //infoArwork[_id].Name = value[i].description.Split('\t')[i];
                         ImportOptions optionsIm = new ImportOptions();
-                        optionsIm.localScale = value[0].artworkScale;
-                        optionsIm.localPosition = value[0].position;
-                        optionsIm.localEulerAngles = value[0].rotation;
+                        optionsIm.localScale = value[i].artworkScale;
+                        optionsIm.localPosition = value[i].position;
+                        optionsIm.localEulerAngles = value[i].rotation;
                         optionsIm.use32bitIndices = true;
                         optionsIm.buildColliders = true;
                         optionsIm.zUp = false;
                         optionsIm.inheritLayer = true;
-                        moImporter.ImportModelAsync(value[0].id, value[0].url, infoArwork[_id].@object.transform, optionsIm);
+                        moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
                 }
                 else
                 {
-                    if (_id == ArtistInfo.artistKey & !ArtistInfo.busy)
-                    {
-                        infoArwork[_id].@object.transform.position = value[0].platform;
+                        infoArwork[_id].@object.transform.position = value[i].platform;
                         if (infoArwork[_id].@object.transform.childCount > 1)
                         {
                             GameObject artwork = infoArwork[_id].@object.transform.GetChild(1).gameObject;
-                            artwork.transform.localPosition = value[0].position;
-                            artwork.transform.localEulerAngles = value[0].rotation;
-                            artwork.transform.localScale = value[0].artworkScale;
+                            artwork.transform.localPosition = value[i].position;
+                            artwork.transform.localEulerAngles = value[i].rotation;
+                            artwork.transform.localScale = value[i].artworkScale;
                         }
-                    }
                 }
+            }
+
         }
     }
 
