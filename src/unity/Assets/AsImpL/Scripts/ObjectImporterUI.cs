@@ -163,7 +163,7 @@ namespace AsImpL
             }
 
             //GeneralState.AceptAssets = false;
-            Debug.Log(GeneralState.AceptAssets);
+            //Debug.Log(GeneralState.AceptAssets);
 
         }
 

@@ -26,7 +26,7 @@ public class Multiplayer : MonoBehaviour
 
 
     public Color32 myColor;
-    //WebSocket w = new WebSocket(new Uri("ws://www.in-dialog.com:3000/socket.io/?EIO=4&transport=websocket"));
+    //WebSocket w = new WebSocket(new Uri("ws://www.in-dialog.com:3002/socket.io/?EIO=4&transport=websocket"));
     //"ws://localhost:8000"
     public AssetManager assetManager;
     public WebSocket w;
@@ -87,19 +87,19 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
-                    Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
+                    //Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
 
-                    assetManager.UpdateArtwork = listArtworks.artWroks;
+                    //assetManager.UpdateArtwork = listArtworks.artWroks;
 
-                    //if (GeneralState.AceptAssets)
-                    //{
-                    //    Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
-                    //    assetManager.UpdateArtwork = listArtworks.artWroks;
-                    //}
-                    //else
-                    //    NewArtwork(true);
-                    ////Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-                    //Debug.Log(GeneralState.AceptAssets);
+                    if (GeneralState.AceptAssets)
+                    {
+                        Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
+                        assetManager.UpdateArtwork = listArtworks.artWroks;
+                    }
+                    else
+                        NewArtwork(true);
+                    //Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
+                    Debug.Log(GeneralState.AceptAssets);
                     continue;
                 }
                 if (message.ToString().Contains("players"))

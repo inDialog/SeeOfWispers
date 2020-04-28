@@ -98,6 +98,7 @@ public class UXManager : MonoBehaviour
         fittingRoomToggle.interactable = true;
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
+        GeneralState.AceptAssets = true;
        
     }
 
