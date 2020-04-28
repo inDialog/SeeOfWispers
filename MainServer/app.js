@@ -101,7 +101,7 @@ wss.on('connection', function connection (client) {
 
 })
 
-
+///TODO if(br) send only my artwork and not all the list 
 function SendArtworks(client,br){
 artManager.ComposeString(function(response){
     		var temp =  Object.keys(response).map(udid => response[udid])

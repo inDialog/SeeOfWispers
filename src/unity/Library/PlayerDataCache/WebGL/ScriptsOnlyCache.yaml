@@ -10,16 +10,12 @@ ScriptsOnlyBuild:
     - CameraController
     - CameraMode
     - Disable_input
-    - HiResScreenShots
     - MoveII
     - MoveOthers
     - Multiplayer
-    - PlatonicSolidBlend
-    - StructuredVolumeSampling
     - TextManager
     - TriggerText
     - UXManager
-    - VolRenderSettings
     - WebGLSupport.WebGLInput
     Unity.Postprocessing.Runtime.dll:
     - UnityEngine.Rendering.PostProcessing.AmbientOcclusion
@@ -149,10 +145,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11520}
     - Class: 114
-      Script: {instanceID: 11572}
-    - Class: 114
-      Script: {instanceID: 11610}
-    - Class: 114
       Script: {instanceID: 11624}
     - Class: 114
       Script: {instanceID: 11716}
@@ -181,8 +173,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12400}
     - Class: 114
-      Script: {instanceID: 12458}
-    - Class: 114
       Script: {instanceID: 12548}
     - Class: 114
       Script: {instanceID: 12580}
@@ -197,17 +187,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12654}
     - Class: 114
-      Script: {instanceID: 12754}
-    - Class: 114
       Script: {instanceID: 12764}
     - Class: 114
       Script: {instanceID: 12872}
     - Class: 114
       Script: {instanceID: 12942}
     - Class: 114
-      Script: {instanceID: 13092}
+      Script: {instanceID: 13094}
     - Class: 114
-      Script: {instanceID: 13112}
+      Script: {instanceID: 13114}
     - Class: 114
       Script: {instanceID: 13216}
     - Class: 114
@@ -333,7 +321,7 @@ ScriptsOnlyBuild:
     className: MotionBlur
   - hash:
       serializedVersion: 2
-      Hash: 12fb9da0bf8af4e65d65d1209b5bbb9c
+      Hash: 6fa37d425f6b1714c34332424dd3d1b4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UXManager
@@ -837,6 +825,12 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 245b339d4ba41202ebe1b43b3e170bfe
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Fallow
+  - hash:
+      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -889,12 +883,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: sceneManger
-  - hash:
-      serializedVersion: 2
-      Hash: 6d2eb1973c05c762fb11ccabc35b60ea
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AsImpL.Examples
-    className: CustomObjImporter
   - hash:
       serializedVersion: 2
       Hash: d5630f96bd5a6a6eed7e1754c3fb8703
@@ -1030,4 +1018,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - Assets/Scenes/Template.unity
-  playerPath: /Users/segalcalin/Documents/GitHub/Heaven2.0_OpenSource/Export
+  playerPath: /Users/segalcalin/Documents/GitHub/Server_S.O.W/Export
