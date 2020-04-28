@@ -90,6 +90,7 @@
     <Compile Include="Assets\AssetManager.cs" />
     <Compile Include="Assets\CameraController.cs" />
     <Compile Include="Assets\CameraMode.cs" />
+    <Compile Include="Assets\Fallow.cs" />
     <Compile Include="Assets\Scripts\AniMainCharacter.cs" />
     <Compile Include="Assets\Scripts\AnimationCharacter.cs" />
     <Compile Include="Assets\Scripts\Disable_input.cs" />

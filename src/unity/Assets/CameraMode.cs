@@ -84,24 +84,18 @@ public class CameraMode : MonoBehaviour
     }
     public IEnumerator ZoomIn()
     {
-        //StopCoroutine("ZoomOut");
         while (true)
         {
-            //moveII.stop = true;
             if (transform.localPosition != Pos_FirstPerson)
             {
                 float speed = 10 * Time.deltaTime;
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, Pos_FirstPerson, speed);
-                //volumeSampling.enabled = false;
                 mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView,80, 2 * Time.deltaTime);//Camera Field of View
-
             }
             else
             {
                 FreeCam();
                 mainCamera.cullingMask = lm;
-                //if (stop)
-                //    break;
                 if(Input.GetKey(KeyCode.Escape))
                 {
                     ZoomOut();
@@ -117,12 +111,10 @@ public class CameraMode : MonoBehaviour
         while (true)
         {
             mainCamera.cullingMask = origginalMask;
-            //volumeSampling.enabled = toggle.isOn;
             float speed = 30 * Time.deltaTime;
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalState.transform.localRotation, speed*5);
             transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, originalState.transform.localPosition, speed);
             mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, originalFOV, 2 * Time.deltaTime);//Camera Field of View
-            //moveII.stop = false;
             if (this.transform.localPosition == originalState.transform.position & mainCamera.fieldOfView <= 45.1f)
             {
                 break;
@@ -160,7 +152,6 @@ public class CameraMode : MonoBehaviour
             Vector3 sp = mycam.ViewportToScreenPoint(vp);
             Vector3 v = mycam.ScreenToWorldPoint(sp);
             mainCamera.transform.LookAt(v, Vector3.up);
-
         }
     }
 }

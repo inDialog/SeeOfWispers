@@ -17,6 +17,8 @@ public class UXManager : MonoBehaviour
     public Toggle fpCameraToggle;
     public GameObject fittingRoomUi;
     public Animator uiAnim;
+    public Button ArtWorkRequest;
+
 
     GameObject cm_inspector;
     GameObject navigationUI;
@@ -35,6 +37,9 @@ public class UXManager : MonoBehaviour
         fittingRoomUi.SetActive(false);
         cmMode = FindObjectOfType<CameraMode>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
+
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 30;
     }
     void Start()
     {
@@ -44,6 +49,8 @@ public class UXManager : MonoBehaviour
         assetManger = FindObjectOfType<AssetManager>();
         FindObjectOfType<ObjectImporter>().ImportedModel += ActivateFittingRoom;
         FindObjectOfType<Multiplayer>().AccountVerified += EnableFittingRoom;
+        FindObjectOfType<Multiplayer>().NewArtwork += NewArtWorkReques;
+
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
         inspectorTogggle.onValueChanged.AddListener(StartInSpectorMode);
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
@@ -52,12 +59,13 @@ public class UXManager : MonoBehaviour
         Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
         buttons[1].onClick.AddListener(NextArtwork);
         buttons[0].onClick.AddListener(PrviousArtwork);
-        navigationUI.SetActive(false);
 
 
-        cm_inspector.SetActive(false);
         //cm_inspector.transform.GetChild(1).gameObject.SetActive(false);
-        print(Worning.transform.childCount);
+        //print(Worning.transform.childCount);
+        cm_bird.SetActive(false);
+        cm_inspector.SetActive(false);
+        navigationUI.SetActive(false);
 
     }
 
@@ -81,12 +89,16 @@ public class UXManager : MonoBehaviour
     /// Allow fitting room button to be active if user has key
     void EnableFittingRoom(bool state)
     {
+        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+        {
+            ArtistInfo.hasArt = true;
+            uiAnim.Play("GoUp");
+        }
         NeutralState();
-        uiAnim.Play("GoUp");
         fittingRoomToggle.interactable = true;
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
-        ArtistInfo.hasArt = true;
+       
     }
 
     /// triggers fitting room  when object loaded and set inspectorMode interacteble
@@ -97,29 +109,31 @@ public class UXManager : MonoBehaviour
             StartFittingRoom(true);
         }
         inspectorTogggle.interactable = true;
-        //navigationUI.SetActive(true);
     }
 
     public void StartFittingRoom(bool state)
     {
         if (state)
         {
-            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey)) 
+            /// Fitting Room
+            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
             {
                 if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                     {
-                        assetManger.StartCoroutine("FittingRoom");
+                        ArtistInfo.busy = true;
                         cm_inspector.SetActive(true);
+                        cm_bird.SetActive(false);
                         fittingRoomUi.SetActive(true);
                         FindObjectOfType<MoveII>().enabled = false; //move function TODO find a better sollution
                         cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
+                        assetManger.StartCoroutine("FittingRoom");
                     }
             }
             else
             {
                 /// Fill in form 
-                uiAnim.Play("dropDown"); 
+                uiAnim.Play("dropDown");
             }
         }
         else
@@ -127,6 +141,8 @@ public class UXManager : MonoBehaviour
             assetManger.StopAllCoroutines();
             StopSecondCamera();
             uiAnim.Play("GoUp");
+            ArtistInfo.busy = false;
+
         }
 
     }
@@ -216,6 +232,10 @@ public class UXManager : MonoBehaviour
             Worning.SetActive(true);
             Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
         }
+    }
+    public void NewArtWorkReques(bool state)
+    {
+        ArtWorkRequest.interactable = true;
     }
 
 }

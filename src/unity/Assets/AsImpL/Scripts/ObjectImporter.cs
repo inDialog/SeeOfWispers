@@ -359,7 +359,9 @@ namespace AsImpL
                         break;
                     // TODO: add mode formats here...
                     default:
-                        Debug.LogErrorFormat("File format not supported ({0})", ext);
+                        //Debug.LogWarning("File format not supported ({0})", ext);
+                        GameObject.FindObjectOfType<UXManager>().BadUrl(absolutePath);
+
                         return null;
                 }
             }

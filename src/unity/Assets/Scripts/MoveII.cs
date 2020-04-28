@@ -4,32 +4,45 @@ using UnityEngine;
 
 public class MoveII : MonoBehaviour
 {
-	static float speed1 = 550f; // slow
+	static float speed1 = 20f; // slow
 	float speed;
 	public float gravity = 10.0f;
 	static float maxVelocityChange = 100.0f;
 	static float jumpHeight = 1f;
-    public Rigidbody _rigidbody;
+	public Rigidbody _rigidbody;
 	static float jumpTime;
 	public bool stop;
 	public bool small;
 	static bool grounded = true;
+	float axis;
 	void Awake()
 	{
 		_rigidbody.freezeRotation = true;
 		_rigidbody.useGravity = false;
 	}
+    private void Update()
+    {
+		//axis = Input.GetAxis("Horizontal") * (Time.deltaTime*50);
+		float rotation = Input.GetAxis("Horizontal") * (100+ speed/100);
+		rotation *= Time.deltaTime;
+		transform.Rotate(0, rotation, 0);
+
+	}
+
 	void FixedUpdate()
 	{
 		Vector3 jump = Vector3.zero;
 		if (!stop)
 		{
-			speed *= Time.deltaTime;
-			float _speed = Time.deltaTime * 70;
-			transform.Rotate(new Vector3(0, Input.GetAxis("Horizontal") * _speed, 0));
+            //speed *= Time.deltaTime;
 
-			// Calculate how fast we should be moving
-			Vector3 targetVelocity = new Vector3(0, 0, Input.GetAxis("Vertical"));
+            //speed *= Time.deltaTime;
+            //float _speed = Time.deltaTime * 70;
+            //transform.Rotate(new Vector3(0, Input.GetAxis("Horizontal") * _speed, 0));
+
+
+            // Calculate how fast we should be moving
+            Vector3 targetVelocity = new Vector3(0, 0, Input.GetAxis("Vertical"));
 			targetVelocity = transform.TransformDirection(targetVelocity);
 			targetVelocity *= speed;
 
@@ -45,9 +58,9 @@ public class MoveII : MonoBehaviour
 		if (grounded)
 			newSpeed /= 10;
 		else if (Input.GetButton("Jump"))
-			newSpeed *=1.2f;
-	    else if (Input.GetKey(KeyCode.RightShift) | Input.GetKey(KeyCode.RightShift))
-			newSpeed *=5;
+			newSpeed *= 2f;
+		else if (Input.GetKey(KeyCode.RightShift) | Input.GetKey(KeyCode.RightShift))
+			newSpeed *= 5;
 		if (small)
 			newSpeed /= 10;
 
@@ -80,16 +93,16 @@ public class MoveII : MonoBehaviour
 	}
 
 	private void OnTriggerStay(Collider other)
-    {
+	{
 		if (other.gameObject.tag == "ground")
 			grounded = true;
 	}
 	private void OnTriggerEnter(Collider other)
 	{
-        if(other.gameObject.tag=="ground")
-		grounded = true;
+		if (other.gameObject.tag == "ground")
+			grounded = true;
 	}
-    float CalculateJumpVerticalSpeed()
+	float CalculateJumpVerticalSpeed()
 	{
 		return Mathf.Sqrt(1000 * jumpHeight * gravity);
 	}

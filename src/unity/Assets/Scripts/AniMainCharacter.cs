@@ -17,7 +17,7 @@ public class AniMainCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (sRigidBody.velocity != Vector3.zero)
         {
@@ -25,7 +25,7 @@ public class AniMainCharacter : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(
                  sRigidBody.velocity.y.Remap(-8, 6, 100, -60),
                   parent.eulerAngles.y + Input.GetAxis("Horizontal") * 20,
-                 parent.eulerAngles.z + Input.GetAxis("Horizontal") * -20
+                 parent.eulerAngles.z + Input.GetAxis("Horizontal") * -40
              );
             transform.parent.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
 

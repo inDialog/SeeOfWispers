@@ -70,7 +70,7 @@ public class CameraController : MonoBehaviour
     /*
      * Camera logic on LatueUpdate to only update after all character movement logic has been handled.
      */
-    void LateUpdate()
+    void Update()
     {
         if (Input.GetKey(KeyCode.C))
             return;

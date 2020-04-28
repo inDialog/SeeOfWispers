@@ -8,4 +8,10 @@ public static class ArtistInfo
     public static bool activ;
     public static string urlArt;
     public static bool hasArt;
+    public static bool busy;
+
+}
+public static class GeneralState
+{
+    public static bool AceptAssets;
 }

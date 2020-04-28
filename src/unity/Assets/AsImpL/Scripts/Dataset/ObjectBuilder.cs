@@ -40,8 +40,8 @@ namespace AsImpL
         /// <summary>
         /// TODO add more complex cap
         /// </summary>
-        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 15000;
-        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 15000;
+        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 65000;
+        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 65000;
         // maximum number of vertices that can be used for triangles
         private static int MAX_VERT_COUNT = (MAX_VERTICES_LIMIT_FOR_A_MESH - 2) / 3 * 3;
 
@@ -150,22 +150,22 @@ namespace AsImpL
         {
             if (origMesh.uv == null || origMesh.uv.Length == 0)
             {
-                Debug.LogWarning("Unable to compute tangent space vectors - texture coordinates not defined.");
+                //Debug.LogWarning("Unable to compute tangent space vectors - texture coordinates not defined.");
                 return;
             }
             if (origMesh.vertices == null || origMesh.vertices.Length == 0)
             {
-                Debug.LogWarning("Unable to compute tangent space vectors - vertices not defined.");
+                //Debug.LogWarning("Unable to compute tangent space vectors - vertices not defined.");
                 return;
             }
             if (origMesh.normals == null || origMesh.normals.Length == 0)
             {
-                Debug.LogWarning("Unable to compute tangent space vectors - normals not defined.");
+                //Debug.LogWarning("Unable to compute tangent space vectors - normals not defined.");
                 return;
             }
             if (origMesh.triangles == null || origMesh.triangles.Length == 0)
             {
-                Debug.LogWarning("Unable to compute tangent space vectors - triangles not defined.");
+                //Debug.LogWarning("Unable to compute tangent space vectors - triangles not defined.");
                 return;
             }
             Vector3[] vertices = origMesh.vertices;
@@ -421,7 +421,7 @@ namespace AsImpL
             GameObject subobj = ImportSubObject(buildStatus.subObjParent, subObjData, mats);
             if (subobj == null)
             {
-                Debug.LogWarningFormat("Error loading sub object n.{0}.", buildStatus.subObjCount);
+                //Debug.LogWarningFormat("Error loading sub object n.{0}.", buildStatus.subObjCount);
             }
             //else Debug.LogFormat( "Imported face indices: {0} to {1}", buildStatus.totFaceIdxCount - sub_od.AllFaces.Count, buildStatus.totFaceIdxCount );
 
@@ -431,7 +431,7 @@ namespace AsImpL
             {
                 if (buildStatus.totFaceIdxCount != objData.allFaces.Count)
                 {
-                    Debug.LogWarningFormat("Imported face indices: {0} of {1}", buildStatus.totFaceIdxCount, objData.allFaces.Count);
+                    //Debug.LogWarningFormat("Imported face indices: {0} of {1}", buildStatus.totFaceIdxCount, objData.allFaces.Count);
                     return false;
                 }
                 buildStatus.objCount++;

@@ -46,40 +46,41 @@ public class AssetManager : MonoBehaviour
     {
         set
         {
-            for (int i = 0; i < value.Count; i++)
-            {
-                string _id = value[i].id;
+            Debug.Log(value.Count);
+
+                string _id = value[0].id;
 
                 if (!infoArwork.ContainsKey(_id))
                 {
-                    infoArwork.Add(_id, value[i]);
-                    infoArwork[_id].@object = Instantiate(prefabBase);
-                    infoArwork[_id].@object.name = _id;
-                    infoArwork[_id].@object.transform.position = value[i].platform;
-                    infoArwork[_id].Name = value[i].description.Split('\t')[0];
-                    ImportOptions optionsIm = new ImportOptions();
-                    optionsIm.localScale = value[i].artworkScale;
-                    optionsIm.localPosition = value[i].position;
-                    optionsIm.localEulerAngles = value[i].rotation;
-                    optionsIm.use32bitIndices = true;
-                    optionsIm.buildColliders = true;
-                    optionsIm.zUp = false;
-                    optionsIm.inheritLayer = true;
-                    moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
+                        infoArwork.Add(_id, value[0]);
+                        infoArwork[_id].@object = Instantiate(prefabBase);
+                        infoArwork[_id].@object.name = _id;
+                        infoArwork[_id].@object.transform.position = value[0].platform;
+                        infoArwork[_id].Name = value[0].description.Split('\t')[0];
+                        ImportOptions optionsIm = new ImportOptions();
+                        optionsIm.localScale = value[0].artworkScale;
+                        optionsIm.localPosition = value[0].position;
+                        optionsIm.localEulerAngles = value[0].rotation;
+                        optionsIm.use32bitIndices = true;
+                        optionsIm.buildColliders = true;
+                        optionsIm.zUp = false;
+                        optionsIm.inheritLayer = true;
+                        moImporter.ImportModelAsync(value[0].id, value[0].url, infoArwork[_id].@object.transform, optionsIm);
                 }
                 else
                 {
-                    infoArwork[_id].@object.transform.position = value[i].platform;
-                    if (infoArwork[_id].@object.transform.childCount > 0)
+                    if (_id == ArtistInfo.artistKey & !ArtistInfo.busy)
                     {
-                        GameObject artwork = infoArwork[_id].@object.transform.GetChild(1).gameObject;
-                        artwork.transform.localPosition = value[i].position;
-                        artwork.transform.localEulerAngles = value[i].rotation;
-                        artwork.transform.localScale = value[i].artworkScale;
+                        infoArwork[_id].@object.transform.position = value[0].platform;
+                        if (infoArwork[_id].@object.transform.childCount > 1)
+                        {
+                            GameObject artwork = infoArwork[_id].@object.transform.GetChild(1).gameObject;
+                            artwork.transform.localPosition = value[0].position;
+                            artwork.transform.localEulerAngles = value[0].rotation;
+                            artwork.transform.localScale = value[0].artworkScale;
+                        }
                     }
                 }
-
-            }
         }
     }
 
@@ -108,6 +109,7 @@ public class AssetManager : MonoBehaviour
             }
             else
             {
+                if(infoArwork[ArtistInfo.artistKey].@object.transform.childCount>1)
                 toSend = FormatMessege(infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, infoArwork[ArtistInfo.artistKey].@object.transform.position, infoArwork[ArtistInfo.artistKey].url, infoArwork[ArtistInfo.artistKey].description, "ArtWork");
             }
         }
@@ -127,10 +129,11 @@ public class AssetManager : MonoBehaviour
     {
         if (url == "")
             return false;
-        if (url.Substring(url.Length-3,3)!="obj")
+        if (url.Substring(url.Length - 3, 3) != "obj")
             return false;
-        if (!url.Contains("https://"))
+        if (!url.Contains("http"))
             return false;
+
         Uri uriResult;
         return Uri.TryCreate(url, UriKind.Absolute, out uriResult)
             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
@@ -150,57 +153,48 @@ public class AssetManager : MonoBehaviour
     {
         while (true)
         {
-                    //if (Input.GetKeyDown(KeyCode.Escape))
-                    //{
-                    //    camera2.SetActive(false);
-                    //    StopAllCoroutines();
-                    //}
-                    //Debug.Log("FitingRoom");
-                    GameObject artwork = infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
-                    Vector3 addOn = artwork.transform.localPosition;
-                    //camera2.GetComponentInChildren<CameraController>().enabled = true;
-
-                    if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(0))
-                    {
-                //camera2.GetComponentInChildren<CameraController>().enabled = false;
+            GameObject artwork = infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+            Vector3 addOn = artwork.transform.localPosition;
+            if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(0))
+            {
                 float horizontalSpeed = 5.0F;
-                        float verticalSpeed = 5.0F;
-                        float h = horizontalSpeed * Input.GetAxis("Mouse X");
-                        float v = verticalSpeed * Input.GetAxis("Mouse Y");
-                        artwork.transform.Rotate(v, h, 0);
-                    }
+                float verticalSpeed = 5.0F;
+                float h = horizontalSpeed * Input.GetAxis("Mouse X");
+                float v = verticalSpeed * Input.GetAxis("Mouse Y");
+                artwork.transform.Rotate(v, h, 0);
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y + 1, addOn.z);
                     else
-                    {
-                        if (Input.GetKeyDown(KeyCode.UpArrow))
-                        {
-                            if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y + 1, addOn.z);
-                            else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z + 1);
-                        }
-                        if (Input.GetKeyDown(KeyCode.DownArrow))
-                        {
-                            if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y - 1, addOn.z);
-                            else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z - 1);
-                        }
-                        if (Input.GetKeyDown(KeyCode.RightArrow))
-                        {
-                            addOn = new Vector3(addOn.x + 1, addOn.y, addOn.z);
-                        }
-                        if (Input.GetKeyDown(KeyCode.LeftArrow))
-                        {
-                            addOn = new Vector3(addOn.x - 1, addOn.y, addOn.z);
-                        }
+                        addOn = new Vector3(addOn.x, addOn.y, addOn.z + 1);
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y - 1, addOn.z);
+                    else
+                        addOn = new Vector3(addOn.x, addOn.y, addOn.z - 1);
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    addOn = new Vector3(addOn.x + 1, addOn.y, addOn.z);
+                }
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    addOn = new Vector3(addOn.x - 1, addOn.y, addOn.z);
+                }
 
-                        artwork.transform.localPosition = addOn;
-                    }
+                artwork.transform.localPosition = addOn;
+            }
             yield return null;
         }
     }
-    public void SetScale ()
+    public void SetScale()
     {
-            GameObject artwork = infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
-            artwork.transform.localScale = new Vector3(mainSlider.value, mainSlider.value, mainSlider.value);
+        GameObject artwork = infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+        artwork.transform.localScale = new Vector3(mainSlider.value, mainSlider.value, mainSlider.value);
     }
   
    public  void ResetPosition()

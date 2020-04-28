@@ -32,7 +32,10 @@ public class ArtistLogIn : MonoBehaviour
             Debug.Log(key + '\t' + "CheckKey");
         }
         else
+        {
+            TextLogIn.image.color = Color.yellow;
             Debug.LogWarning("KeyWrong");
+        }
     }
 
 }

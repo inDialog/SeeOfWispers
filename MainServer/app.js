@@ -28,10 +28,15 @@ wss.on('connection', function connection (client) {
 
 		if(_data.includes('color'))
 	    {
-			broadcastToMe (client);
+			broadcastArtWorkToMe (client);
 			CreatePlayer (_data,client)
 			broadcastTextMesege ();
 	 		return;
+	    }
+	    if(_data.includes('RequestArtwork'))
+	    {
+			broadcastArtWorkToMe (client);
+	   		return;
 	    }
 		if(_data.includes('TextMessage'))
 	    {
@@ -140,7 +145,7 @@ function ArtWork (data){
 			})
 }
 
-function broadcastToMe (client) {
+function broadcastArtWorkToMe (client) {
    if (client.readyState !== WebSocket.OPEN) 
     {
     	console.log('Client deleted');

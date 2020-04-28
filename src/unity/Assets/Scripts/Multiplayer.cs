@@ -22,6 +22,8 @@ public class Multiplayer : MonoBehaviour
     public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
     public Dictionary<string, MessegeInfo> _messeges = new Dictionary<string, MessegeInfo>();
     public event Action<bool> AccountVerified;
+    public event Action<bool> NewArtwork;
+
 
     public Color32 myColor;
     //WebSocket w = new WebSocket(new Uri("ws://www.in-dialog.com:3000/socket.io/?EIO=4&transport=websocket"));
@@ -36,6 +38,7 @@ public class Multiplayer : MonoBehaviour
         myColor.a = 225;
         crena.GetComponent<Renderer>().material.SetColor("_EmissionColor", myColor);
         myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
+        //GeneralState.AceptAssets = true;
     }
     private void OnEnable()
     {
@@ -85,8 +88,16 @@ public class Multiplayer : MonoBehaviour
                 if (message.ToString().Contains("artWroks"))
                 {
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
-                    assetManager.UpdateArtwork = listArtworks.artWroks;
+
+                    if (GeneralState.AceptAssets)
+                    {
+
+                        assetManager.UpdateArtwork = listArtworks.artWroks;
+                    }
+                    else
+                        NewArtwork(true);
                     //Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
+
                     continue;
                 }
                 if (message.ToString().Contains("players"))
@@ -240,6 +251,12 @@ public class Multiplayer : MonoBehaviour
     {
         return myGUID + "\t" + _player.position.x + "\t" + _player.position.y + "\t" + _player.position.z
         + "\t" + 0 + "\t" + _player.rotation.eulerAngles.y + "\t" + 0 + "\t" + msg + "\t" + type;
+    }
+    public void askForArtwork()
+    {
+        GeneralState.AceptAssets = true;
+        Debug.Log(GeneralState.AceptAssets);
+        w.SendString("RequestArtwork");
     }
 
 }

@@ -515,11 +515,14 @@ namespace AsImpL
 #if UNITY_2018_3_OR_NEWER
             using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(texPath))
             {
-                yield return uwr.SendWebRequest();
+                Debug.LogWarning(uwr.error);
 
+                yield return uwr.SendWebRequest();
+                
                 if (uwr.isNetworkError || uwr.isHttpError)
                 {
-                    Debug.LogError(uwr.error);
+                    GameObject.FindObjectOfType<UXManager>().BadUrl(basePath);
+                    Debug.LogWarning(uwr.error);
                 }
                 else
                 {

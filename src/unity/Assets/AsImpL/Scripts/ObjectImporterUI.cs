@@ -52,6 +52,8 @@ namespace AsImpL
         {
             objImporter.ImportingComplete -= OnImportComplete;
             objImporter.ImportingStart -= OnImportStart;
+            GeneralState.AceptAssets = false;
+
         }
 
 
