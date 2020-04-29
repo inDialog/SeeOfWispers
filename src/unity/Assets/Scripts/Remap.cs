@@ -42,17 +42,19 @@ public static class ExtensionMethods
 
     public static bool CheckKey(string key)
     {
-        int a, b, c, d;
+        int a, b, c, d,f,g;
         string[] _key;
         _key = key.Split('-');
-        if (_key.Length == 4)
+        if (_key.Length == 6)
         {
             a = int.Parse((_key[0]).Replace(" ", ""));
             b = int.Parse((_key[1]).Replace(" ", ""));
             c = int.Parse((_key[2]).Replace(" ", ""));
             d = int.Parse((_key[3]).Replace(" ", ""));
-            bool result = ((a * b) + (c / d)) + a * d == 1992;
-            return result;
+            f = int.Parse((_key[4]).Replace(" ", ""));
+            g = int.Parse((_key[5]).Replace(" ", ""));
+            var floor = ((a * b) + (c / d)) + a * d;
+            return floor == 1992 & g + f > 92;
         }
         else return false;
         //Debug.Log(result + key);

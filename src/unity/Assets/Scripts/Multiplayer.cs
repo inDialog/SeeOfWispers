@@ -16,7 +16,6 @@ public class Multiplayer : MonoBehaviour
     public GameObject myPlayer;
     public GameObject crena;
 
-    public string url;
     private Vector3 prevPosition;
     //public Dictionary<string, GameObject> otherPlayers = new Dictionary<string, GameObject>();
     public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
@@ -28,6 +27,13 @@ public class Multiplayer : MonoBehaviour
     public Color32 myColor;
     //WebSocket w = new WebSocket(new Uri("ws://www.in-dialog.com:3002/socket.io/?EIO=4&transport=websocket"));
     //"ws://localhost:8000"
+    /// <summary>
+    /// URL manager todo UI for selecting multiple rooms;
+    /// </summary>
+    public string[] Urls = new string [2];
+    public int ind;
+    public string url;
+
     public AssetManager assetManager;
     public WebSocket w;
     public System.Guid myGUID;
@@ -42,6 +48,7 @@ public class Multiplayer : MonoBehaviour
     }
     private void OnEnable()
     {
+        url = Urls[ind];
         w = new WebSocket(new Uri(url));
         myGUID = System.Guid.NewGuid();
         //print(myGUID.ToString());

@@ -12,7 +12,10 @@ var createKey = function() {
 		b =Math.floor(Math.random()*500 +1);
 		c =Math.floor(Math.random()*1000 +1);
 		d =Math.floor(Math.random()*50 +1);
-		var idKey =  a+'-'+b+'-'+c+'-'+d;
+    f =Math.floor(Math.random()*1000 +50);
+    g =Math.floor(Math.random()*10000 +50);
+
+		var idKey =  a+'-'+b+'-'+c+'-'+d+'-'+f+'-'+g;
   	state = CheckKey(idKey);
     }
     // while(){
@@ -41,8 +44,11 @@ var CheckKey = function(key){
     b = parseInt(_key[1]);
     c = parseInt(_key[2]);
     d = parseInt(_key[3]);
-	var floor = ((a*b)+(c/d))+a*d;
-    return floor == 1992;
+    f = parseInt(_key[4]);
+    g = parseInt(_key[5]);
+
+	var floor = ((a*b)+(c/d))+a*d; 
+    return floor == 1992 & g+f>92;
 }
 var SaveKey = function(key) {
 
