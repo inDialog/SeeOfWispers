@@ -87,10 +87,6 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
-                    //Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
-
-                    //assetManager.UpdateArtwork = listArtworks.artWroks;
-
                     if (GeneralState.AceptAssets)
                     {
                         Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);

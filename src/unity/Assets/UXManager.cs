@@ -12,12 +12,14 @@ public class UXManager : MonoBehaviour
     public GameObject InspectorMode;
     public GameObject Worning;
 
+
     public Toggle fittingRoomToggle;
     public Toggle inspectorTogggle;
     public Toggle fpCameraToggle;
     public GameObject fittingRoomUi;
     public Animator uiAnim;
     public Button ArtWorkRequest;
+
 
 
     GameObject cm_inspector;
@@ -60,10 +62,6 @@ public class UXManager : MonoBehaviour
         buttons[1].onClick.AddListener(NextArtwork);
         buttons[0].onClick.AddListener(PrviousArtwork);
 
-
-        //cm_inspector.transform.GetChild(1).gameObject.SetActive(false);
-        //print(Worning.transform.childCount);
-        //cm_bird.SetActive(false);
         cm_inspector.SetActive(false);
         navigationUI.SetActive(false);
 
@@ -121,7 +119,6 @@ public class UXManager : MonoBehaviour
                 if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                     {
-                        ArtistInfo.busy = true;
                         cm_inspector.SetActive(true);
                         cm_bird.SetActive(false);
                         fittingRoomUi.SetActive(true);
@@ -141,8 +138,6 @@ public class UXManager : MonoBehaviour
             assetManger.StopAllCoroutines();
             StopSecondCamera();
             uiAnim.Play("GoUp");
-            ArtistInfo.busy = false;
-
         }
 
     }

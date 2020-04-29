@@ -113,6 +113,7 @@ public class AssetManager : MonoBehaviour
                 toSend = FormatMessege(infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, infoArwork[ArtistInfo.artistKey].@object.transform.position, infoArwork[ArtistInfo.artistKey].url, infoArwork[ArtistInfo.artistKey].description, "ArtWork");
             }
         }
+
         GeneralState.AceptAssets = true;
         multiplayer.w.SendString(toSend);
     }
