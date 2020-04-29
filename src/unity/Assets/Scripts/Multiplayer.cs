@@ -120,7 +120,6 @@ public class Multiplayer : MonoBehaviour
                     }
                 }
                 continue;
-                //Debug.Log("PlayerCount: " + data.players.Count);
                 //Debug.Log("otherPlayers: " + otherPlayers.Count);
             }
 

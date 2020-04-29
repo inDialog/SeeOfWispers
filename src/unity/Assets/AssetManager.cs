@@ -115,6 +115,8 @@ public class AssetManager : MonoBehaviour
         }
 
         GeneralState.AceptAssets = true;
+        //// TODO add parking rulesto check if you can put it there
+        /// todo local dowload of string and the send
         multiplayer.w.SendString(toSend);
     }
    
@@ -134,7 +136,6 @@ public class AssetManager : MonoBehaviour
             return false;
         if (!url.Contains("http"))
             return false;
-
         Uri uriResult;
         return Uri.TryCreate(url, UriKind.Absolute, out uriResult)
             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);

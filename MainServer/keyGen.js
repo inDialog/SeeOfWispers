@@ -5,7 +5,7 @@ var state = false;
 var adress = './Log/' + "keyList" + '.json'
 const fs = require('fs');
 const lineReader = require('line-reader');
-
+//////TODO check file for recurent key
 var createKey = function() {
 	while (!state) {
 		a =Math.floor(Math.random()*50 +1);
@@ -13,25 +13,11 @@ var createKey = function() {
 		c =Math.floor(Math.random()*1000 +1);
 		d =Math.floor(Math.random()*50 +1);
 		var idKey =  a+'-'+b+'-'+c+'-'+d;
-  		state = CheckKey(idKey);
-  	
-  		}
- //  	if(state==true){
- //  	lineReader.eachLine(adress, function(line,last) {
-	// if(line.includes(idKey))
-	// {
- //    		console.log(line);
- //  			state = false;
- //  			createKey();
- //  			return;
- //  	}
-	// });
-  		// if(state){
-  			// var temp ;
-  			// LookForKey(idKey,temp);
-			// state = temp;
-  		// }
-	// }
+  	state = CheckKey(idKey);
+    }
+    // while(){
+
+    // }
   	state = false;
   	SaveKey("\n"+idKey.toString()+'\t'+TimwNow().toString());
 	return idKey;
