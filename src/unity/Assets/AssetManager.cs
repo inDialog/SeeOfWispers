@@ -23,14 +23,10 @@ public class InfoArtwork
     public string url;
     public string description;
     public string uploadOptions;
-
     public string id;
     public GameObject @object;
     public string Name;
     public string SpawnState;
-
-
-
 }
 
 
@@ -38,7 +34,6 @@ public class AssetManager : MonoBehaviour
 {
     public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
     public event Action<bool> NewArtwork;
-
     MultiObjectImporter moImporter;
     Multiplayer multiplayer;
     public GameObject prefabBase;
@@ -109,6 +104,7 @@ public class AssetManager : MonoBehaviour
             optionsIm.convertToDoubleSided = true;
             optionsIm.zUp = false;
             optionsIm.inheritLayer = true;
+
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
         }
@@ -121,10 +117,12 @@ public class AssetManager : MonoBehaviour
 
     public void SendArtwork()
     {
+        Vector3 frontalVector = multiplayer.crena.transform.position - multiplayer.crena.transform.forward * (-10);
         string toSend = "";
         if (!GatherString()) return;
+
         if (!infoArwork.ContainsKey(ArtistInfo.artistKey)) /// if  artist has no artwork then compose string  
-                toSend = FormatMessege(this.transform, multiplayer.crena.transform.position - multiplayer.crena.transform.forward*(-1), ArtistInfo.urlArt, ArtistInfo.description, "ArtWork");
+                toSend = FormatMessege(this.transform, frontalVector, ArtistInfo.urlArt, ArtistInfo.description, "ArtWork");
         else
         {
             if (ArtistInfo.keepInPlace)
@@ -134,7 +132,15 @@ public class AssetManager : MonoBehaviour
             }
 
             else
-                toSend = FormatMessege(this.transform, multiplayer.crena.transform.position, ArtistInfo.urlArt, ArtistInfo.description, "ArtWork");
+            {
+                if (infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
+                {
+                    Transform artwork = infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform;
+                    toSend = FormatMessege(artwork, frontalVector, ArtistInfo.urlArt, ArtistInfo.description, "ArtWork");
+                }else
+                    toSend = FormatMessege(this.transform, frontalVector, ArtistInfo.urlArt, ArtistInfo.description, "ArtWork");
+
+            }
             /// if user changed artwork url 
             if (ArtistInfo.urlArt != infoArwork[ArtistInfo.artistKey].url)
             {
@@ -176,11 +182,11 @@ public class AssetManager : MonoBehaviour
     {
         if (infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
         {
-            GatherString();
+            //GatherString();
             string toSend = FormatMessege(infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
                 infoArwork[ArtistInfo.artistKey].@object.transform.position,
-                ArtistInfo.urlArt,
-                ArtistInfo.description,
+                infoArwork[ArtistInfo.artistKey].url,
+                infoArwork[ArtistInfo.artistKey].description,
                 "ArtWork");
             multiplayer.w.SendString(toSend);
 

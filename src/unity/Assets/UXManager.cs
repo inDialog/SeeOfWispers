@@ -62,7 +62,7 @@ public class UXManager : MonoBehaviour
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
         inspectorTogggle.onValueChanged.AddListener(StartInSpectorMode);
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
-        SpawnArtwork.onClick.AddListener(ChangeLocation);
+        SpawnArtwork.onClick.AddListener(SendMessegeToSpawn);
         navigationUI = InspectorMode.GetComponentsInChildren<Transform>(true)[4].gameObject;
         Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
         buttons[1].onClick.AddListener(NextArtwork);
@@ -72,10 +72,11 @@ public class UXManager : MonoBehaviour
         navigationUI.SetActive(false);
 
     }
-    void ChangeLocation()
+    void SendMessegeToSpawn()
     {
         ArtistInfo.keepInPlace = keepLocation.isOn;
         assetManger.SendArtwork();
+
     }
     public  void ActivateRadar()
     {
@@ -136,6 +137,7 @@ public class UXManager : MonoBehaviour
         if (st == ArtistInfo.urlArt)
         {
             StartFittingRoom(true);
+
         }
         inspectorTogggle.interactable = true;
     }
@@ -150,6 +152,7 @@ public class UXManager : MonoBehaviour
                 if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                     {
+                        keepLocation.gameObject.SetActive(true);
                         cm_inspector.SetActive(true);
                         cm_bird.SetActive(false);
                         fittingRoomUi.SetActive(true);
@@ -267,6 +270,10 @@ public class UXManager : MonoBehaviour
             FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + '\t' + "DeleteArtwork");
             Worning.SetActive(true);
             Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
+            if (SpawnArtwork.isActiveAndEnabled)
+            {
+                SpawnArtwork.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
     public void NewArtWorkReques(bool state)

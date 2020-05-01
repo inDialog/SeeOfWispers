@@ -1,26 +1,26 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Remap.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs">
     <Files>
-      <File FileName="Assets/UXManager.cs" Line="74" Column="79" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="148" Column="174" IsPinned="True" />
-      <File FileName="Assets/CameraController.cs" Line="73" Column="16" IsPinned="True" />
-      <File FileName="Assets/UXPlayer.cs" Line="9" Column="1" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="103" Column="75" />
-      <File FileName="Assets/Scripts/TextManager.cs" Line="29" Column="23" />
-      <File FileName="Assets/ArtistLogIn.cs" Line="52" Column="24" />
-      <File FileName="Assets/CameraMode.cs" Line="20" Column="19" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="145" Column="39" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="520" Column="43" />
-      <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" Line="463" Column="96" />
-      <File FileName="Assets/Scripts/Disable_input.cs" Line="1" Column="1" />
-      <File FileName="Assets/ArtistInfo.cs" Line="10" Column="37" />
-      <File FileName="Assets/Scripts/MoveII.cs" Line="15" Column="19" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="61" Column="1" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="66" Column="3" IsPinned="True" />
+      <File FileName="Assets/UXManager.cs" Line="121" Column="38" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" IsPinned="True" />
+      <File FileName="Assets/CameraController.cs" IsPinned="True" />
+      <File FileName="Assets/UXPlayer.cs" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" />
+      <File FileName="Assets/Scripts/TextManager.cs" />
+      <File FileName="Assets/ArtistLogIn.cs" />
+      <File FileName="Assets/CameraMode.cs" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="518" Column="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" />
+      <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
+      <File FileName="Assets/Scripts/Disable_input.cs" />
+      <File FileName="Assets/ArtistInfo.cs" />
+      <File FileName="Assets/Scripts/MoveII.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bfa05012-cab0-4777-8fe8-3ee7a8d319e6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e05705fe-1c51-4b73-b98c-5e7af19bd590" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
