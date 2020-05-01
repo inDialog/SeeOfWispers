@@ -91,6 +91,7 @@
     <Compile Include="Assets\CameraController.cs" />
     <Compile Include="Assets\CameraMode.cs" />
     <Compile Include="Assets\Fallow.cs" />
+    <Compile Include="Assets\PlayerUX.cs" />
     <Compile Include="Assets\Scripts\AniMainCharacter.cs" />
     <Compile Include="Assets\Scripts\AnimationCharacter.cs" />
     <Compile Include="Assets\Scripts\Disable_input.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Shaders\Depth\SaveOutCamDepths.cs" />
     <Compile Include="Assets\TriggerText.cs" />
     <Compile Include="Assets\UXManager.cs" />
+    <Compile Include="Assets\UXPlayer.cs" />
     <Compile Include="Assets\UiFunctions.cs" />
     <Compile Include="Assets\Unlock.cs" />
     <Compile Include="Assets\WebGLSupport\WebGLInput\Detail\RebuildChecker.cs" />
@@ -131,7 +133,6 @@
     <None Include="Assets\Shaders\Legacy\DiagramOverlay.cginc" />
     <None Include="Assets\Shaders\RayMarchCore.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\Models\Sibernik-Sponza\copyright.txt" />
     <None Include="Assets\Shaders\SpotLight.cginc" />
     <None Include="Assets\Shaders\Depth\SaveOutCamDepths.shader" />
     <None Include="Assets\Shaders\Scenes\SceneClouds.cginc" />

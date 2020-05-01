@@ -32,8 +32,8 @@ public class MoveII : MonoBehaviour
 	void FixedUpdate()
 	{
 		Vector3 jump = Vector3.zero;
-		if (!stop)
-		{
+		//if (!stop)
+		//{
             //speed *= Time.deltaTime;
 
             //speed *= Time.deltaTime;
@@ -53,7 +53,7 @@ public class MoveII : MonoBehaviour
 			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 			velocityChange.y = 0;
 			_rigidbody.AddForce(velocityChange, ForceMode.Impulse);
-		}
+		//}
 		float newSpeed = speed1; // base speed
 		if (grounded)
 			newSpeed /= 10;
@@ -75,7 +75,7 @@ public class MoveII : MonoBehaviour
 		else if (!grounded)
 		{
 			if (_rigidbody.velocity.y < 0.1f)
-				jumpTime += Time.deltaTime / 2.5f;
+				jumpTime += Time.deltaTime / 1.5f;
 			else jumpTime = 0.5f;
 			jumpTime = Mathf.Clamp(jumpTime, 0.1f, _rigidbody.mass);
 			if (transform.position.y > -1)

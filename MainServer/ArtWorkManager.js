@@ -15,7 +15,8 @@ function ArtWork (data){
         sX, sY, sZ,
         pX, pY, pZ,
         rX,rY,rZ,
-        inUrl,inDescription] =  data.toString().split('\t');
+        inUrl,inDescription,
+        options] =  data.toString().split('\t');
         
         var artWroks ={};
 
@@ -42,6 +43,7 @@ function ArtWork (data){
             },
             url : inUrl,
             description : inDescription,
+            uploadOptions : options,
             id : udid
       }
     keysGen.LookForKey(udid, function(response){

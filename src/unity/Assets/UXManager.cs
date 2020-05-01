@@ -11,26 +11,32 @@ public class UXManager : MonoBehaviour
     public GameObject uploadForm;
     public GameObject InspectorMode;
     public GameObject Worning;
+    public GameObject PrefabRadar;
+    //public GameObject UploadButton;
 
 
     public Toggle fittingRoomToggle;
     public Toggle inspectorTogggle;
     public Toggle fpCameraToggle;
+    public Toggle keepLocation;
+    public Button SpawnArtwork;
+
+
     public GameObject fittingRoomUi;
     public Animator uiAnim;
     public Button ArtWorkRequest;
-
-
+    public Image Compas;
 
     GameObject cm_inspector;
     GameObject navigationUI;
-
+    GameObject radar;
     GameObject cm_bird;
-    CameraController cam2Controller;
-    AssetManager assetManger;
-    ToggleGroup toggleGroup;
-    int count;
     CameraMode cmMode;
+    ToggleGroup toggleGroup;
+    AssetManager assetManger;
+    CameraController cam2Controller;
+
+    int count;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -49,21 +55,44 @@ public class UXManager : MonoBehaviour
         inspectorTogggle.interactable = false;
         fittingRoomToggle.interactable = false;
         assetManger = FindObjectOfType<AssetManager>();
+        assetManger.NewArtwork += NewArtWorkReques;
+
         FindObjectOfType<ObjectImporter>().ImportedModel += ActivateFittingRoom;
         FindObjectOfType<Multiplayer>().AccountVerified += EnableFittingRoom;
-        FindObjectOfType<Multiplayer>().NewArtwork += NewArtWorkReques;
-
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
         inspectorTogggle.onValueChanged.AddListener(StartInSpectorMode);
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
-
+        SpawnArtwork.onClick.AddListener(ChangeLocation);
         navigationUI = InspectorMode.GetComponentsInChildren<Transform>(true)[4].gameObject;
         Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
         buttons[1].onClick.AddListener(NextArtwork);
         buttons[0].onClick.AddListener(PrviousArtwork);
-
+        keepLocation.gameObject.SetActive(false);
         cm_inspector.SetActive(false);
         navigationUI.SetActive(false);
+
+    }
+    void ChangeLocation()
+    {
+        ArtistInfo.keepInPlace = keepLocation.isOn;
+        assetManger.SendArtwork();
+    }
+    public  void ActivateRadar()
+    {
+        radar = Instantiate(PrefabRadar);
+        FindObjectOfType<UXPlayer>().InRangeOfArtwork += CheckForArtWorkAround;
+    }
+    public void StopRadar()
+    {
+        FindObjectOfType<UXPlayer>().InRangeOfArtwork -= CheckForArtWorkAround;
+        Destroy(radar);
+    }
+    void CheckForArtWorkAround(bool state)
+    {
+        if (state)
+            Compas.color = Color.red;
+        else
+            Compas.color = Color.blue;
 
     }
 
@@ -90,6 +119,8 @@ public class UXManager : MonoBehaviour
         if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
         {
             ArtistInfo.hasArt = true;
+            keepLocation.gameObject.SetActive(true);
+            assetManger.SetInputField();
             uiAnim.Play("GoUp");
         }
         NeutralState();
@@ -114,7 +145,7 @@ public class UXManager : MonoBehaviour
         if (state)
         {
             /// Fitting Room
-            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+            if (ArtistInfo.hasArt)
             {
                 if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
@@ -143,8 +174,9 @@ public class UXManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Inspector Mode
+    /// 
     /// </summary>
+    /// <param name="StartInSpectorMode"></param>
     void StartInSpectorMode(bool state)
     {
         fittingRoomUi.SetActive(false);
@@ -185,6 +217,8 @@ public class UXManager : MonoBehaviour
         cm_bird.SetActive(true);
         FindObjectOfType<MoveII>().enabled = true; //move function TODO find a better sollution
     }
+    ////////////
+
 
     /// Bird Camera
     void NeutralState()
@@ -195,6 +229,9 @@ public class UXManager : MonoBehaviour
         FindObjectOfType<MoveII>().enabled = true; //move function TODO find a better sollution
     }
 
+    /// <summary>
+    /// General Escpe
+    /// </summary>
     void OnGUI()
     {
         Event e = Event.current;
@@ -209,6 +246,10 @@ public class UXManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Callbacks on bad url or mesh data
+    /// </summary>
     //todo a better action remove call from ObjectBuilder and LoaderObj
     public void BadMeshData(string key)
     {

@@ -21,7 +21,6 @@ public class Multiplayer : MonoBehaviour
     public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
     public Dictionary<string, MessegeInfo> _messeges = new Dictionary<string, MessegeInfo>();
     public event Action<bool> AccountVerified;
-    public event Action<bool> NewArtwork;
 
 
     public Color32 myColor;
@@ -44,7 +43,7 @@ public class Multiplayer : MonoBehaviour
         myColor.a = 225;
         crena.GetComponent<Renderer>().material.SetColor("_EmissionColor", myColor);
         myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
-        //GeneralState.AceptAssets = true;
+        GeneralState.AceptAssets = true;
     }
     private void OnEnable()
     {
@@ -70,7 +69,7 @@ public class Multiplayer : MonoBehaviour
             // check if message is not empty
             if (message != null)
             {
-                Debug.Log(message.ToString());
+                //Debug.Log(message.ToString());
                 if (message.ToString() == "Conceted")
                 {
                     w.SendString(myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
@@ -94,15 +93,15 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
-                    if (GeneralState.AceptAssets)
-                    {
+                    //if (GeneralState.AceptAssets)
+                    //{
                         Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                         assetManager.UpdateArtwork = listArtworks.artWroks;
-                    }
-                    else
-                        NewArtwork(true);
-                    //Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-                    Debug.Log(GeneralState.AceptAssets);
+                    //}
+                    //else
+                    //NewArtwork(true);
+                    Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
+                    //Debug.Log();
                     continue;
                 }
                 if (message.ToString().Contains("players"))

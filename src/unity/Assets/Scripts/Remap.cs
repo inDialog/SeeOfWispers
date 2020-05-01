@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using TMPro;
 public static class ExtensionMethods
 {
 
@@ -57,9 +58,12 @@ public static class ExtensionMethods
             return floor == 1992 & g + f > 92;
         }
         else return false;
-        //Debug.Log(result + key);
-
     }
- 
+    public static string ComposeString(TMP_InputField[] inputFields)
+    {
+       return inputFields[0].text + "\n" + inputFields[1].text + "\n" + inputFields[2].text + "\n" + inputFields[3].text + "\n" + inputFields[4].text;
+    }
+  
+   
 }
 

@@ -1,22 +1,21 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AsImpL/Scripts/ObjectImporterUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Remap.cs">
     <Files>
-      <File FileName="Assets/UXManager.cs" Line="65" Column="47" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="84" Column="20" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="96" Column="22" />
-      <File FileName="Assets/ArtistLogIn.cs" Line="37" Column="1" />
-      <File FileName="Assets/CameraMode.cs" Line="29" Column="5" />
+      <File FileName="Assets/UXManager.cs" Line="74" Column="79" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="148" Column="174" IsPinned="True" />
+      <File FileName="Assets/CameraController.cs" Line="73" Column="16" IsPinned="True" />
+      <File FileName="Assets/UXPlayer.cs" Line="9" Column="1" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="103" Column="75" />
+      <File FileName="Assets/Scripts/TextManager.cs" Line="29" Column="23" />
+      <File FileName="Assets/ArtistLogIn.cs" Line="52" Column="24" />
+      <File FileName="Assets/CameraMode.cs" Line="20" Column="19" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="145" Column="39" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="520" Column="43" />
       <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" Line="463" Column="96" />
-      <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" Line="48" Column="30" />
-      <File FileName="Assets/Fallow.cs" Line="21" Column="73" />
-      <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" Line="363" Column="85" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="41" Column="6" />
-      <File FileName="Assets/CameraController.cs" Line="73" Column="16" />
-      <File FileName="Assets/Scripts/MoveII.cs" Line="26" Column="65" />
-      <File FileName="Assets/ArtistInfo.cs" Line="16" Column="35" />
-      <File FileName="Assets/AsImpL/Scripts/ObjectImporterUI.cs" Line="123" Column="33" />
+      <File FileName="Assets/Scripts/Disable_input.cs" Line="1" Column="1" />
+      <File FileName="Assets/ArtistInfo.cs" Line="10" Column="37" />
+      <File FileName="Assets/Scripts/MoveII.cs" Line="15" Column="19" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="61" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
