@@ -9,12 +9,13 @@ module.exports.ArtWork = ArtWork;
 
 const directoryPath = path.join(__dirname, 'Save');
 
-function ArtWork (data){
+function ArtWork (data,callback){
     var [udid,
         X, Y, Z,
         sX, sY, sZ,
         pX, pY, pZ,
         rX,rY,rZ,
+        cX,cY,cZ,
         inUrl,inDescription,
         options] =  data.toString().split('\t');
         
@@ -41,9 +42,15 @@ function ArtWork (data){
                 y: parseFloat(rY),
                 z: parseFloat(rZ)
             },
+            colideScale: {
+                x: parseFloat(cX),
+                y: parseFloat(cY),
+                z: parseFloat(cZ)
+            },
             url : inUrl,
             description : inDescription,
             uploadOptions : options,
+            
             id : udid
       }
     keysGen.LookForKey(udid, function(response){
@@ -54,9 +61,10 @@ function ArtWork (data){
             console.log('Error writing file', err)
         } else {
             console.log('Successfully wrote file')
+            return callback(true)
         }   
     })
-        app.SendArtworks(null,false);
+        // app.SendArtworks(null,false);
         // console.log(response);
             })
 }
@@ -68,8 +76,8 @@ function ComposeString  (callback) {
     if (err) {
         return console.log('Unable to scan directory: ' + err);
     } 
-
-    files.forEach(function (file,idx,array) {
+    var  i =1;
+    files.forEach(function (file,index,array) {
     	// console.log(array)
 
     	var [id,type] =file.toString().split('.');
@@ -79,13 +87,15 @@ function ComposeString  (callback) {
        					 console.log(err)
         				return
     					}
-    				// console.log(recived)
+    				console.log("arraySize " + array.length)
+                    console.log("index  " + i)
+                    i+=1;
              
     				artWroks[id] = recived[id]
     				// temp[id] += JSON.stringify(recived[id],null);
     				// var tm = JSON.stringify(recived);
     				// temp[id] += tm
-    				 if (idx === array.length-1){ 
+    				 if (i == array.length){ 
     				return callback(artWroks)
    						}
 

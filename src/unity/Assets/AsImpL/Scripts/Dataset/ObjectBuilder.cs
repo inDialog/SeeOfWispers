@@ -417,6 +417,7 @@ namespace AsImpL
                 buildStatus.grpFaceIdx = 0;
                 buildStatus.grpIdx++;
             }
+            if (subObjData.allFaces.Count == 0) return false;
             buildStatus.totFaceIdxCount += subObjData.allFaces.Count;
             GameObject subobj = ImportSubObject(buildStatus.subObjParent, subObjData, mats);
             if (subobj == null)
@@ -460,7 +461,7 @@ namespace AsImpL
             if (objData.allFaces.Count == 0)
             {
                 Debug.LogWarning("Sub object: " + objData.name + " has no face defined. Creating empty game object.");
-                GameObject.FindObjectOfType<UXManager>().BadMeshData(parentObj.transform.name);
+                GameObject.FindObjectOfType<UXManager>().BadMeshData(parentObj.transform.name, "has no face defined. Creating empty game object");
                 return go;
             }
 
@@ -515,8 +516,10 @@ namespace AsImpL
                         newUVs[vcount + k] = newUVs[k];
                     }
                 }
-                if (currDataSet.normalList.Count > 0 && fi.normIdx >= 0)
+                if (currDataSet.normalList.Count > 0 && fi.normIdx >= 0 && fi.normIdx< currDataSet.normalList.Count)
                 {
+                    //Debug.Log(fi.normIdx);
+                    //Debug.Log(currDataSet.normalList.Count);
                     newNormals[k] = currDataSet.normalList[fi.normIdx];
                     if (conv2sided)
                     {

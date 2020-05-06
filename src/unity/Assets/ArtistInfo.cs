@@ -13,11 +13,15 @@ public static class ArtistInfo
 
     public static bool hasArt;
     public static bool busy;
+    public static Vector3 colderSize;
+    public static string uploadOptionsA = "";
 
 }
 public static class GeneralState
 {
     public static bool AceptAssets;
     public static bool InRangeOfArtWork;
+    public static bool colided;
+
 
 }

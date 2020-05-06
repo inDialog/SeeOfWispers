@@ -1,0 +1,33 @@
+{
+  "14-114-736-2-1033-3746": {
+    "position": {
+      "x": 3,
+      "y": 2.31,
+      "z": -2.2
+    },
+    "artworkScale": {
+      "x": 0.1778263,
+      "y": 0.1778263,
+      "z": 0.1778263
+    },
+    "platform": {
+      "x": -43.48211,
+      "y": 18.8977,
+      "z": -53.30845
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "colideScale": {
+      "x": 10,
+      "y": 10,
+      "z": 10
+    },
+    "url": "https://raw.githubusercontent.com/NVIDIAGameWorks/FaceWorks/master/samples/media/testShadowCaster.obj",
+    "description": "\n\n\n\n",
+    "uploadOptions": "True/True/True/True/False/",
+    "id": "14-114-736-2-1033-3746"
+  }
+}

@@ -97,7 +97,7 @@ namespace AsImpL
 
                 totalProgress.singleProgress.Remove(objLoadingProgress);
                 ////todo a proper action callback file:///https://
-                GameObject.FindObjectOfType<UXManager>().BadUrl(absolutePath);
+                GameObject.FindObjectOfType<UXManager>().BadMeshData(absolutePath,"No objects loded path came back empty");
 
                 yield break;
             }
@@ -257,7 +257,7 @@ namespace AsImpL
             yield return null;
 
             string[] lines = objDataText.Split("\n".ToCharArray());
-
+            //Debug.Log(objDataText.Length);
             bool isFirstInGroup = true;
             bool isFaceIndexPlus = true;
 
@@ -521,7 +521,7 @@ namespace AsImpL
                 }
                 catch (Exception e)
                 {
-                    Debug.LogErrorFormat("Error at line {0} in mtl file: {1}", i + 1, e);
+                    Debug.LogWarningFormat("Error at line {0} in mtl file: {1}", i + 1, e);
                 }
             }
         }
@@ -629,18 +629,23 @@ namespace AsImpL
 #if UNITY_2018_3_OR_NEWER
             UnityWebRequest uwr = UnityWebRequest.Get(url);
             yield return uwr.SendWebRequest();
-
-            if (uwr.isNetworkError || uwr.isHttpError)
+            bool toBig = (uwr.downloadHandler.data.Length * 0.000001) > 24;
+            if (uwr.isNetworkError || uwr.isHttpError  || toBig)
             {
                 if (notifyErrors)
                 {
-                    //Debug.LogWarning(uwr.error + "!!!");
+                    if (toBig)
+                        GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "Ho there cowboy the file is to big! You have: " + uwr.downloadHandler.data.Length * 0.000001 + "Mb Maximum allowen is 12Mb per file");
+                    //else
+                    //    GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "I dont know... the url...hmm...there seams to be a problem with the data");
+                    //Debug.Log(toBig + uwr.downloadHandler.data.Length.ToString() + url);
                 }
             }
             else
             {
                 // Get downloaded asset bundle
                 loadedText = uwr.downloadHandler.text;
+
             }
 #else
             WWW www = new WWW(url);

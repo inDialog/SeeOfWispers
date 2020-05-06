@@ -1,0 +1,33 @@
+{
+  "47-35-506-2-629-8717": {
+    "position": {
+      "x": 0,
+      "y": 2.31,
+      "z": -6.2
+    },
+    "artworkScale": {
+      "x": 0.2691819,
+      "y": 0.2691819,
+      "z": 0.2691819
+    },
+    "platform": {
+      "x": -223.886,
+      "y": 17.79585,
+      "z": 49.59542
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "colideScale": {
+      "x": 10,
+      "y": 10,
+      "z": 10
+    },
+    "url": "https://raw.githubusercontent.com/josdirksen/learning-threejs/master/assets/models/city.obj",
+    "description": "\n\n\n\n",
+    "uploadOptions": "True/True/True/False/False/",
+    "id": "47-35-506-2-629-8717"
+  }
+}

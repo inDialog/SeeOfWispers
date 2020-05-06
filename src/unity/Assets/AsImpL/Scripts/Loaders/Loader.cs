@@ -178,6 +178,8 @@ namespace AsImpL
 
 
                 GameObject newObj = Instantiate(loadedModels[absolutePath]);
+                newObj.tag = buildOptions.tag;
+                Debug.Log(buildOptions.tag);
                 yield return newObj;
                 OnCreated(newObj, absolutePath);
                 newObj.name = objName;
@@ -356,6 +358,7 @@ namespace AsImpL
             objLoadingProgress.message = "Building scene objects...";
 
             GameObject newObj = new GameObject(objName);
+            newObj.tag = buildOptions.tag;
             if (buildOptions.hideWhileLoading)
             {
                 newObj.SetActive(false);
@@ -418,6 +421,8 @@ namespace AsImpL
                     obj.transform.localPosition = buildOptions.localPosition;
                     obj.transform.localRotation = Quaternion.Euler(buildOptions.localEulerAngles); ;
                     obj.transform.localScale = buildOptions.localScale;
+
+
                     if (buildOptions.inheritLayer)
                     {
                         obj.layer = obj.transform.parent.gameObject.layer;
@@ -425,6 +430,7 @@ namespace AsImpL
                         for (int i = 0; i < mrs.Length; i++)
                         {
                             mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
+                            mrs[i].gameObject.tag = buildOptions.tag;
                         }
                     }
                 }
@@ -515,13 +521,13 @@ namespace AsImpL
 #if UNITY_2018_3_OR_NEWER
             using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(texPath))
             {
-                Debug.LogWarning(uwr.error);
+                //Debug.LogWarning(uwr.error);
 
                 yield return uwr.SendWebRequest();
                 
                 if (uwr.isNetworkError || uwr.isHttpError)
                 {
-                    GameObject.FindObjectOfType<UXManager>().BadUrl(basePath);
+                    GameObject.FindObjectOfType<UXManager>().BadMeshData(basePath,"The path to the texture is bad");
                     Debug.LogWarning(uwr.error);
                 }
                 else

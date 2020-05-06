@@ -51,7 +51,12 @@ wss.on('connection', function connection (client) {
 	    }
 	    if(_data.includes('ArtWork'))
 	    {
-	   		artManager.ArtWork(data);
+	   		// artManager.ArtWork(data);
+	   		artManager.ArtWork(data, function(response){
+    		// client.send(JSON.stringify("artKey@ "+ artistKey))
+    		console.log(response);
+        	SendArtworks(null,false);
+			})
 	   		return;
 	    }
 	     if(_data.includes('DeleteArtwork') )
@@ -107,9 +112,13 @@ artManager.ComposeString(function(response){
     		var temp =  Object.keys(response).map(udid => response[udid])
     		if(br){
     		client.send(JSON.stringify({artWroks: temp}))
+    		// console.log("solo"+temp);
+
     		}
     		else {
 			broadcastArtWork (JSON.stringify({artWroks: temp}))
+    		console.log("BR"+temp);
+
     		}
     		console.log(response);
 			})

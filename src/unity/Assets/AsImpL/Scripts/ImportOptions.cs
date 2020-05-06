@@ -10,6 +10,8 @@ namespace AsImpL
     {
         [Tooltip("load the OBJ file assumitg its vertical axis is Z instead of Y")]
         public bool zUp = true;
+        [Tooltip("set tag")]
+        public string tag = "untagged";
 
         [Tooltip("Consider diffuse map as already lit (disable lighting) if no other texture is present")]
         public bool litDiffuse = false;

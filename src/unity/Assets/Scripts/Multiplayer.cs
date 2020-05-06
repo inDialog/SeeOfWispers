@@ -39,11 +39,11 @@ public class Multiplayer : MonoBehaviour
 
     private void Start()
     {
-        myColor = RandomColor();
+        myColor = ExtensionMethods.RandomColor();
         myColor.a = 225;
         crena.GetComponent<Renderer>().material.SetColor("_EmissionColor", myColor);
         myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
-        GeneralState.AceptAssets = true;
+        //GeneralState.AceptAssets = true;
     }
     private void OnEnable()
     {
@@ -72,7 +72,7 @@ public class Multiplayer : MonoBehaviour
                 //Debug.Log(message.ToString());
                 if (message.ToString() == "Conceted")
                 {
-                    w.SendString(myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
+                    w.SendString(myGUID + "\t" + ExtensionMethods.StringToCollor(myColor) + "\t" + "color");
                     //Debug.Log("color" + myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
                     continue;
                 }
@@ -93,13 +93,11 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
-                    //if (GeneralState.AceptAssets)
-                    //{
+             
                         Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                         assetManager.UpdateArtwork = listArtworks.artWroks;
-                    //}
-                    //else
-                    //NewArtwork(true);
+            
+                    //Debug.Log(message.ToString());
                     Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
                     //Debug.Log();
                     continue;
@@ -220,31 +218,14 @@ public class Multiplayer : MonoBehaviour
     private void SendPositions()
     {
         // check if player moved
-        float distance = Vector3.Distance(prevPosition, myPlayer.transform.position);
-        if (distance > 0.05f)
+        if (prevPosition!= myPlayer.transform.position)
         {
             // send update if position had changed
             w.SendString(FormatMessege(myPlayer.transform));
             prevPosition = myPlayer.transform.position;
         }
     }
-
-
-    public static string StringToCollor(Color32 Color)
-    {
-        return
-        Color.r + "\t" +
-        Color.g + "\t" +
-        Color.b;
-    }
-    public static Color32 RandomColor()
-    {
-        return new Color32(
-        (byte)UnityEngine.Random.Range(0, 200),
-        (byte)UnityEngine.Random.Range(0, 200),
-        (byte)UnityEngine.Random.Range(0, 200),
-        225);
-    }
+   
     public string FormatMessege (Transform _player)
     {
         return myGUID + "\t" + _player.position.x + "\t" + _player.position.y + "\t" + _player.position.z

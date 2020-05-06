@@ -1,0 +1,33 @@
+{
+  "11-166-600-6-551-8776": {
+    "position": {
+      "x": 0,
+      "y": -1.69,
+      "z": -0.1999998
+    },
+    "artworkScale": {
+      "x": 0.14922,
+      "y": 0.14922,
+      "z": 0.14922
+    },
+    "platform": {
+      "x": -58.96614,
+      "y": 29.23066,
+      "z": -33.67226
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "colideScale": {
+      "x": 12,
+      "y": 12,
+      "z": 12
+    },
+    "url": "https://raw.githubusercontent.com/ZeroK-RTS/Zero-K-Artwork/master/gunship4/exports/gunship%20-%20latest-%20UV.obj",
+    "description": "\n\n\n\n",
+    "uploadOptions": "False/True/True/True/True/",
+    "id": "11-166-600-6-551-8776"
+  }
+}

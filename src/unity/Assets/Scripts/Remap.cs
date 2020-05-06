@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using TMPro;
+using System;
+using AsImpL;
+using UnityEngine.UI;
 public static class ExtensionMethods
 {
 
@@ -43,7 +46,7 @@ public static class ExtensionMethods
 
     public static bool CheckKey(string key)
     {
-        int a, b, c, d,f,g;
+        int a, b, c, d, f, g;
         string[] _key;
         _key = key.Split('-');
         if (_key.Length == 6)
@@ -61,9 +64,46 @@ public static class ExtensionMethods
     }
     public static string ComposeString(TMP_InputField[] inputFields)
     {
-       return inputFields[0].text + "\n" + inputFields[1].text + "\n" + inputFields[2].text + "\n" + inputFields[3].text + "\n" + inputFields[4].text;
+        return inputFields[0].text + "\n" + inputFields[1].text + "\n" + inputFields[2].text + "\n" + inputFields[3].text + "\n" + inputFields[4].text;
     }
-  
-   
+
+    public static bool CheckURl(string url)
+    {
+        if (url == "")
+            return false;
+        if (url.Substring(url.Length - 3, 3) != "obj")
+            return false;
+        if (!url.Contains("http"))
+            return false;
+        Uri uriResult;
+        return Uri.TryCreate(url, UriKind.Absolute, out uriResult)
+            && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    }
+    public static bool[] ConcertToBool(string input)
+    {
+        string[] temp = input.Split('/');
+        bool[] output = new bool[temp.Length - 1];
+
+        for (int i = 0; i < output.Length; i++)
+        {
+            output[i] = (temp[i] == "True");
+        }
+        return output;
+    }
+    public static Color32 RandomColor()
+    {
+        return new Color32(
+        (byte)UnityEngine.Random.Range(0, 200),
+        (byte)UnityEngine.Random.Range(0, 200),
+        (byte)UnityEngine.Random.Range(0, 200),
+        225);
+    }
+    public static string StringToCollor(Color32 Color)
+    {
+        return
+        Color.r + "\t" +
+        Color.g + "\t" +
+        Color.b;
+    }
 }
 
