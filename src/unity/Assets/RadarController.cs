@@ -34,13 +34,15 @@ public class RadarController : MonoBehaviour
         {
             if (!ExtensionMethods.ConcertToBool(item.Value.uploadOptions)[4])
             {
-                isNotConvex.Add(item.Value.@object.transform.root.name);
-
-            }
-            MeshCollider[] meshFilters = item.Value.@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-            foreach (var item2 in meshFilters)
-            {
-                item2.convex = true;
+                if (item.Value.@object.transform.childCount > 1)
+                {
+                    isNotConvex.Add(item.Value.@object.transform.root.name);
+                    MeshCollider[] meshFilters = item.Value.@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+                    foreach (var item2 in meshFilters)
+                    {
+                        item2.convex = true;
+                    }
+                }
             }
         }
         ShowBorder();

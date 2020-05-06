@@ -222,9 +222,9 @@ public class UXManager : MonoBehaviour
         {
             Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
             Destroy(fittingRoom.coliderBox);
-
+            fittingRoom.StopAllCoroutines();
         }
-        fittingRoom.StopAllCoroutines();
+    
 
 
 
