@@ -105,5 +105,11 @@ public static class ExtensionMethods
         Color.g + "\t" +
         Color.b;
     }
+
+    public static Vector3 Trip (Vector3 Original, Vector3 target,Transform space)
+    {
+       return  space.InverseTransformPoint(Original) -target;
+
+    }
 }
 

@@ -1,19 +1,19 @@
 {
-  "47-35-506-2-629-8717": {
+  "26-44-512-32-350-3602": {
     "position": {
       "x": 0,
-      "y": 2.31,
-      "z": -6.2
+      "y": 0,
+      "z": 0
     },
     "artworkScale": {
-      "x": 0.2691819,
-      "y": 0.2691819,
-      "z": 0.2691819
+      "x": 1,
+      "y": 1,
+      "z": 1
     },
     "platform": {
-      "x": -223.886,
-      "y": 17.79585,
-      "z": 49.59542
+      "x": -248.7722,
+      "y": 57.63215,
+      "z": -177.0219
     },
     "rotation": {
       "x": 0,
@@ -21,13 +21,13 @@
       "z": 0
     },
     "colideScale": {
-      "x": 10,
-      "y": 10,
-      "z": 10
+      "x": 50,
+      "y": 20,
+      "z": 50
     },
     "url": "https://raw.githubusercontent.com/josdirksen/learning-threejs/master/assets/models/city.obj",
     "description": "\n\n\n\n",
-    "uploadOptions": "True/True/True/False/False/",
-    "id": "47-35-506-2-629-8717"
+    "uploadOptions": "True/True/True/False/True/",
+    "id": "26-44-512-32-350-3602"
   }
 }

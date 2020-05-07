@@ -115,7 +115,7 @@ public class AssetManager : MonoBehaviour
             optionsIm.use32bitIndices = false;
             optionsIm.buildColliders = true;
             optionsIm.hideWhileLoading = true;
-
+            optionsIm.boxColiderSize = value[i].colideScale;
             optionsIm.tag = "Base";
             optionsIm.litDiffuse = importOption[1];
             //optionsIm.colliderTrigger = true;

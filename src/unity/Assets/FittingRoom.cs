@@ -68,7 +68,7 @@ public class FittingRoom : MonoBehaviour
         Debug.Log(ArtistInfo.colderSize);
         return _coliderBox;
     }
-    void UpdateArt()
+    public void UpdateArt()
     {
         FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         upload.UpdateExistingArtwork();

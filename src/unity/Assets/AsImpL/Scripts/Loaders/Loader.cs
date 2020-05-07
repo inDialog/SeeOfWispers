@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -421,18 +422,63 @@ namespace AsImpL
                     obj.transform.localPosition = buildOptions.localPosition;
                     obj.transform.localRotation = Quaternion.Euler(buildOptions.localEulerAngles); ;
                     obj.transform.localScale = buildOptions.localScale;
-                    Debug.Log(obj.name + "    "+ obj.transform.childCount);
-
-                    if (buildOptions.inheritLayer)
+                    Debug.Log(obj.name + "    " + obj.transform.childCount);
+                    Bounds meshesBounds = new Bounds(buildOptions.localPosition,Vector3.zero);
+                    if (obj.transform.childCount==1)
                     {
-                        obj.layer = obj.transform.parent.gameObject.layer;
-                        MeshRenderer[] mrs = obj.transform.GetComponentsInChildren<MeshRenderer>(true);
-                        for (int i = 0; i < mrs.Length; i++)
+                        MeshRenderer mrs = obj.transform.GetComponentInChildren<MeshRenderer>(true);
+                        meshesBounds = mrs.bounds;
+                        mrs.gameObject.tag = buildOptions.tag;
+                        mrs.gameObject.layer = obj.transform.parent.gameObject.layer;
+
+                    }
+                    else
+                    {
+                        if (buildOptions.inheritLayer)
                         {
-                            mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
-                            mrs[i].gameObject.tag = buildOptions.tag;
+                            obj.layer = obj.transform.parent.gameObject.layer;
+                            MeshRenderer[] mrs = obj.transform.GetComponentsInChildren<MeshRenderer>(true);
+                            for (int i = 0; i < mrs.Length; i++)
+                            {
+                                mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
+                                mrs[i].gameObject.tag = buildOptions.tag;
+                                if (i == 0) meshesBounds = mrs[i].bounds;
+                                else
+                                meshesBounds.Encapsulate(mrs[i].bounds);
+                            }
                         }
                     }
+                 
+                    float[] distances = new float[3];
+                    distances[0] = buildOptions.boxColiderSize.x - meshesBounds.size.x;
+                    distances[1] = buildOptions.boxColiderSize.y - meshesBounds.size.y;
+                    distances[2] = buildOptions.boxColiderSize.z - meshesBounds.size.z;
+
+                    if (distances[0] < 0 & distances[1] < 0 & distances[2] < 0)
+                    {
+                        float[] temp = distances;
+                        Array.Sort(temp);
+                        int axis = Array.IndexOf(distances, temp[0]);
+                        float ratio = 1;
+                        if (axis == 0)
+                        {
+                            ratio = obj.transform.localScale.x / meshesBounds.size.x;
+                        }
+                        if (axis == 1)
+                        {
+                            ratio = obj.transform.localScale.x / meshesBounds.size.y;
+                        }
+                        if (axis == 2)
+                        {
+                            ratio = obj.transform.localScale.x / meshesBounds.size.z;
+                        }
+
+                        Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + buildOptions.boxColiderSize + "distances" + distances[0]);
+
+                        obj.transform.localScale = buildOptions.boxColiderSize * (ratio /1.1f);
+                    }
+                
+
                 }
                 if (buildOptions.hideWhileLoading)
                 {

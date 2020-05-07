@@ -30,6 +30,7 @@ public class UploadForm : MonoBehaviour
             ArtistInfo.description,
             ArtistInfo.uploadOptionsA,
             "ArtWork");
+            FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         }
 
         else

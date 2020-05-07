@@ -36,6 +36,8 @@ namespace AsImpL
 
         [Tooltip("Mesh colliders as trigger (only active if colliderConvex = true)")]
         public bool colliderTrigger = false;
+        [Tooltip("Mesh colliders as trigger (only active if colliderConvex = true)")]
+        public Vector3 boxColiderSize = Vector3.one;
 
 #if !UNITY_2018_3_OR_NEWER
         [Tooltip("Mesh colliders inflated (only active if colliderConvex = true)")]
