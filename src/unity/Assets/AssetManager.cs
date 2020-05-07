@@ -44,49 +44,50 @@ public class AssetManager : MonoBehaviour
         
         set
         {
-            Debug.Log(Loader.totalProgress); 
-            for (int i = 0; i < value.Count; i++)
+            if (Loader.totalProgress.singleProgress.Count == 0)
             {
-                string _id = value[i].id;
+                for (int i = 0; i < value.Count; i++)
+                {
+                    string _id = value[i].id;
 
-                if (!infoArwork.ContainsKey(_id))
-                {
-                    SpawnArtWork(value, _id, i);
-                }
-                else
-                {
-                    if (infoArwork[_id].url == value[i].url & infoArwork[_id].SpawnState == "FullySpawn" & infoArwork[_id].uploadOptions==value[i].uploadOptions)
+                    if (!infoArwork.ContainsKey(_id))
                     {
-                        infoArwork[_id].@object.transform.position = value[i].platform;
-                        if (infoArwork[_id].@object.transform.childCount > 1)
-                        {
-                            GameObject artwork = infoArwork[_id].@object.transform.GetChild(1).gameObject;
-                            artwork.transform.localPosition = value[i].position;
-                            artwork.transform.localEulerAngles = value[i].rotation;
-                            artwork.transform.localScale = value[i].artworkScale;
-                        }
+                        SpawnArtWork(value, _id, i);
                     }
                     else
                     {
-                        Destroy(infoArwork[_id].@object);
-                        infoArwork.Remove(_id);
-                        SpawnArtWork(value, _id, i);
+                        if (infoArwork[_id].url == value[i].url & infoArwork[_id].SpawnState == "FullySpawn" & infoArwork[_id].uploadOptions == value[i].uploadOptions)
+                        {
+                            infoArwork[_id].@object.transform.position = value[i].platform;
+                            if (infoArwork[_id].@object.transform.childCount > 1)
+                            {
+                                GameObject artwork = infoArwork[_id].@object.transform.GetChild(1).gameObject;
+                                artwork.transform.localPosition = value[i].position;
+                                artwork.transform.localEulerAngles = value[i].rotation;
+                                artwork.transform.localScale = value[i].artworkScale;
+                            }
+                        }
+                        else
+                        {
+                            Destroy(infoArwork[_id].@object);
+                            infoArwork.Remove(_id);
+                            SpawnArtWork(value, _id, i);
+                        }
+
+                    }
+                    if (_id == ArtistInfo.artistKey)
+                    {
+                        ArtistInfo.hasArt = true;
                     }
 
+                    if (i == value.Count - 1)
+                    {
+                        GeneralState.AceptAssets = false;
+                        return;
+                    }
                 }
-                if (_id == ArtistInfo.artistKey)
-                {
-                    ArtistInfo.hasArt = true;
-                }
-
-                if (i == value.Count - 1)
-                {
-                    GeneralState.AceptAssets = false;
-                    return;
-                }
-
             }
-
+            else NewArtwork(true);
         }
     }
     void SpawnArtWork(List<InfoArtwork> value, string _id, int i)

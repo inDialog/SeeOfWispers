@@ -95,15 +95,14 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
-                    if (Loader.totalProgress.singleProgress.Count == 0)
-                    {
-                        Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
-                        assetManager.UpdateArtwork = listArtworks.artWroks;
 
-                        //Debug.Log(message.ToString());
-                        Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-                        //Debug.Log();
-                    }
+                    Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
+                    assetManager.UpdateArtwork = listArtworks.artWroks;
+
+                    //Debug.Log(message.ToString());
+                    Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
+                    //Debug.Log();
+
                     continue;
                 }
                 if (message.ToString().Contains("players"))
