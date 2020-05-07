@@ -2,23 +2,23 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ColiderCheck.cs">
     <Files>
       <File FileName="Assets/Scripts/Remap.cs" Line="82" Column="32" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="126" Column="16" IsPinned="True" />
-      <File FileName="Assets/UXManager.cs" Line="109" Column="49" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="221" Column="56" />
+      <File FileName="Assets/AssetManager.cs" IsPinned="True" />
+      <File FileName="Assets/UXManager.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" />
       <File FileName="Assets/CameraController.cs" />
       <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" />
       <File FileName="Assets/AsImpL/Scripts/MathUtil/Triangulation.cs" />
       <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" />
-      <File FileName="Assets/RadarController.cs" Line="35" Column="35" />
+      <File FileName="Assets/RadarController.cs" />
       <File FileName="Assets/FittingRoom.cs" Line="19" Column="34" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" Line="140" Column="17" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" NotebookId="1" />
       <File FileName="Assets/ColiderCheck.cs" Line="57" Column="17" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ad376eba-6d52-4f7c-a310-d54733760b8e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7636ca6f-016c-463d-92dc-545df64eae62" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

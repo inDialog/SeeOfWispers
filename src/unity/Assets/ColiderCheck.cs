@@ -73,7 +73,7 @@ public class ColiderCheck : MonoBehaviour
         {
             if (bx.bounds.Contains(meshRenderes[i].bounds.center))
             {
-                //Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
+                Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
                 temp = false;
             }
             i++;

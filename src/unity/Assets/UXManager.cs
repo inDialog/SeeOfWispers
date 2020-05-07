@@ -157,14 +157,7 @@ public class UXManager : MonoBehaviour
         uploadForm.SetActive(true);
         NeutralState();
 
-        //if (ArtistInfo.hasArt)
-        //{
-        //    keepLocation.gameObject.SetActive(true);
-        //}
-        //else
-        //{
-        //    keepLocation.gameObject.SetActive(false);
-        //}
+
     }
 
     /// triggers fitting room  when object imported 
@@ -191,7 +184,8 @@ public class UXManager : MonoBehaviour
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                         if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                         {
-                            assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
+                            if (!assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
+                                assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
                             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);

@@ -45,10 +45,12 @@ public class UploadForm : MonoBehaviour
         //if user changed artwork url
         if (ArtistInfo.hasArt )
         {
-            if(ArtistInfo.urlArt != assetManager.infoArwork[ArtistInfo.artistKey].url)
-            assetManager.infoArwork[ArtistInfo.artistKey].url = ArtistInfo.urlArt;
-            //// destroy or keep old position
-            assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+            if (ArtistInfo.urlArt != assetManager.infoArwork[ArtistInfo.artistKey].url)
+            {
+                assetManager.infoArwork[ArtistInfo.artistKey].url = ArtistInfo.urlArt;
+                //// destroy or keep old position
+                assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+            }
         }
         GeneralState.AceptAssets = true;
         if (GeneralState.InRangeOfArtWork | ArtistInfo.keepInPlace)

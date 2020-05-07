@@ -105,8 +105,9 @@ public class AssetManager : MonoBehaviour
             optionsIm.localPosition = value[i].position;
             optionsIm.localEulerAngles = value[i].rotation;
             optionsIm.use32bitIndices = true;
-            optionsIm.buildColliders = importOption[1];
+            optionsIm.buildColliders = true;
             optionsIm.tag = "Base";
+            optionsIm.litDiffuse = importOption[1];
             //optionsIm.colliderTrigger = true;
             optionsIm.convertToDoubleSided = importOption[2];
             optionsIm.zUp = importOption[3];
