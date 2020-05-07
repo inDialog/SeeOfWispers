@@ -112,7 +112,7 @@ public class AssetManager : MonoBehaviour
             optionsIm.localScale = value[i].artworkScale;
             optionsIm.localPosition = value[i].position;
             optionsIm.localEulerAngles = value[i].rotation;
-            optionsIm.use32bitIndices = false;
+            optionsIm.use32bitIndices = true;
             optionsIm.buildColliders = true;
             optionsIm.hideWhileLoading = true;
             optionsIm.boxColiderSize = value[i].colideScale;

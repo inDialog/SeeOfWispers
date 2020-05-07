@@ -424,12 +424,12 @@ namespace AsImpL
                     obj.transform.localScale = buildOptions.localScale;
                     Debug.Log(obj.name + "    " + obj.transform.childCount);
                     Bounds meshesBounds = new Bounds(buildOptions.localPosition,Vector3.zero);
-                    if (obj.transform.childCount==1)
+                    MeshRenderer[] mrs = obj.transform.GetComponentsInChildren<MeshRenderer>(true);
+                    if (mrs.Length == 1)
                     {
-                        MeshRenderer mrs = obj.transform.GetComponentInChildren<MeshRenderer>(true);
-                        meshesBounds = mrs.bounds;
-                        mrs.gameObject.tag = buildOptions.tag;
-                        mrs.gameObject.layer = obj.transform.parent.gameObject.layer;
+                        meshesBounds = mrs[0].bounds;
+                        mrs[0].gameObject.tag = buildOptions.tag;
+                        mrs[0].gameObject.layer = obj.transform.parent.gameObject.layer;
 
                     }
                     else
@@ -437,7 +437,7 @@ namespace AsImpL
                         if (buildOptions.inheritLayer)
                         {
                             obj.layer = obj.transform.parent.gameObject.layer;
-                            MeshRenderer[] mrs = obj.transform.GetComponentsInChildren<MeshRenderer>(true);
+                            
                             for (int i = 0; i < mrs.Length; i++)
                             {
                                 mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
@@ -475,7 +475,7 @@ namespace AsImpL
 
                         Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + buildOptions.boxColiderSize + "distances" + distances[0]);
 
-                        obj.transform.localScale = buildOptions.boxColiderSize * (ratio /1.1f);
+                        obj.transform.localScale = buildOptions.boxColiderSize * (ratio / 1.1f);
                     }
                 
 
