@@ -421,7 +421,7 @@ namespace AsImpL
                     obj.transform.localPosition = buildOptions.localPosition;
                     obj.transform.localRotation = Quaternion.Euler(buildOptions.localEulerAngles); ;
                     obj.transform.localScale = buildOptions.localScale;
-
+                    Debug.Log(obj.name + "    "+ obj.transform.childCount);
 
                     if (buildOptions.inheritLayer)
                     {

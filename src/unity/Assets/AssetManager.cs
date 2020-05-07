@@ -41,8 +41,10 @@ public class AssetManager : MonoBehaviour
 
     public List<InfoArtwork> UpdateArtwork
     {
+        
         set
         {
+            Debug.Log(Loader.totalProgress); 
             for (int i = 0; i < value.Count; i++)
             {
                 string _id = value[i].id;
@@ -77,7 +79,12 @@ public class AssetManager : MonoBehaviour
                     ArtistInfo.hasArt = true;
                 }
 
-                if (i == value.Count - 1) GeneralState.AceptAssets = false;
+                if (i == value.Count - 1)
+                {
+                    GeneralState.AceptAssets = false;
+                    return;
+                }
+
             }
 
         }
@@ -104,8 +111,10 @@ public class AssetManager : MonoBehaviour
             optionsIm.localScale = value[i].artworkScale;
             optionsIm.localPosition = value[i].position;
             optionsIm.localEulerAngles = value[i].rotation;
-            optionsIm.use32bitIndices = true;
+            optionsIm.use32bitIndices = false;
             optionsIm.buildColliders = true;
+            optionsIm.hideWhileLoading = true;
+
             optionsIm.tag = "Base";
             optionsIm.litDiffuse = importOption[1];
             //optionsIm.colliderTrigger = true;
