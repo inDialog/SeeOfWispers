@@ -296,7 +296,7 @@ public class UXManager : MonoBehaviour
             cmMode.StopCoroutine("ZoomIn");
             cmMode.StartCoroutine("ZoomOut");
         }
-        Debug.Log("CameraMode" + state);
+        //Debug.Log("CameraMode" + state);
     }
 
 

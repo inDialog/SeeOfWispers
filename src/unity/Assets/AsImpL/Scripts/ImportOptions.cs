@@ -25,8 +25,6 @@ namespace AsImpL
         [Tooltip("Reuse a model in memory if already loaded")]
         public bool reuseLoaded = false;
 
-        [Tooltip("Inherit parent layer")]
-        public bool inheritLayer = false;
 
         [Tooltip("Generate mesh colliders")]
         public bool buildColliders = false;
@@ -55,7 +53,7 @@ namespace AsImpL
 #endif
 
         [Tooltip("Hide the loaded object during the loading process")]
-        public bool hideWhileLoading = false;
+        public bool hideWhileLoading = true;
 
         [Header("Local Transform for the imported game object")]
         [Tooltip("Position of the object")]

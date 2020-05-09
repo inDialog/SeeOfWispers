@@ -22,6 +22,8 @@ public static class GeneralState
     public static bool InRangeOfArtWork;
     public static bool colided;
     public static Vector3 maxColideSize = new Vector3(1000, 1000, 1000);
+    public static int artworkLayer =12;
+    public static string artworkTag = "Base";
 
 }
 public static class ArtWorkFunctions

@@ -84,7 +84,8 @@ public class AssetManager : MonoBehaviour
 
                     if (i == value.Count - 1)
                     {
-                        Loader.loadedModels.Clear();
+                        if (ArtistInfo.artistKey == "")
+                            Loader.loadedModels.Clear();
                         GeneralState.AceptAssets = false;
                         return;
                     }
@@ -113,17 +114,20 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
+            return;
         }
         else
         {
-            TestDowload(value[i].verifiedStatus, value[i].url, optionsIm, _id);
-            NewArtwork(true);
+            TestDowload(value[i].url, optionsIm, _id);
             infoArwork[_id].SpawnState = "OnlyPlatform";
+            if (value[i].verifiedStatus == "True") 
+            NewArtwork(true);
+
         }
     }
-    void TestDowload(string state,string path, ImportOptions optionsIm, string _id)
+    void TestDowload(string path, ImportOptions optionsIm, string _id)
     {
-        if (state == "False" & _id==ArtistInfo.artistKey)
+        if (_id==ArtistInfo.artistKey)
         {
             moImporter.ImportModelAsync("Tester", path, infoArwork[_id].@object.transform,optionsIm);
         }
@@ -148,11 +152,8 @@ public class AssetManager : MonoBehaviour
             optionsIm.boxColiderSize = value.colideScale;
         else
             optionsIm.boxColiderSize = GeneralState.maxColideSize;
-
-        optionsIm.buildColliders = true;
-        optionsIm.hideWhileLoading = true;
-        optionsIm.inheritLayer = true;
-
+        optionsIm.reuseLoaded = true;
+        optionsIm.buildColliders = true; /// todo add as option
         optionsIm.colliderTrigger = false; ///todo bring back but test 
         optionsIm.use32bitIndices = true; /// todo bring as ui option
         optionsIm.litDiffuse = importOption[1];

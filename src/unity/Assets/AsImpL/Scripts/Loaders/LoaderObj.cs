@@ -630,14 +630,13 @@ namespace AsImpL
             UnityWebRequest uwr = UnityWebRequest.Get(url);
             yield return uwr.SendWebRequest();
             bool toBig = (uwr.downloadHandler.data.Length * 0.000001) > 24;
-            if (uwr.isNetworkError || uwr.isHttpError  || toBig)
+            if (uwr.isNetworkError || uwr.isHttpError || toBig)
             {
                 if (notifyErrors)
                 {
                     if (toBig)
                         GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "Ho there cowboy the file is to big! You have: " + uwr.downloadHandler.data.Length * 0.000001 + "Mb Maximum allowen is 12Mb per file");
-                    else
-                        GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "I dont know... the url...hmm...there seams to be a problem with the data");
+                    GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "I dont know... the url...hmm...there seams to be a problem with the data");
                     Debug.Log(toBig + uwr.downloadHandler.data.Length.ToString() + url);
                 }
             }

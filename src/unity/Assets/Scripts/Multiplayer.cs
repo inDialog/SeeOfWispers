@@ -98,10 +98,8 @@ public class Multiplayer : MonoBehaviour
 
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                     assetManager.UpdateArtwork = listArtworks.artWroks;
-
-                    //Debug.Log(message.ToString());
-                    Debug.Log(" Mesege : " + listArtworks.artWroks.Count);
-                    //Debug.Log();
+                    Debug.Log("ArtworkOnTheServer: " + listArtworks.artWroks.Count);
+                    Debug.Log("Accept dowload: "+ GeneralState.AceptAssets);
 
                     continue;
                 }
@@ -241,7 +239,7 @@ public class Multiplayer : MonoBehaviour
     public void askForArtwork()
     {
         GeneralState.AceptAssets = true;
-        Debug.Log(GeneralState.AceptAssets);
+        Debug.Log("Send Request to server for new artwork");
         w.SendString("RequestArtwork");
     }
 

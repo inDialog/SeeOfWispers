@@ -447,6 +447,8 @@ namespace AsImpL
             bool conv2sided = buildOptions != null && buildOptions.convertToDoubleSided;
             GameObject go = new GameObject();
             go.name = objData.name;
+            go.layer = GeneralState.artworkLayer;
+            go.tag = GeneralState.artworkTag;
             int count = 0;
             if (parentObj.transform)
             {

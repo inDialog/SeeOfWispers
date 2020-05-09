@@ -359,7 +359,8 @@ namespace AsImpL
             objLoadingProgress.message = "Building scene objects...";
 
             GameObject newObj = new GameObject(objName);
-            newObj.tag = buildOptions.tag;
+            //newObj.tag = buildOptions.tag;
+            //newObj.layer = GeneralState.artworkLayer;
             if (buildOptions.hideWhileLoading)
             {
                 newObj.SetActive(false);
@@ -438,20 +439,20 @@ namespace AsImpL
             obj.transform.localPosition = buildOptions.localPosition;
             obj.transform.localRotation = Quaternion.Euler(buildOptions.localEulerAngles); ;
             obj.transform.localScale = buildOptions.localScale;
-            obj.layer = obj.transform.parent.gameObject.layer;
-            ////todo take out inherent layer
-    
-            Debug.Log(obj.name + "    " + obj.transform.childCount);
+            Debug.Log("Created new object "+ obj.name + "   with nr of children: " + obj.transform.childCount);
+     
+            if (buildOptions.verificationStatus == "True")
+            {
+                return;
+            }
             Bounds meshesBounds = new Bounds(buildOptions.localPosition, Vector3.zero);
             MeshRenderer[] mrs = obj.transform.GetComponentsInChildren<MeshRenderer>(true);
             for (int i = 0; i < mrs.Length; i++)
             {
-                mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
-                mrs[i].gameObject.tag = buildOptions.tag;
                 if (i == 0) meshesBounds = mrs[i].bounds;
                 else meshesBounds.Encapsulate(mrs[i].bounds);
             }
-            if (buildOptions.verificationStatus == "True") return;
+
             if (buildOptions.boxColiderSize == Vector3.zero)
                 buildOptions.boxColiderSize = Vector3.one * 10;
 
