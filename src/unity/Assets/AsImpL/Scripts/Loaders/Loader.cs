@@ -179,8 +179,6 @@ namespace AsImpL
 
 
                 GameObject newObj = Instantiate(loadedModels[absolutePath]);
-                newObj.tag = buildOptions.tag;
-                Debug.Log(buildOptions.tag);
                 yield return newObj;
                 OnCreated(newObj, absolutePath);
                 newObj.name = objName;
@@ -488,8 +486,6 @@ namespace AsImpL
                 {
                     for (int i = 0; i < mrs.Length; i++)
                     {
-                        mrs[i].gameObject.layer = obj.transform.parent.gameObject.layer;
-                        mrs[i].gameObject.tag = buildOptions.tag;
                         if (i == 0) meshesBounds = mrs[i].bounds;
                         else meshesBounds.Encapsulate(mrs[i].bounds);
                     }

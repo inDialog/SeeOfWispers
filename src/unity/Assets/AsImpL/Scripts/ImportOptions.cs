@@ -10,6 +10,7 @@ namespace AsImpL
     {
         [Tooltip("load the OBJ file assumitg its vertical axis is Z instead of Y")]
         public bool zUp = true;
+
         [Tooltip("set tag")]
         public string tag = "untagged";
 
@@ -25,7 +26,6 @@ namespace AsImpL
         [Tooltip("Reuse a model in memory if already loaded")]
         public bool reuseLoaded = false;
 
-
         [Tooltip("Generate mesh colliders")]
         public bool buildColliders = false;
 
@@ -34,9 +34,9 @@ namespace AsImpL
 
         [Tooltip("Mesh colliders as trigger (only active if colliderConvex = true)")]
         public bool colliderTrigger = false;
-        [Tooltip("Mesh colliders as trigger (only active if colliderConvex = true)")]
+
         public Vector3 boxColiderSize = Vector3.one;
-        [Tooltip("Mesh colliders as trigger (only active if colliderConvex = true)")]
+
         public string verificationStatus;
 
 #if !UNITY_2018_3_OR_NEWER

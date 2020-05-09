@@ -58,6 +58,10 @@ public class Multiplayer : MonoBehaviour
 
     IEnumerator Multyplayer()
     {
+        if (Time.frameCount % 60 == 0)
+        {
+            System.GC.Collect();
+        }
         // connect to server
         yield return StartCoroutine(w.Connect());
         Debug.Log("CONNECTED TO WEBSOCKETS");

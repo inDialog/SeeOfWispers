@@ -84,8 +84,8 @@ public class AssetManager : MonoBehaviour
 
                     if (i == value.Count - 1)
                     {
-                        if (ArtistInfo.artistKey == "")
-                            Loader.loadedModels.Clear();
+                        //if (ArtistInfo.artistKey == "")
+                            //Loader.loadedModels.Clear();
                         GeneralState.AceptAssets = false;
                         return;
                     }
@@ -110,10 +110,13 @@ public class AssetManager : MonoBehaviour
             infoArwork[_id].@object.GetComponent<BoxCollider>().size = value[i].colideScale;
         else
             Destroy(infoArwork[_id].@object.GetComponent<BoxCollider>());
+
+
         if (GeneralState.AceptAssets & value[i].verifiedStatus == "True")
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
+            Debug.Log(i);
             return;
         }
         else
@@ -143,7 +146,7 @@ public class AssetManager : MonoBehaviour
     ImportOptions ComposeOptions(InfoArtwork value, bool[] importOption, string status)
     {
         ImportOptions optionsIm = new ImportOptions();
-        optionsIm.tag = "Base";
+        //optionsIm.tag = "Base";
         optionsIm.localScale = value.artworkScale;
         optionsIm.localPosition = value.position;
         optionsIm.localEulerAngles = value.rotation;
@@ -156,10 +159,10 @@ public class AssetManager : MonoBehaviour
         optionsIm.buildColliders = true; /// todo add as option
         optionsIm.colliderTrigger = false; ///todo bring back but test 
         optionsIm.use32bitIndices = true; /// todo bring as ui option
-        optionsIm.litDiffuse = importOption[1];
+        optionsIm.litDiffuse = false;
         optionsIm.convertToDoubleSided = importOption[2];
         optionsIm.zUp = importOption[3];
-        optionsIm.colliderConvex = importOption[4];
+        optionsIm.colliderConvex = !importOption[4];
         optionsIm.verificationStatus = status;
         return optionsIm;
     }

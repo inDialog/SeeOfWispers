@@ -353,11 +353,15 @@ namespace AsImpL
                 }
 
                 // update progress only sometimes
-                if (i % 7000 == 0)
+                if (i % 28000 == 0)
                 {
                     objLoadingProgress.percentage = LOAD_PHASE_PERC * i / lines.Length;
                     yield return null;
                 }
+                //if (Time.frameCount % 30 == 0)
+                //{
+                //    System.GC.Collect();
+                //}
             }
             objLoadingProgress.percentage = LOAD_PHASE_PERC;
             //dataSet.PrintSummary();
@@ -630,13 +634,15 @@ namespace AsImpL
             UnityWebRequest uwr = UnityWebRequest.Get(url);
             yield return uwr.SendWebRequest();
             bool toBig = (uwr.downloadHandler.data.Length * 0.000001) > 24;
-            if (uwr.isNetworkError || uwr.isHttpError || toBig)
+            //bool toBig = false;
+            if (uwr.isNetworkError || uwr.isHttpError  || toBig)
             {
                 if (notifyErrors)
                 {
                     if (toBig)
                         GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "Ho there cowboy the file is to big! You have: " + uwr.downloadHandler.data.Length * 0.000001 + "Mb Maximum allowen is 12Mb per file");
-                    GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "I dont know... the url...hmm...there seams to be a problem with the data");
+                    else
+                        GameObject.FindObjectOfType<UXManager>().BadMeshData(url, "I dont know... the url...hmm...there seams to be a problem with the data");
                     Debug.Log(toBig + uwr.downloadHandler.data.Length.ToString() + url);
                 }
             }
