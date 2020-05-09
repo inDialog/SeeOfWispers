@@ -119,8 +119,8 @@ public class FittingRoom : MonoBehaviour
                             addOn = new Vector3(addOn.x - 1, addOn.y, addOn.z);
 
                         }
-                        Debug.Log(GeneralState.colided);
-                        if(artwork.transform.localPosition != addOn)
+                        Debug.Log("Colision state = "+GeneralState.colided);
+                        if (artwork.transform.localPosition != addOn)
                         {
                             artwork.transform.localPosition = addOn;
                             UpdateArt();

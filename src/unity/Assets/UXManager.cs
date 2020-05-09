@@ -150,6 +150,7 @@ public class UXManager : MonoBehaviour
         {
             ////Fill in Values
             upForm.FillInForms();
+            FindObjectOfType<Multiplayer>().askForArtwork();
             uiAnim.Play("GoUp");
         }
         fittingRoomToggle.interactable = true;
@@ -163,11 +164,20 @@ public class UXManager : MonoBehaviour
     /// triggers fitting room  when object imported 
     void ActivateFittingRoom(GameObject gm, string st)
     {
-        if (st == ArtistInfo.urlArt)
+        if (st == ArtistInfo.urlArt &gm.name=="Tester")
         {
-            StartFittingRoom(true);
             ArtistInfo.hasArt = true;
+            GeneralState.AceptAssets = true;
+            Debug.LogError("Test");
+            upForm.UpdateExistingArtwork();
         }
+        else
+        {
+            if(assetManger.infoArwork.ContainsKey(gm.name)&ArtistInfo.hasArt)
+                StartFittingRoom(true);
+
+        }
+        //Debug.Log(gm.name);
         /// ActivateInspectorMode
         inspectorTogggle.interactable = true;
     }
@@ -176,6 +186,7 @@ public class UXManager : MonoBehaviour
     {
         if (state)
         {
+            ArtistInfo.busy = state;
             /// Fitting Room
             if (ArtistInfo.hasArt)
             {
@@ -207,20 +218,22 @@ public class UXManager : MonoBehaviour
             fittingRoom.coliderBox = null;
             StopSecondCamera();
             uiAnim.Play("GoUp");
+            fittingRoom.StopAllCoroutines();
         }
 
     }
     void DestroyColideCjeck()
     {
-        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+        if (ArtistInfo.hasArt)
         {
-            Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
-            Destroy(fittingRoom.coliderBox);
-            fittingRoom.StopAllCoroutines();
+            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+            {
+                Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
+                Destroy(fittingRoom.coliderBox);
+            }
+
+
         }
-    
-
-
 
     }
     /// <summary>
@@ -311,7 +324,7 @@ public class UXManager : MonoBehaviour
 
                 NeutralState();
                 toggleGroup.SetAllTogglesOff();
-                DestroyColideCjeck();
+                StartFittingRoom(false);
 
             }
         }

@@ -5,7 +5,7 @@ using System;
 
 public class ColiderCheck : MonoBehaviour
 {
-    int[,] order = {
+    static int[,] order = {
             { 0, 1, 3, 2, 0, 3, 2, 1 },
             { 0, 4, 6, 2, 0, 6, 2, 4 },
             { 5, 4, 6, 7, 5, 6, 7, 4 },
@@ -13,41 +13,69 @@ public class ColiderCheck : MonoBehaviour
             { 2, 3, 7, 6, 2, 7, 3, 6 },//bottom
             { 0, 1, 5, 4, 0, 5, 1, 4 },//top
     };
-    BoxCollider bx;
-    Rigidbody rs;
+    static BoxCollider bx;
+    static Rigidbody rb;
+    static bool hadColider = true;
     const uint NUM_VERTICES = 8;
-    public GameObject myArt;
+    static List<string> isNotConvex = new List<string>();
+
     // Start is called before the first frame update
     private void OnEnable()
     {
-        bx = GetComponent<BoxCollider>();
-        Check();
+        if (GetComponent<BoxCollider>())
+            bx = GetComponent<BoxCollider>();
+        else
+        {
+            hadColider = false;
+            bx = this.gameObject.AddComponent<BoxCollider>();
+            bx.size = GeneralState.maxColideSize;
+            rb = this.gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+         
+        }
 
-        //rs = gameObject.AddComponent<Rigidbody>();
-        //rs.isKinematic = true;
-        //bx.size = ArtistInfo.colderSize;
-        bx.isTrigger = true;
+        AssetManager asset = FindObjectOfType<AssetManager>();
+        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
         ConstrcutCube();
-   
-        //StartCoroutine("Check");
+        Check();
+        SetMeshTrigger();
     }
 
+    void SetMeshTrigger()
+    {
+        MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+        foreach (var item in ms)
+        {
+            item.isTrigger = !item.isTrigger;
+        }
+    }
     private void OnDisable()
     {
-        //bx.isTrigger = true;
-        Destroy(rs);
-        GameObject[] gm = GameObject.FindGameObjectsWithTag("Base");
-        foreach (var item in gm)
+        SetMeshTrigger();
+        Destroy(rb);
+        if (!hadColider)
         {
-            if (item.GetComponent<MeshCollider>())
-                item.GetComponent<MeshCollider>().convex = false;
+            Destroy(bx);
+        }
+        StartCoroutine("Disable");
+    }
+    IEnumerable Disable()
+    {
+        while (true)
+        {
+            ExtensionMethods.RestitureConvertedObjects(isNotConvex);
+            yield return new WaitForSeconds(3f);
+         
+
+            isNotConvex.Clear();
+            break;
         }
     }
 
-    private void Update()
-    {
-        //StartTest();
-    }
+    //private void Update()
+    //{
+    //    //StartTest();
+    //}
 
     private IEnumerator Check()
     {
@@ -64,20 +92,17 @@ public class ColiderCheck : MonoBehaviour
 
     bool CheckIfMeshIsContatined()
     {
-///todo check if all mesh objects are in the box 
-        int i = 0;
         MeshCollider[] meshRenderes = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-
         bool temp = true;
+        int i = 0;
         while (i < meshRenderes.Length)
         {
             if (bx.bounds.Contains(meshRenderes[i].bounds.center))
             {
-                Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
+                //Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
                 temp = false;
             }
             i++;
-
         }
         return temp;
     }
@@ -104,9 +129,9 @@ public class ColiderCheck : MonoBehaviour
     {
         float dist = Vector3.Distance(POSITION[2], POSITION[6]);
         bool temp;
-        for (int j = 0; j < dist*2; j += 1)
+        for (int j = 0; j < dist * 2; j += 1)
         {
-            Vector3 temps = transform.TransformDirection(Vector3.forward).normalized * -j/2;
+            Vector3 temps = transform.TransformDirection(Vector3.forward).normalized * -j / 2;
             for (int i = 0; i < 4; i++)
             {
                 Vector3 target = POSITION[order[0, i]];
@@ -117,14 +142,14 @@ public class ColiderCheck : MonoBehaviour
             }
         }
         dist = Vector3.Distance(POSITION[2], POSITION[0]);
-        for (int j = 0; j < dist*4; j += 1)
+        for (int j = 0; j < dist * 4; j += 1)
         {
-            Vector3 temps = transform.TransformDirection(Vector3.up).normalized * -j/4;
+            Vector3 temps = transform.TransformDirection(Vector3.up).normalized * -j / 4;
             for (int i = 0; i < 4; i++)
             {
                 Vector3 target = POSITION[order[5, i]];
                 Vector3 direction = POSITION[order[5, i + 1]];
-                 temp = (ConstructRaycast(temps + target, temps + direction));
+                temp = (ConstructRaycast(temps + target, temps + direction));
                 if (temp)
                     return true;
             }
@@ -136,11 +161,11 @@ public class ColiderCheck : MonoBehaviour
 
     Vector3[] ConstrcutCube()
     {
-        bx.size = ArtistInfo.colderSize;
+        if (ArtistInfo.colderSize != Vector3.zero)
+            bx.size = ArtistInfo.colderSize;
         Vector3[] POSITION = new Vector3[NUM_VERTICES];
         Vector3 colliderCentre = bx.center;
         Vector3 colliderExtents = bx.extents;
-        Debug.Log(bx.extents * 2);
         for (int i = 0; i != NUM_VERTICES; ++i)
         {
             Vector3 extents = colliderExtents;
@@ -151,26 +176,35 @@ public class ColiderCheck : MonoBehaviour
             Vector3 vertexPosGlobal = bx.transform.TransformPoint(vertexPosLocal);
             POSITION[i] = vertexPosGlobal;
         }
-        Debug.Log("oance");
+        Debug.Log("Checking For Colisions");
         return POSITION;
     }
     bool ConstructRaycast(Vector3 origin, Vector3 direction)
     {
         RaycastHit hit;
-        Ray ra = new Ray(origin,  direction- origin);
+        Ray ra = new Ray(origin, direction - origin);
         Debug.DrawRay(origin, direction - origin, Color.red);
-        float dist = Vector3.Distance(origin, direction); 
+        float dist = Vector3.Distance(origin, direction);
         if (Physics.Raycast(ra, out hit, dist))
         {
-            if (hit.transform.name != this.transform.name & hit.transform.tag != "Untagged"& hit.transform.tag != "Player")
+            if (hit.transform.tag == "Base" & ArtistInfo.colderSize == Vector3.zero)
+            {
+                GeneralState.colided = false;
+                return false;
+            }
+
+            if (hit.transform.name != this.transform.name & hit.transform.tag != "Untagged" & hit.transform.tag != "Player")
             {
                 Debug.DrawLine(origin, hit.point, Color.green);
                 GeneralState.colided = true;
                 return true;
             }
             else
+            {
+                GeneralState.colided = false;
                 return false;
-                
+            }
+
         }
         else
         {
@@ -180,22 +214,37 @@ public class ColiderCheck : MonoBehaviour
 
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log(collision.gameObject.name);
-    //}
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    Debug.Log(collision.gameObject.name);
-    //}
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log(other.gameObject.name);
 
-    //}
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    Debug.Log(other.gameObject.name);
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey)
+        {
+            GeneralState.colided = false;
+            Debug.Log(other.gameObject.name);
 
-    //}
+            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
+            foreach (var item in ms)
+            {
+                item.material.color = Color.white; ////todo save material to put back in original state
+            }
+
+        }
+
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey)
+        {
+            GeneralState.colided = true;
+            Debug.Log(other.gameObject.name);
+
+            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
+            foreach (var item in ms)
+            {
+                item.material.color = Color.red;
+            }
+
+        }
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿///todo add extra check for 1 in XYZ of colider scale
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -30,6 +31,7 @@ public class UploadForm : MonoBehaviour
             ArtistInfo.description,
             ArtistInfo.uploadOptionsA,
             "ArtWork");
+            if(FindObjectOfType<ColiderCheck>())
             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         }
 
@@ -92,7 +94,7 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
             + "\t" + platform.x + "\t" + platform.y + "\t" + platform.z
             + "\t" + artWork.rotation.eulerAngles.x + "\t" + artWork.rotation.eulerAngles.y + "\t" + artWork.rotation.eulerAngles.z
             + "\t" + perimeter.x + "\t" + perimeter.y + "\t" + perimeter.z
-            + "\t" + url + "\t" + description + "\t" + uploadOptions
+            + "\t" + url + "\t" + description + "\t" + uploadOptions + "\t" + ArtistInfo.hasArt
             + "\t" + type + "\t";
     }
 
@@ -112,7 +114,7 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
     {
         ArtistInfo.colderSize = assetManager.infoArwork[ArtistInfo.artistKey].colideScale;
         ArtistInfo.urlArt = assetManager.infoArwork[ArtistInfo.artistKey].url;
-        ArtistInfo.hasArt = true;
+  
         ArtistInfo.uploadOptionsA = assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions;
         //// Artist Information
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
@@ -161,7 +163,7 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
             }
             else
             {
-                int max = 500;
+                int max =(int)GeneralState.maxColideSize.x;
                 float x = 1, y = 1, z = 1;
                 float.TryParse(inputFields[0].text, out x);
                 float.TryParse(inputFields[1].text, out y);
@@ -189,14 +191,17 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
                 }
 
                 ArtistInfo.colderSize = new Vector3(x, y, z);
-                if(assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
-                assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
             }
         }
+        else
+        {
+            ArtistInfo.colderSize = Vector3.zero;
+        }
+        if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
+                assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
+        ArtistInfo.uploadOptionsA = "";
         for (int i = 0; i <= toggles.Length - 1; i++)
         {
-            //Debug.Log(toggles[i].name);
-
             ArtistInfo.uploadOptionsA += (toggles[i].isOn.ToString() + '/');
         }
         Debug.Log(ArtistInfo.colderSize + " " + ArtistInfo.uploadOptionsA);

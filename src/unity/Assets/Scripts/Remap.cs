@@ -111,5 +111,42 @@ public static class ExtensionMethods
        return  space.InverseTransformPoint(Original) -target;
 
     }
+    public static void ConvertConvexObjects(Dictionary<string, InfoArtwork> infoArwork, out List<string> converted)
+    {
+        converted = new List<string>();
+        foreach (var item in infoArwork)
+        {
+            if (!ExtensionMethods.ConcertToBool(item.Value.uploadOptions)[4])
+            {
+                if (item.Value.@object.transform.childCount > 1)
+                {
+                    converted.Add(item.Value.@object.transform.root.name);
+                    MeshCollider[] meshFilters = item.Value.@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+                    foreach (var item2 in meshFilters)
+                    {
+                        item2.convex = true;
+                    }
+                }
+            }
+        }
+    }
+    public static void RestitureConvertedObjects(List<string> wasConverted)
+    {
+        AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
+        foreach (var item in wasConverted)
+        {
+            if (_as.infoArwork.ContainsKey(item))
+            {
+                if (_as.infoArwork[item].@object)
+                {
+                    MeshCollider[] meshFilters = _as.infoArwork[item].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+                    foreach (var item2 in meshFilters)
+                    {
+                        item2.convex = false;
+                    }
+                }
+            }
+        }
+    }
 }
 

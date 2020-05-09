@@ -20,7 +20,9 @@ public class InfoArtwork
     public string url;
     public string description;
     public string uploadOptions;
+    public string verifiedStatus;
     public string id;
+
     /// </summary>
     public GameObject @object;
     public string SpawnState;
@@ -49,7 +51,7 @@ public class AssetManager : MonoBehaviour
                 for (int i = 0; i < value.Count; i++)
                 {
                     string _id = value[i].id;
-
+                    if (_id == ArtistInfo.artistKey & ArtistInfo.busy & ArtistInfo.hasArt) continue;
                     if (!infoArwork.ContainsKey(_id))
                     {
                         SpawnArtWork(value, _id, i);
@@ -75,13 +77,14 @@ public class AssetManager : MonoBehaviour
                         }
 
                     }
-                    if (_id == ArtistInfo.artistKey)
+                    if (_id == ArtistInfo.artistKey & value[i].verifiedStatus =="True")
                     {
                         ArtistInfo.hasArt = true;
                     }
 
                     if (i == value.Count - 1)
                     {
+                        Loader.loadedModels.Clear();
                         GeneralState.AceptAssets = false;
                         return;
                     }
@@ -100,38 +103,29 @@ public class AssetManager : MonoBehaviour
         infoArwork[_id].uploadOptions = value[i].uploadOptions;
 
         bool[] importOption = ExtensionMethods.ConcertToBool(value[i].uploadOptions);
-        if(importOption[0])
+        ImportOptions optionsIm = ComposeOptions(value[i], importOption, value[i].verifiedStatus);
+
+        if (importOption[0])
             infoArwork[_id].@object.GetComponent<BoxCollider>().size = value[i].colideScale;
         else
-            infoArwork[_id].@object.GetComponent<BoxCollider>().size = Vector3.one;
-        Debug.Log(value[i].colideScale);
-        if (GeneralState.AceptAssets)
+            Destroy(infoArwork[_id].@object.GetComponent<BoxCollider>());
+        if (GeneralState.AceptAssets & value[i].verifiedStatus == "True")
         {
-            //infoArwork[_id].Name = value[i].description.Split('\t')[i];
-            ImportOptions optionsIm = new ImportOptions();
-            optionsIm.localScale = value[i].artworkScale;
-            optionsIm.localPosition = value[i].position;
-            optionsIm.localEulerAngles = value[i].rotation;
-            optionsIm.use32bitIndices = true;
-            optionsIm.buildColliders = true;
-            optionsIm.hideWhileLoading = true;
-            optionsIm.boxColiderSize = value[i].colideScale;
-            optionsIm.tag = "Base";
-            optionsIm.litDiffuse = importOption[1];
-            //optionsIm.colliderTrigger = true;
-            optionsIm.convertToDoubleSided = importOption[2];
-            optionsIm.zUp = importOption[3];
-            optionsIm.colliderConvex = importOption[4];
-
-            optionsIm.inheritLayer = true;
-
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
         }
         else
         {
+            TestDowload(value[i].verifiedStatus, value[i].url, optionsIm, _id);
             NewArtwork(true);
             infoArwork[_id].SpawnState = "OnlyPlatform";
+        }
+    }
+    void TestDowload(string state,string path, ImportOptions optionsIm, string _id)
+    {
+        if (state == "False" & _id==ArtistInfo.artistKey)
+        {
+            moImporter.ImportModelAsync("Tester", path, infoArwork[_id].@object.transform,optionsIm);
         }
     }
    public void DestroyObject(string _key)
@@ -141,5 +135,31 @@ public class AssetManager : MonoBehaviour
         if (_key == ArtistInfo.artistKey)
             ArtistInfo.hasArt = false;
         FindObjectOfType<Multiplayer>().w.SendString(_key+ "DeleteArtwork");
+    }
+    ImportOptions ComposeOptions(InfoArtwork value, bool[] importOption, string status)
+    {
+        ImportOptions optionsIm = new ImportOptions();
+        optionsIm.tag = "Base";
+        optionsIm.localScale = value.artworkScale;
+        optionsIm.localPosition = value.position;
+        optionsIm.localEulerAngles = value.rotation;
+        /////
+        if (importOption[0])
+            optionsIm.boxColiderSize = value.colideScale;
+        else
+            optionsIm.boxColiderSize = GeneralState.maxColideSize;
+
+        optionsIm.buildColliders = true;
+        optionsIm.hideWhileLoading = true;
+        optionsIm.inheritLayer = true;
+
+        optionsIm.colliderTrigger = false; ///todo bring back but test 
+        optionsIm.use32bitIndices = true; /// todo bring as ui option
+        optionsIm.litDiffuse = importOption[1];
+        optionsIm.convertToDoubleSided = importOption[2];
+        optionsIm.zUp = importOption[3];
+        optionsIm.colliderConvex = importOption[4];
+        optionsIm.verificationStatus = status;
+        return optionsIm;
     }
 }

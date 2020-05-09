@@ -120,7 +120,6 @@ public class Multiplayer : MonoBehaviour
                     bool temp = ExtensionMethods.CheckKey(artKey);
                     if (temp)
                     {
-                        ArtistInfo.activ = true;
                         ArtistInfo.artistKey  = artKey;
                         Debug.Log(ArtistInfo.artistKey);
                         AccountVerified(true);
