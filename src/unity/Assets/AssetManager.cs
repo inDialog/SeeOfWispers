@@ -52,13 +52,14 @@ public class AssetManager : MonoBehaviour
                 {
                     string _id = value[i].id;
                     if (_id == ArtistInfo.artistKey & ArtistInfo.busy & ArtistInfo.hasArt) continue;
+
                     if (!infoArwork.ContainsKey(_id))
                     {
                         SpawnArtWork(value, _id, i);
                     }
                     else
                     {
-                        if (infoArwork[_id].url == value[i].url & infoArwork[_id].SpawnState == "FullySpawn" & infoArwork[_id].uploadOptions == value[i].uploadOptions)
+                        if (infoArwork[_id].SpawnState == "FullySpawn")
                         {
                             infoArwork[_id].@object.transform.position = value[i].platform;
                             if (infoArwork[_id].@object.transform.childCount > 1)
@@ -116,7 +117,6 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
-            Debug.Log(i);
             return;
         }
         else
@@ -139,9 +139,8 @@ public class AssetManager : MonoBehaviour
     {
         Destroy(infoArwork[_key].@object);
         infoArwork.Remove(_key);
-        if (_key == ArtistInfo.artistKey)
-            ArtistInfo.hasArt = false;
-        FindObjectOfType<Multiplayer>().w.SendString(_key+ "DeleteArtwork");
+
+        FindObjectOfType<Multiplayer>().w.SendString(_key+ "\t" + "DeleteArtwork");
     }
     ImportOptions ComposeOptions(InfoArtwork value, bool[] importOption, string status)
     {
@@ -154,15 +153,15 @@ public class AssetManager : MonoBehaviour
         if (importOption[0])
             optionsIm.boxColiderSize = value.colideScale;
         else
-            optionsIm.boxColiderSize = GeneralState.maxColideSize;
-        optionsIm.reuseLoaded = true;
+            optionsIm.boxColiderSize = Vector3.one*2;
+        optionsIm.reuseLoaded = false; // todo reload model after first test
         optionsIm.buildColliders = true; /// todo add as option
         optionsIm.colliderTrigger = false; ///todo bring back but test 
-        optionsIm.use32bitIndices = true; /// todo bring as ui option
+        optionsIm.use32bitIndices = false; /// todo bring as ui option
         optionsIm.litDiffuse = false;
         optionsIm.convertToDoubleSided = importOption[2];
         optionsIm.zUp = importOption[3];
-        optionsIm.colliderConvex = !importOption[4];
+        optionsIm.colliderConvex = importOption[4];
         optionsIm.verificationStatus = status;
         return optionsIm;
     }

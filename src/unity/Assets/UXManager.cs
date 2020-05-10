@@ -98,7 +98,6 @@ public class UXManager : MonoBehaviour
     /// Randar to look for a free parking spot. Is triggerd after the uploadOptions form is compleated
     public void ActivateRadar()
     {
-        GeneralState.colided = false;
         if (upForm.GatherColiderData())
         {
             Compas.gameObject.SetActive(true);
@@ -107,6 +106,8 @@ public class UXManager : MonoBehaviour
             {
                 radar = Instantiate(PrefabRadar);
                 FindObjectOfType<RadarController>().InRangeOfArtwork += CheckForArtWorkAround;
+
+
             }
             else
             {
@@ -116,7 +117,8 @@ public class UXManager : MonoBehaviour
             }
             uiAnim.Play("GoUp");
         }
-
+        if (FindObjectOfType<ColiderCheck>())
+            FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
 
     }
 
@@ -186,7 +188,6 @@ public class UXManager : MonoBehaviour
     {
         if (state)
         {
-            ArtistInfo.busy = state;
             /// Fitting Room
             if (ArtistInfo.hasArt)
             {
@@ -195,13 +196,13 @@ public class UXManager : MonoBehaviour
                     if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
                         if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                         {
+                            ArtistInfo.busy = true;
                             if (!assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
                                 assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
                             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);
                             fittingRoomUi.SetActive(true);
-                            FindObjectOfType<MoveII>().enabled = false; //move function TODO find a better sollution
                             cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
                             fittingRoom.StartCoroutine("StartFittingRoom");
                         }
@@ -219,6 +220,8 @@ public class UXManager : MonoBehaviour
             StopSecondCamera();
             uiAnim.Play("GoUp");
             fittingRoom.StopAllCoroutines();
+            ArtistInfo.busy = false;
+
         }
 
     }
@@ -247,7 +250,6 @@ public class UXManager : MonoBehaviour
         cm_bird.SetActive(false);
         if (state & assetManger.infoArwork.Count > 1)
         {
-            FindObjectOfType<MoveII>().enabled = false; //move function TODO find a better sollution
             cm_inspector.SetActive(true);
             cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
 
@@ -276,9 +278,7 @@ public class UXManager : MonoBehaviour
     void StopSecondCamera()
     {
         cm_inspector.SetActive(false);
-        //navigationUI.SetActive(false);
         cm_bird.SetActive(true);
-        FindObjectOfType<MoveII>().enabled = true; //move function TODO find a better sollution
     }
     ////////////
 
@@ -307,7 +307,6 @@ public class UXManager : MonoBehaviour
         cm_inspector.SetActive(false);
         cmMode.StartReset();
         assetManger.StopAllCoroutines();
-        FindObjectOfType<MoveII>().enabled = true; //move function TODO find a better sollution
     }
 
     /// <summary>

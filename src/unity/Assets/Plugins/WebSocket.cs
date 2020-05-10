@@ -24,9 +24,9 @@ public class WebSocket
 	public void SendString(string str)
 	{
 		Send(Encoding.UTF8.GetBytes (str));
-		//Debug.Log(str);
+        //Debug.LogError(str);
 
-	}
+    }
 	
 
 	public string RecvString()

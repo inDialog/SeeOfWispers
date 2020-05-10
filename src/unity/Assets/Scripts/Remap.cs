@@ -116,6 +116,7 @@ public static class ExtensionMethods
         converted = new List<string>();
         foreach (var item in infoArwork)
         {
+            if (item.Key == ArtistInfo.artistKey) continue;
             if (!ExtensionMethods.ConcertToBool(item.Value.uploadOptions)[4])
             {
                 if (item.Value.@object.transform.childCount > 1)
@@ -125,28 +126,32 @@ public static class ExtensionMethods
                     foreach (var item2 in meshFilters)
                     {
                         item2.convex = true;
+                        //item2.isTrigger = true;
                     }
                 }
             }
         }
     }
-    public static void RestitureConvertedObjects(List<string> wasConverted)
+    public static bool RestitureConvertedObjects(List<string> wasConverted)
     {
         AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
-        foreach (var item in wasConverted)
-        {
-            if (_as.infoArwork.ContainsKey(item))
+        int i =0;
+            while (i < wasConverted.Count)
             {
-                if (_as.infoArwork[item].@object)
+                if (_as.infoArwork.ContainsKey(wasConverted[i]))
                 {
-                    MeshCollider[] meshFilters = _as.infoArwork[item].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-                    foreach (var item2 in meshFilters)
+                    if (_as.infoArwork[wasConverted[i]].@object)
                     {
-                        item2.convex = false;
+                        MeshCollider[] meshFilters = _as.infoArwork[wasConverted[i]].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+                        foreach (var item2 in meshFilters)
+                        {
+                            item2.convex = false;
+                        }
                     }
                 }
+                i++;
             }
-        }
+        return true;
     }
 }
 

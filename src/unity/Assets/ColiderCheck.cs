@@ -13,32 +13,35 @@ public class ColiderCheck : MonoBehaviour
             { 2, 3, 7, 6, 2, 7, 3, 6 },//bottom
             { 0, 1, 5, 4, 0, 5, 1, 4 },//top
     };
-    static BoxCollider bx;
-    static Rigidbody rb;
-    static bool hadColider = true;
+    BoxCollider bx;
+    Rigidbody rb;
+    bool hadColider = true;
     const uint NUM_VERTICES = 8;
-    static List<string> isNotConvex = new List<string>();
-
+    public static List<string> isNotConvex = new List<string>();
+    AssetManager asset;
+    Vector3[] POSITION;
     // Start is called before the first frame update
     private void OnEnable()
     {
-        if (GetComponent<BoxCollider>())
-            bx = GetComponent<BoxCollider>();
+        asset = FindObjectOfType<AssetManager>();
+        rb = this.gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        if (ArtistInfo.colderSize == Vector3.zero)
+        {
+            bx = this.gameObject.AddComponent<BoxCollider>();
+            hadColider = false;
+            bx.isTrigger = false;
+
+        }
         else
         {
-            hadColider = false;
-            bx = this.gameObject.AddComponent<BoxCollider>();
-            bx.size = GeneralState.maxColideSize;
-            rb = this.gameObject.AddComponent<Rigidbody>();
-            rb.isKinematic = true;
-         
-        }
+            bx = this.gameObject.GetComponent<BoxCollider>();
+            bx.isTrigger = true;
 
-        AssetManager asset = FindObjectOfType<AssetManager>();
+        }
         ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
-        ConstrcutCube();
-        Check();
         SetMeshTrigger();
+        ConstrcutCube();
     }
 
     void SetMeshTrigger()
@@ -46,46 +49,65 @@ public class ColiderCheck : MonoBehaviour
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
         foreach (var item in ms)
         {
-            item.isTrigger = !item.isTrigger;
+            item.convex = true;
+            item.isTrigger = true;
+        }
+    }
+    void Rever(string key)
+    {
+        MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+        foreach (var item in ms)
+        {
+            bool[] options = ExtensionMethods.ConcertToBool(asset.infoArwork[key].uploadOptions);
+            item.isTrigger = false; //todo set it as option
+            item.convex = options[4];
         }
     }
     private void OnDisable()
     {
-        SetMeshTrigger();
+        bx.isTrigger = true;
+        Rever(this.name);
         Destroy(rb);
         if (!hadColider)
         {
             Destroy(bx);
         }
-        StartCoroutine("Disable");
+        ExtensionMethods.RestitureConvertedObjects(isNotConvex);
+        isNotConvex.Clear();
+        StopAllCoroutines();
     }
-    IEnumerable Disable()
-    {
-        while (true)
-        {
-            ExtensionMethods.RestitureConvertedObjects(isNotConvex);
-            yield return new WaitForSeconds(3f);
-         
-
-            isNotConvex.Clear();
-            break;
-        }
-    }
-
-    //private void Update()
-    //{
-    //    //StartTest();
-    //}
 
     private IEnumerator Check()
     {
         while (true)
         {
-            GeneralState.colided = CheckIfMeshIsContatined();
-            if (CheckIfMeshIsContatined()) break;
 
-            GeneralState.colided = StartTest();
-            if (StartTest()) break;
+            Debug.Log("Started Cehack" + ArtistInfo.colderSize);
+
+            if (ArtistInfo.colderSize != Vector3.zero)
+            {
+                bx.size = ArtistInfo.colderSize;
+                bx.isTrigger = true;
+
+            }
+            else
+            {
+                bx.isTrigger = false;
+                bx.size = GeneralState.maxColideSize;
+            }
+
+
+            GeneralState.colided = CheckIfMeshIsContatined();
+            Debug.Log("Colisions Check 1" + GeneralState.colided);
+            if (GeneralState.colided) break;
+
+            GeneralState.colided = StartTest1();
+            Debug.Log("Colisions check 2" + GeneralState.colided);
+            if (GeneralState.colided) break;
+
+            GeneralState.colided = StartTest2();
+            Debug.Log("Colisions check 3" + GeneralState.colided);
+            StopAllCoroutines();
             yield return null;
         }
     }
@@ -93,79 +115,87 @@ public class ColiderCheck : MonoBehaviour
     bool CheckIfMeshIsContatined()
     {
         MeshCollider[] meshRenderes = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-        bool temp = true;
         int i = 0;
         while (i < meshRenderes.Length)
         {
             if (bx.bounds.Contains(meshRenderes[i].bounds.center))
             {
                 //Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
-                temp = false;
+                return false;
             }
             i++;
         }
-        return temp;
+        return true;
     }
-    bool StartTest()
+    bool StartTest1()
     {
         //Debug.Log("started");
-        Vector3[] POSITION = ConstrcutCube();
-        bool temp = true;
-        for (int i = 0; i < 6; i++)
+        POSITION = ConstrcutCube();
+        int i = 0;
+        while (i < 6)
         {
-            for (int j = 0; j < NUM_VERTICES - 1; j++)
+            int j = 0;
+            while (j < NUM_VERTICES - 1)
             {
-                temp = (ConstructRaycast(POSITION[order[i, j]], POSITION[order[i, j + 1]]));
-                if (temp == true) return temp;
+                bool temp = (ConstructRaycast(POSITION[order[i, j]], POSITION[order[i, j + 1]]));
+                //Debug.LogError(i.ToString() + " j:" + j.ToString() + temp);
+                if (temp == true) return true;
+                j++;
 
             }
-            if (temp == false & i == 5)
-                return Test2(POSITION);
+
+            i++;
         }
-        return temp;
+        return false;
     }
 
-    bool Test2(Vector3[] POSITION)
+    bool StartTest2()
     {
+        POSITION = ConstrcutCube();
         float dist = Vector3.Distance(POSITION[2], POSITION[6]);
         bool temp;
-        for (int j = 0; j < dist * 2; j += 1)
+        int j = 0;
+        while (j < dist * 2)
         {
             Vector3 temps = transform.TransformDirection(Vector3.forward).normalized * -j / 2;
-            for (int i = 0; i < 4; i++)
+            int i = 0;
+            while (i < 4)
             {
                 Vector3 target = POSITION[order[0, i]];
                 Vector3 direction = POSITION[order[0, i + 1]];
                 temp = (ConstructRaycast(temps + target, temps + direction));
                 if (temp)
                     return true;
+                i++;
             }
+            j++;
         }
         dist = Vector3.Distance(POSITION[2], POSITION[0]);
-        for (int j = 0; j < dist * 4; j += 1)
+        j = 0;
+        while (j < dist * 4)
         {
             Vector3 temps = transform.TransformDirection(Vector3.up).normalized * -j / 4;
-            for (int i = 0; i < 4; i++)
+            int i = 0;
+            while (i < 4)
             {
                 Vector3 target = POSITION[order[5, i]];
                 Vector3 direction = POSITION[order[5, i + 1]];
                 temp = (ConstructRaycast(temps + target, temps + direction));
                 if (temp)
                     return true;
+                i++;
             }
+            j++;
         }
-        //Debug.Log("ended");
-        return true;
+        return false;
 
     }
 
     Vector3[] ConstrcutCube()
     {
-        if (ArtistInfo.colderSize != Vector3.zero)
-            bx.size = ArtistInfo.colderSize;
-        Vector3[] POSITION = new Vector3[NUM_VERTICES];
+        Vector3[] _POSITION = new Vector3[NUM_VERTICES];
         Vector3 colliderCentre = bx.center;
-        Vector3 colliderExtents = bx.extents;
+        Vector3 colliderExtents = bx.extents - bx.extents / 100;
         for (int i = 0; i != NUM_VERTICES; ++i)
         {
             Vector3 extents = colliderExtents;
@@ -174,33 +204,31 @@ public class ColiderCheck : MonoBehaviour
 
             Vector3 vertexPosLocal = colliderCentre + extents;
             Vector3 vertexPosGlobal = bx.transform.TransformPoint(vertexPosLocal);
-            POSITION[i] = vertexPosGlobal;
+            _POSITION[i] = vertexPosGlobal;
         }
-        Debug.Log("Checking For Colisions");
-        return POSITION;
+        return _POSITION;
     }
     bool ConstructRaycast(Vector3 origin, Vector3 direction)
     {
         RaycastHit hit;
+
+
         Ray ra = new Ray(origin, direction - origin);
-        Debug.DrawRay(origin, direction - origin, Color.red);
         float dist = Vector3.Distance(origin, direction);
         if (Physics.Raycast(ra, out hit, dist))
         {
-            if (hit.transform.tag == "Base" & ArtistInfo.colderSize == Vector3.zero)
-            {
-                GeneralState.colided = false;
-                return false;
-            }
 
-            if (hit.transform.name != this.transform.name & hit.transform.tag != "Untagged" & hit.transform.tag != "Player")
+            if (hit.transform.tag == "Base")
             {
                 Debug.DrawLine(origin, hit.point, Color.green);
+                Debug.Log("OutsideTheBunds");
                 GeneralState.colided = true;
                 return true;
             }
             else
             {
+                //Debug.Log("HitSomething" + hit.GetType());
+                //Debug.DrawRay(origin, direction - origin, Color.red);
                 GeneralState.colided = false;
                 return false;
             }
@@ -208,6 +236,8 @@ public class ColiderCheck : MonoBehaviour
         }
         else
         {
+            //Debug.Log("AllClear");
+            Debug.DrawRay(origin, direction - origin, Color.magenta);
             GeneralState.colided = false;
             return false;
         }
@@ -237,7 +267,6 @@ public class ColiderCheck : MonoBehaviour
         {
             GeneralState.colided = true;
             Debug.Log(other.gameObject.name);
-
             MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
             foreach (var item in ms)
             {

@@ -15,14 +15,16 @@ public class UploadForm : MonoBehaviour
         assetManager = FindObjectOfType<AssetManager>();
         multiplayer = FindObjectOfType<Multiplayer>();
     }
-
+    
     public bool SendArtwork()
     {
-        Vector3 frontalVector = multiplayer.crena.transform.position - multiplayer.crena.transform.forward * (-10);
+        if (FindObjectOfType<ColiderCheck>())
+            FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         string toSend = "";
         if (!GatherString()) return false;
         if (!GatherColiderData()) return false;
-        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace)
+
+        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace) /// change everithing but the artworkInfo
         {
             toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
             assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
@@ -31,43 +33,50 @@ public class UploadForm : MonoBehaviour
             ArtistInfo.description,
             ArtistInfo.uploadOptionsA,
             "ArtWork");
-            if(FindObjectOfType<ColiderCheck>())
-            FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
-        }
-
-        else
-        {
-            ////if new object start wirh fresh transform
-            if (!assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
-                toSend = FormatMessege(this.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
-            /// if already has artwork but want to move it 
-            else
-                toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
-
-        }
-        //if user changed artwork url
-        if (ArtistInfo.hasArt )
-        {
-            if (ArtistInfo.urlArt != assetManager.infoArwork[ArtistInfo.artistKey].url)
-            {
-                assetManager.infoArwork[ArtistInfo.artistKey].url = ArtistInfo.urlArt;
-                //// destroy or keep old position
-                assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
-            }
-        }
-        GeneralState.AceptAssets = true;
-        if (GeneralState.InRangeOfArtWork | ArtistInfo.keepInPlace)
-        {
             if (!GeneralState.colided)
             {
+                GeneralState.AceptAssets = true;
                 multiplayer.w.SendString(toSend);
                 return true;
             }
-            else return false;
-
+            else
+                return false;
         }
-        else
-            return false;
+
+        else /// change the position or  respwon a new object all together 
+        {
+            Vector3 frontalVector = multiplayer.crena.transform.position - multiplayer.crena.transform.forward * (-10);
+            //if any changes to url destroy and veryfy again if not just update position
+            if (ArtistInfo.hasArt)
+            {
+                ///If object is collided when changing location putOpject in center
+                if (GeneralState.colided)
+                {
+                    restartPosition(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
+                }
+                toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
+                
+
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
+                {
+                    ArtistInfo.hasArt = false;
+                    assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+                }
+            }
+            else
+            {
+                toSend = FormatMessege(this.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
+            }
+            if (GeneralState.InRangeOfArtWork)
+            {
+                GeneralState.AceptAssets = true;
+                multiplayer.w.SendString(toSend);
+
+                return true;
+            }
+            else
+                return false;
+        }
 
     }
     public void UpdateExistingArtwork()
@@ -204,9 +213,12 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
         {
             ArtistInfo.uploadOptionsA += (toggles[i].isOn.ToString() + '/');
         }
-        Debug.Log(ArtistInfo.colderSize + " " + ArtistInfo.uploadOptionsA);
+        //Debug.Log(ArtistInfo.colderSize + " " + ArtistInfo.uploadOptionsA);
         return true;
     }
 
-
+    void restartPosition( GameObject obj)
+    {
+        obj.transform.localScale = Vector3.zero;
+    }
 }

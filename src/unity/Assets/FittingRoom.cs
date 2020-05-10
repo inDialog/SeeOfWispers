@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.Networking;
 
 public class FittingRoom : MonoBehaviour
 {
@@ -57,6 +63,7 @@ public class FittingRoom : MonoBehaviour
     public GameObject CreateColider(Transform target)
     {
         GameObject _coliderBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        _coliderBox.name = "MyCube";
         Destroy(_coliderBox.GetComponent<BoxCollider>());
         _coliderBox.transform.position = target.position;
         _coliderBox.layer = 12;
@@ -119,7 +126,7 @@ public class FittingRoom : MonoBehaviour
                             addOn = new Vector3(addOn.x - 1, addOn.y, addOn.z);
 
                         }
-                        Debug.Log("Colision state = "+GeneralState.colided);
+                        //Debug.Log("Colision state = "+GeneralState.colided);
                         if (artwork.transform.localPosition != addOn)
                         {
                             artwork.transform.localPosition = addOn;

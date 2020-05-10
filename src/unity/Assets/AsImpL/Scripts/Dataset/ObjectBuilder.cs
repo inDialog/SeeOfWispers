@@ -40,8 +40,8 @@ namespace AsImpL
         /// <summary>
         /// TODO add more complex cap
         /// </summary>
-        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 65000;
-        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 65000;
+        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 12000;
+        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 12000;
         // maximum number of vertices that can be used for triangles
         private static int MAX_VERT_COUNT = (MAX_VERTICES_LIMIT_FOR_A_MESH - 2) / 3 * 3;
 
@@ -378,7 +378,7 @@ namespace AsImpL
                     // split the group across more objects
                     splitGrp = true;
                     buildStatus.grpFaceIdx = f;
-                    Debug.LogWarningFormat("Maximum vertex number for a mesh exceeded.\nSplitting object {0} (group {1}, starting from index {2})...", grp.name, buildStatus.grpIdx, f);
+                    //Debug.LogWarningFormat("Maximum vertex number for a mesh exceeded.\nSplitting object {0} (group {1}, starting from index {2})...", grp.name, buildStatus.grpIdx, f);
                     break;
                 }
                 DataSet.FaceIndices fi = objData.faceGroups[buildStatus.grpIdx].faces[f];

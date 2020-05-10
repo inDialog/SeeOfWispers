@@ -15,6 +15,7 @@ public class MoveII : MonoBehaviour
 	public bool small;
 	static bool grounded = true;
 	float axis;
+
 	void Awake()
 	{
 		_rigidbody.freezeRotation = true;
@@ -22,8 +23,9 @@ public class MoveII : MonoBehaviour
 	}
     private void Update()
     {
-		//axis = Input.GetAxis("Horizontal") * (Time.deltaTime*50);
-		float rotation = Input.GetAxis("Horizontal") * (100+ speed/100);
+		if (ArtistInfo.busy) return;
+			//axis = Input.GetAxis("Horizontal") * (Time.deltaTime*50);
+			float rotation = Input.GetAxis("Horizontal") * (100+ speed/100);
 		rotation *= Time.deltaTime;
 		transform.Rotate(0, rotation, 0);
 
@@ -31,6 +33,15 @@ public class MoveII : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		//Debug.Log("HowIsArtistState: " +ArtistInfo.busy);
+
+		if (ArtistInfo.busy)
+        {
+			_rigidbody.isKinematic = true;
+			return;
+        }
+		_rigidbody.isKinematic = false;
+
 		Vector3 jump = Vector3.zero;
 		//if (!stop)
 		//{

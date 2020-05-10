@@ -1,30 +1,32 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AsImpL/Scripts/ObjectImporter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ColiderCheck.cs">
     <Files>
-      <File FileName="Assets/AssetManager.cs" Line="119" Column="26" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="361" Column="10" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="157" Column="77" IsPinned="True" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="129" Column="50" IsPinned="True" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="225" Column="78" />
       <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" />
-      <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" Line="489" Column="14" />
-      <File FileName="Assets/RadarController.cs" />
-      <File FileName="Assets/AsImpL/Scripts/LoadingProgress.cs" />
+      <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" />
       <File FileName="Assets/AsImpL/Scripts/MathUtil/Triangulation.cs" />
       <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" />
-      <File FileName="Assets/AsImpL/Scripts/Dataset/Triangulator.cs" />
-      <File FileName="Assets/Scripts/TextManager.cs" />
-      <File FileName="Assets/UXManager.cs" Line="72" Column="51" NotebookId="1" IsPinned="True" />
-      <File FileName="Assets/FittingRoom.cs" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Remap.cs" NotebookId="1" />
-      <File FileName="Assets/ColiderCheck.cs" NotebookId="1" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
-      <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Dataset/Triangulator.cs" Line="23" Column="63" />
+      <File FileName="Assets/Scripts/MoveII.cs" Line="36" Column="54" />
+      <File FileName="Assets/ColiderCheck.cs" Line="199" Column="1" />
+      <File FileName="Assets/UXManager.cs" Line="198" Column="29" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/FittingRoom.cs" Line="74" Column="16" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" Line="28" Column="12" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="182" Column="37" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" Line="56" Column="44" NotebookId="1" />
       <File FileName="Assets/ArtistInfo.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Interactions/Interactions.cs" Line="87" Column="54" NotebookId="1" />
+      <File FileName="Assets/Scripts/TextManager.cs" Line="24" Column="33" NotebookId="1" />
+      <File FileName="Assets/CameraMode.cs" Line="44" Column="13" NotebookId="1" />
+      <File FileName="Assets/Plugins/WebSocket.cs" Line="27" Column="31" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="da8cfb1a-e919-4195-82b5-61c2a6dab0da" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1de6b030-c9d8-45ca-89eb-b5e7c8a9fd30" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

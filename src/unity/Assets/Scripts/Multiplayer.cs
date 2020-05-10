@@ -58,10 +58,10 @@ public class Multiplayer : MonoBehaviour
 
     IEnumerator Multyplayer()
     {
-        if (Time.frameCount % 60 == 0)
-        {
-            System.GC.Collect();
-        }
+        //if (Time.frameCount % 60 == 0)
+        //{
+        //    System.GC.Collect();
+        //}
         // connect to server
         yield return StartCoroutine(w.Connect());
         Debug.Log("CONNECTED TO WEBSOCKETS");
@@ -99,11 +99,11 @@ public class Multiplayer : MonoBehaviour
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
+                    Debug.Log("Accept dowload: " + GeneralState.AceptAssets);
 
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                     assetManager.UpdateArtwork = listArtworks.artWroks;
                     Debug.Log("ArtworkOnTheServer: " + listArtworks.artWroks.Count);
-                    Debug.Log("Accept dowload: "+ GeneralState.AceptAssets);
 
                     continue;
                 }
@@ -222,7 +222,7 @@ public class Multiplayer : MonoBehaviour
     private void SendPositions()
     {
         // check if player moved
-        if (prevPosition!= myPlayer.transform.position)
+        if (Vector3.Distance(prevPosition , myPlayer.transform.position)>0.1f)
         {
             // send update if position had changed
             w.SendString(FormatMessege(myPlayer.transform));
