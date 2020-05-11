@@ -244,26 +244,29 @@ public class ColiderCheck : MonoBehaviour
 
     }
 
-
-    private void OnTriggerExit(Collider other)
+    private void LateUpdate()
     {
-        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey)
+        GeneralState.colided = false;
+        GeneralState.colided = false;
+
+        MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
+        foreach (var item in ms)
         {
-            GeneralState.colided = false;
-            Debug.Log(other.gameObject.name);
-
-            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
-            foreach (var item in ms)
-            {
-                item.material.color = Color.white; ////todo save material to put back in original state
-            }
-
+            item.material.color = Color.white; ////todo save material to put back in original state
         }
-
     }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag!="Player")
+    //    {
+   
+
+    //    }
+
+    //}
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey)
+        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
             GeneralState.colided = true;
             Debug.Log(other.gameObject.name);

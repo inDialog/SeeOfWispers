@@ -90,6 +90,13 @@ public class Multiplayer : MonoBehaviour
                     infoPl.Remove(otherGUID);
                     continue;
                 }
+                if (message.ToString().Contains("players"))
+                {
+                    Players data = JsonUtility.FromJson<Players>(message);
+                    UpdateLocalData(data);
+                    continue;
+
+                }
                 if (message.ToString().Contains("messageS"))
                 {
                     TextMessages inMeseges = JsonUtility.FromJson<TextMessages>(message);
@@ -107,12 +114,7 @@ public class Multiplayer : MonoBehaviour
 
                     continue;
                 }
-                if (message.ToString().Contains("players"))
-                {
-                    Players data = JsonUtility.FromJson<Players>(message);
-                    UpdateLocalData(data);
-
-                }
+            
                
                 if (message.ToString().Contains("artKey"))
                 {

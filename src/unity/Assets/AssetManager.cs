@@ -35,7 +35,6 @@ public class AssetManager : MonoBehaviour
     public event Action<bool> NewArtwork;
     public GameObject prefabBase;
     MultiObjectImporter moImporter;
-
     private void Start()
     {
         moImporter = GetComponent<MultiObjectImporter>();
@@ -117,7 +116,7 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
-            return;
+                return;
         }
         else
         {
@@ -158,7 +157,7 @@ public class AssetManager : MonoBehaviour
         optionsIm.buildColliders = true; /// todo add as option
         optionsIm.colliderTrigger = false; ///todo bring back but test 
         optionsIm.use32bitIndices = false; /// todo bring as ui option
-        optionsIm.litDiffuse = false;
+        optionsIm.litDiffuse = false; // todo  bring in to option menu
         optionsIm.convertToDoubleSided = importOption[2];
         optionsIm.zUp = importOption[3];
         optionsIm.colliderConvex = importOption[4];
