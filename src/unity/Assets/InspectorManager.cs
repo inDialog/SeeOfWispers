@@ -25,11 +25,11 @@ public class InspectorManager : MonoBehaviour
 
         navigationUI.SetActive(false);
     }
-    private void OnEnable() /// is callled every time its enabled
+    private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
+
     {
         if (assetManger.infoArwork.Count>1)
         cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
-        Debug.Log("b");
 
     }
     void NextArtwork()
