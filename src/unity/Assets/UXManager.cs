@@ -17,7 +17,7 @@ public class UXManager : MonoBehaviour
     public GameObject uploadForm;
     public GameObject OptionsUpload;
 
-    public GameObject InspectorMode;
+    //public GameObject InspectorMode;
     public GameObject Worning;
     public GameObject PrefabRadar;
     public GameObject SpanArtwork;
@@ -37,7 +37,7 @@ public class UXManager : MonoBehaviour
     public Image Compas;
 
     GameObject cm_inspector;
-    GameObject navigationUI;
+    //GameObject navigationUI;
     GameObject radar;
     GameObject cm_bird;
     CameraMode cmMode;
@@ -47,55 +47,96 @@ public class UXManager : MonoBehaviour
     FittingRoom fittingRoom;
     CameraController cam2Controller;
 
-    int count;
+    //int count;
     // Start is called before the first frame update
     private void Awake()
     {
+
         spawnArtwork = SpanArtwork.GetComponentInChildren<Button>();
         keepLocation = SpanArtwork.GetComponentInChildren<Toggle>();
         cm_inspector = GameObject.FindGameObjectWithTag("SecondCamera");
         cm_bird = GameObject.FindGameObjectWithTag("MainCamera");
-        fittingRoomUi.SetActive(false);
         cmMode = FindObjectOfType<CameraMode>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
         upForm = GetComponent<UploadForm>();
         fittingRoom = FindObjectOfType<FittingRoom>();
+
+        assetManger = FindObjectOfType<AssetManager>();
+        cam2Controller = FindObjectOfType<CameraController>();
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 30;
     }
     void Start()
     {
-        cam2Controller = FindObjectOfType<CameraController>();
-        inspectorTogggle.interactable = false;
-        fittingRoomToggle.interactable = false;
-        assetManger = FindObjectOfType<AssetManager>();
+
+
+        FindObjectOfType<ObjectImporter>().ImportedModel += ArtWorkPresent;
+        FindObjectOfType<Multiplayer>().AccountVerified += AfterAccountVerification;
         assetManger.NewArtwork += NewArtWorkReques;
 
-        FindObjectOfType<ObjectImporter>().ImportedModel += ActivateFittingRoom;
-        FindObjectOfType<Multiplayer>().AccountVerified += AfterAccountVerification;
-        fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
-        inspectorTogggle.onValueChanged.AddListener(StartInSpectorMode);
+        inspectorTogggle.onValueChanged.AddListener(InspectorMode);
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
         spawnArtwork.onClick.AddListener(SendMessegeToSpawn);
-        navigationUI = InspectorMode.GetComponentsInChildren<Transform>(true)[4].gameObject;
-        Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
-        buttons[1].onClick.AddListener(NextArtwork);
-        buttons[0].onClick.AddListener(PrviousArtwork);
+        fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
+
         SpanArtwork.gameObject.SetActive(false);
         cm_inspector.SetActive(false);
-        navigationUI.SetActive(false);
         Compas.gameObject.SetActive(false);
+        inspectorTogggle.interactable = false;
+        fittingRoomToggle.interactable = false;
+        fittingRoomUi.SetActive(false);
 
     }
 
-    void SendMessegeToSpawn()
+
+
+
+
+    void AfterAccountVerification(bool state)
     {
-        ArtistInfo.keepInPlace = keepLocation.isOn;
-        if (upForm.SendArtwork()) StopRadar();
+        /// Allow fitting room button to be active 
+        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+        {
+            ////Fill in Values
+            upForm.FillInForms();
+            FindObjectOfType<Multiplayer>().askForArtwork();
+            uiAnim.Play("GoUp");
+        }
+        fittingRoomToggle.interactable = true;
+        logInForm.SetActive(false);
+        uploadForm.SetActive(true);
+        SStartBirdMode();
     }
 
+    void ArtWorkPresent(GameObject gm, string st)
+    {
+        /// <!----> trigers oance a artist inport new art
+        if (st == ArtistInfo.urlArt & gm.name == "Tester")
+        {
+            ArtistInfo.hasArt = true;
+            GeneralState.AceptAssets = true;
+            Debug.LogWarning("Test");
+            upForm.UpdateExistingArtwork();
+        }
+        else
+        {
+            /// triggers fitting for artist  because artist has art
+            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
+                StartFittingRoom(true);
+
+        }
+        /// ActivateInspectorMode <!----> < remarks
+        inspectorTogggle.interactable = true;
+    }
+    /// <summary></summary>
+    /// Handels all  the callbacks for managing fiting room interactions and spawning permisions and ui
+    /// Pariking rules sensenor 
+    ///         1. radar for enviroment
+    ///         2. <ColiderCheck> for within spwning space 
 
     /// Randar to look for a free parking spot. Is triggerd after the uploadOptions form is compleated
+
+
     public void ActivateRadar()
     {
         if (upForm.GatherColiderData())
@@ -143,45 +184,10 @@ public class UXManager : MonoBehaviour
 
     }
 
-
-
-    void AfterAccountVerification(bool state)
+    void SendMessegeToSpawn()
     {
-        /// Allow fitting room button to be active 
-        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
-        {
-            ////Fill in Values
-            upForm.FillInForms();
-            FindObjectOfType<Multiplayer>().askForArtwork();
-            uiAnim.Play("GoUp");
-        }
-        fittingRoomToggle.interactable = true;
-        logInForm.SetActive(false);
-        uploadForm.SetActive(true);
-        NeutralState();
-
-
-    }
-
-    /// triggers fitting room  when object imported 
-    void ActivateFittingRoom(GameObject gm, string st)
-    {
-        if (st == ArtistInfo.urlArt &gm.name=="Tester")
-        {
-            ArtistInfo.hasArt = true;
-            GeneralState.AceptAssets = true;
-            Debug.LogWarning("Test");
-            upForm.UpdateExistingArtwork();
-        }
-        else
-        {
-            if(assetManger.infoArwork.ContainsKey(gm.name)&ArtistInfo.hasArt)
-                StartFittingRoom(true);
-
-        }
-        //Debug.Log(gm.name);
-        /// ActivateInspectorMode
-        inspectorTogggle.interactable = true;
+        ArtistInfo.keepInPlace = keepLocation.isOn;
+        if (upForm.SendArtwork()) StopRadar();
     }
 
     public void StartFittingRoom(bool state)
@@ -197,20 +203,25 @@ public class UXManager : MonoBehaviour
                         if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                         {
                             ArtistInfo.busy = true;
+
                             if (!assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
                                 assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
+
                             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
+
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);
                             fittingRoomUi.SetActive(true);
                             cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
                             fittingRoom.StartCoroutine("StartFittingRoom");
+                            return;
                         }
             }
             else
             {
-                /// Fill in form 
+                /// there is no artwork present so default fill in form 
                 uiAnim.Play("dropDown");
+                return;
             }
         }
         else
@@ -218,10 +229,12 @@ public class UXManager : MonoBehaviour
             DestroyColideCjeck();
             fittingRoom.coliderBox = null;
             StopSecondCamera();
+            if(uiAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name== "dropDown")
             uiAnim.Play("GoUp");
             fittingRoom.StopAllCoroutines();
             ArtistInfo.busy = false;
-
+            SStartBirdMode();
+            return;
         }
 
     }
@@ -240,41 +253,22 @@ public class UXManager : MonoBehaviour
 
     }
     /// <summary>
-    /// todo create a seperete class for inspector mode when expanding
+    /// Truggers inspectomode class on 
     /// </summary>
-    /// <param name="StartInSpectorMode"></param>
-    void StartInSpectorMode(bool state)
+    /// <param name="InspectorMode"></param>
+    void InspectorMode(bool state)
     {
-        fittingRoomUi.SetActive(false);
+        fittingRoomUi.SetActive(!state);
         assetManger.StopAllCoroutines();
-        cm_bird.SetActive(false);
+        cm_bird.SetActive(!state);
         if (state & assetManger.infoArwork.Count > 1)
         {
-            cm_inspector.SetActive(true);
-            cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
-
+            cm_inspector.SetActive(state);
         }
         else
-            NeutralState();
+            SStartBirdMode();
     }
 
-    void NextArtwork()
-    {
-        if (count <= assetManger.infoArwork.Count - 2)
-            count++;
-        else
-            count = 0;
-        cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
-
-    }
-    void PrviousArtwork()
-    {
-        if (count != 0)
-            count--;
-        else
-            count = assetManger.infoArwork.Count - 1;
-        cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
-    }
     void StopSecondCamera()
     {
         cm_inspector.SetActive(false);
@@ -285,7 +279,7 @@ public class UXManager : MonoBehaviour
     /// Activate FP view of main camera
     void ActivateFPView(bool state)
     {
-        NeutralState();
+        SStartBirdMode();
         if (state)
         {
             cmMode.StopCoroutine("ZoomOut");
@@ -301,7 +295,7 @@ public class UXManager : MonoBehaviour
 
 
     /// Bird Camera
-    void NeutralState()
+    void SStartBirdMode()
     {
         cm_bird.SetActive(true);
         cm_inspector.SetActive(false);
@@ -310,21 +304,21 @@ public class UXManager : MonoBehaviour
     }
 
     /// <summary>
-    /// General Escpe
+    /// General Escpe All roads must lead to natural state
     /// </summary>
     void OnGUI()
     {
         Event e = Event.current;
         if (e.isKey)
         {
-            //Debug.Log("Detected key code: " + e.keyCode);
             if (e.keyCode == KeyCode.Escape)
             {
 
-                NeutralState();
                 toggleGroup.SetAllTogglesOff();
-                StartFittingRoom(false);
-
+                if (fittingRoomToggle.isOn)
+                    StartFittingRoom(false);
+                else
+                    SStartBirdMode();
             }
         }
     }
