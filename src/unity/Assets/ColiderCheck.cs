@@ -81,6 +81,7 @@ public class ColiderCheck : MonoBehaviour
     {
         while (true)
         {
+            rb.WakeUp();
 
             Debug.Log("Started Cehack" + ArtistInfo.colderSize);
 
@@ -244,26 +245,23 @@ public class ColiderCheck : MonoBehaviour
 
     }
 
-    private void LateUpdate()
+    
+    private void OnTriggerExit(Collider other)
     {
-        GeneralState.colided = false;
-        GeneralState.colided = false;
-
-        MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
-        foreach (var item in ms)
+        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag!="Player")
         {
-            item.material.color = Color.white; ////todo save material to put back in original state
+            GeneralState.colided = false;
+            Debug.Log(other.gameObject.name);
+
+            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
+            foreach (var item in ms)
+            {
+                item.material.color = Color.white; ////todo save material to put back in original state
+            }
+
         }
+
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag!="Player")
-    //    {
-   
-
-    //    }
-
-    //}
     private void OnTriggerStay(Collider other)
     {
         if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")

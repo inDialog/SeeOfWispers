@@ -1,20 +1,15 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/RadarController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AssetManager.cs">
     <Files>
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="361" Column="10" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="156" Column="53" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="38" Column="25" IsPinned="True" />
       <File FileName="Assets/Scripts/Remap.cs" IsPinned="True" />
+      <File FileName="Assets/RadarController.cs" Line="87" Column="72" IsPinned="True" />
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="133" Column="17" />
-      <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
-      <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" />
-      <File FileName="Assets/AsImpL/Scripts/MathUtil/Triangulation.cs" />
-      <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" />
-      <File FileName="Assets/AsImpL/Scripts/Dataset/Triangulator.cs" />
       <File FileName="Assets/Scripts/MoveII.cs" />
-      <File FileName="Assets/ColiderCheck.cs" />
+      <File FileName="Assets/ColiderCheck.cs" Line="251" Column="1" />
       <File FileName="Assets/UXManager.cs" Line="149" Column="40" />
-      <File FileName="Assets/RadarController.cs" Line="6" Column="14" />
-      <File FileName="Assets/FittingRoom.cs" Line="47" Column="17" NotebookId="1" />
+      <File FileName="Assets/FittingRoom.cs" Line="57" Column="23" NotebookId="1" />
       <File FileName="Assets/UploadForm.cs" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" NotebookId="1" />

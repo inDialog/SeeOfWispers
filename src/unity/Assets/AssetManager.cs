@@ -99,6 +99,8 @@ public class AssetManager : MonoBehaviour
         infoArwork.Add(_id, value[i]);
         infoArwork[_id].@object = Instantiate(prefabBase);
         infoArwork[_id].@object.name = _id;
+        infoArwork[_id].@object.name = value[i].description.Split('\n')[0];
+
         infoArwork[_id].@object.tag = "Base";
         infoArwork[_id].@object.transform.position = value[i].platform;
         infoArwork[_id].uploadOptions = value[i].uploadOptions;
