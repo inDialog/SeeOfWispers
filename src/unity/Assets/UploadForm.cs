@@ -24,8 +24,10 @@ public class UploadForm : MonoBehaviour
         if (!GatherString()) return false;
         if (!GatherColiderData()) return false;
 
-        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace) /// change everithing but the artworkInfo
+        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace ) /// change everithing but the artworkInfo
         {
+            /// toDo catch a method for replacing url
+       
             toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
             assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
             ArtistInfo.colderSize,
@@ -33,8 +35,14 @@ public class UploadForm : MonoBehaviour
             ArtistInfo.description,
             ArtistInfo.uploadOptionsA,
             "ArtWork");
+        
             if (!GeneralState.colided)
             {
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
+                {
+                    ArtistInfo.hasArt = false;
+                    assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+                }
                 GeneralState.AceptAssets = true;
                 multiplayer.w.SendString(toSend);
                 return true;
@@ -49,7 +57,6 @@ public class UploadForm : MonoBehaviour
             //if any changes to url destroy and veryfy again if not just update position
             if (ArtistInfo.hasArt)
             {
-                ///If object is collided when changing location putOpject in center
                 if (GeneralState.colided)
                 {
                     restartPosition(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);

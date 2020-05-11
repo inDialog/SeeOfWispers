@@ -2,13 +2,13 @@
   "35-43-452-1-913-6493": {
     "position": {
       "x": 1,
-      "y": 1,
+      "y": 106,
       "z": 1
     },
     "artworkScale": {
-      "x": 5.708902,
-      "y": 5.708902,
-      "z": 5.708902
+      "x": 0.1778263,
+      "y": 0.1778263,
+      "z": 0.1778263
     },
     "platform": {
       "x": 59.62932,
@@ -25,7 +25,7 @@
       "y": 0,
       "z": 0
     },
-    "url": "https://raw.githubusercontent.com/konsoletyper/teavm-libgdx/master/demos/invaders/webapp/src/main/webapp/assets/data/ship.obj",
+    "url": "https://raw.githubusercontent.com/josdirksen/learning-threejs/master/assets/models/city.obj",
     "description": "00000\n00\n00000\n00000\n0000",
     "uploadOptions": "False/True/True/True/True/",
     "verifiedStatus": "True",

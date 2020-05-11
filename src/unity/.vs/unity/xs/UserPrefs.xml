@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ColiderCheck.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UXManager.cs">
     <Files>
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="361" Column="10" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="157" Column="77" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="156" Column="53" IsPinned="True" />
       <File FileName="Assets/Scripts/Remap.cs" Line="129" Column="50" IsPinned="True" />
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="225" Column="78" />
       <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
@@ -11,13 +11,13 @@
       <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" />
       <File FileName="Assets/AsImpL/Scripts/Dataset/Triangulator.cs" Line="23" Column="63" />
       <File FileName="Assets/Scripts/MoveII.cs" Line="36" Column="54" />
-      <File FileName="Assets/ColiderCheck.cs" Line="199" Column="1" />
-      <File FileName="Assets/UXManager.cs" Line="198" Column="29" NotebookId="1" IsPinned="True" />
-      <File FileName="Assets/FittingRoom.cs" Line="74" Column="16" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" Line="28" Column="12" NotebookId="1" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="182" Column="37" NotebookId="1" />
+      <File FileName="Assets/ColiderCheck.cs" Line="198" Column="65" />
+      <File FileName="Assets/UXManager.cs" Line="172" Column="29" />
+      <File FileName="Assets/FittingRoom.cs" Line="47" Column="17" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" Line="45" Column="18" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="1" Column="1" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" Line="56" Column="44" NotebookId="1" />
-      <File FileName="Assets/ArtistInfo.cs" NotebookId="1" />
+      <File FileName="Assets/ArtistInfo.cs" Line="19" Column="21" NotebookId="1" />
       <File FileName="Assets/Scripts/Interactions/Interactions.cs" Line="87" Column="54" NotebookId="1" />
       <File FileName="Assets/Scripts/TextManager.cs" Line="24" Column="33" NotebookId="1" />
       <File FileName="Assets/CameraMode.cs" Line="44" Column="13" NotebookId="1" />

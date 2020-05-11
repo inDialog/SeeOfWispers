@@ -195,7 +195,7 @@ public class ColiderCheck : MonoBehaviour
     {
         Vector3[] _POSITION = new Vector3[NUM_VERTICES];
         Vector3 colliderCentre = bx.center;
-        Vector3 colliderExtents = bx.extents - bx.extents / 100;
+        Vector3 colliderExtents = bx.extents + bx.extents / 1000;
         for (int i = 0; i != NUM_VERTICES; ++i)
         {
             Vector3 extents = colliderExtents;

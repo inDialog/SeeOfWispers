@@ -170,7 +170,7 @@ public class UXManager : MonoBehaviour
         {
             ArtistInfo.hasArt = true;
             GeneralState.AceptAssets = true;
-            Debug.LogError("Test");
+            Debug.LogWarning("Test");
             upForm.UpdateExistingArtwork();
         }
         else

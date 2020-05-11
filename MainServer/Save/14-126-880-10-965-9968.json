@@ -1,14 +1,14 @@
 {
   "14-126-880-10-965-9968": {
     "position": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+      "x": 0.001331329,
+      "y": 2.930058,
+      "z": -0.05092621
     },
     "artworkScale": {
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 0.3490941,
+      "y": 0.3490941,
+      "z": 0.3490941
     },
     "platform": {
       "x": -36.30906,
@@ -28,7 +28,7 @@
     "url": "https://raw.githubusercontent.com/ZeroK-RTS/Zero-K-Artwork/master/gunship4/exports/Gun.obj",
     "description": "\n\n\n\n",
     "uploadOptions": "True/True/True/True/False/",
-    "verifiedStatus": "False",
+    "verifiedStatus": "True",
     "id": "14-126-880-10-965-9968"
   }
 }

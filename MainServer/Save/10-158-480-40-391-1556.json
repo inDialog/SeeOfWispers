@@ -1,0 +1,34 @@
+{
+  "10-158-480-40-391-1556": {
+    "position": {
+      "x": 0.000003814697,
+      "y": 0,
+      "z": -1.705288
+    },
+    "artworkScale": {
+      "x": 0.6059802,
+      "y": 0.6059802,
+      "z": 0.6059802
+    },
+    "platform": {
+      "x": -41.00575,
+      "y": 25.78434,
+      "z": 48.50135
+    },
+    "rotation": {
+      "x": 352.031,
+      "y": 58.6792,
+      "z": 267.3599
+    },
+    "colideScale": {
+      "x": 10,
+      "y": 10,
+      "z": 10
+    },
+    "url": "https://raw.githubusercontent.com/cgibson/OpenGL-Examples/master/models/dragon.obj",
+    "description": "\n\n\n\n",
+    "uploadOptions": "True/True/True/True/False/",
+    "verifiedStatus": "True",
+    "id": "10-158-480-40-391-1556"
+  }
+}
