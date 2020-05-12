@@ -115,10 +115,15 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
     public bool GatherString()
     {
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
+
+        if (inputFields[0].text == "")
+            inputFields[0].text = "Timmy" + ArtistInfo.artistKey.Split('-')[3];
+
         if (ExtensionMethods.CheckURl(inputFields[5].text))
         {
             ArtistInfo.urlArt = inputFields[5].text;
             ArtistInfo.description = ExtensionMethods.ComposeString(inputFields);
+        
             return true;
         }
         else
@@ -137,6 +142,7 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
         {
             inputFields[i].text = st[i];
         }
+    
         inputFields[5].text = assetManager.infoArwork[ArtistInfo.artistKey].url;
         //// Upload uptions
         ///
