@@ -1,24 +1,20 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AssetManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AsImpL/Scripts/Editor/ObjImportWindow.cs">
     <Files>
-      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="361" Column="10" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="38" Column="25" IsPinned="True" />
-      <File FileName="Assets/Scripts/Remap.cs" IsPinned="True" />
-      <File FileName="Assets/RadarController.cs" Line="87" Column="72" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="133" Column="17" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="616" Column="16" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="171" Column="48" IsPinned="True" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="156" Column="5" IsPinned="True" />
+      <File FileName="Assets/RadarController.cs" Line="37" Column="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="125" Column="1" />
       <File FileName="Assets/Scripts/MoveII.cs" />
-      <File FileName="Assets/ColiderCheck.cs" Line="251" Column="1" />
-      <File FileName="Assets/UXManager.cs" Line="149" Column="40" />
-      <File FileName="Assets/FittingRoom.cs" Line="57" Column="23" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" NotebookId="1" />
+      <File FileName="Assets/ColiderCheck.cs" Line="62" Column="39" />
+      <File FileName="Assets/FittingRoom.cs" Line="94" Column="25" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" Line="1" Column="26" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" NotebookId="1" />
-      <File FileName="Assets/ArtistInfo.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Interactions/Interactions.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/TextManager.cs" NotebookId="1" />
-      <File FileName="Assets/CameraMode.cs" NotebookId="1" />
-      <File FileName="Assets/Plugins/WebSocket.cs" NotebookId="1" />
       <File FileName="Assets/InspectorManager.cs" NotebookId="1" />
+      <File FileName="Assets/UXManager.cs" Line="331" Column="7" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Editor/ObjImportWindow.cs" Line="298" Column="20" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

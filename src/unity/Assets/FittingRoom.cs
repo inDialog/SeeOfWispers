@@ -6,17 +6,25 @@ using UnityEngine.UI;
 public class FittingRoom : MonoBehaviour
 {
     public Slider mainSlider;
-    AssetManager assetManager;
     public GameObject coliderBox;
-    UploadForm upload;
     public Material worningMaterial, normalMaterial;
-    bool holdingDown;
+    public Button DeleteArtwork;
+    AssetManager assetManager;
+    UploadForm upload;
     // Start is called before the first frame update
     void Start()
     {
         assetManager = GetComponent<AssetManager>();
         mainSlider.onValueChanged.AddListener(SetScale);
         upload = FindObjectOfType<UploadForm>();
+        DeleteArtwork.onClick.AddListener(DestroyObject);
+    }
+    void DestroyObject()
+    {
+        if(ArtistInfo.hasArt)
+        assetManager.BroadcastDeleteArtwork(ArtistInfo.artistKey);
+        if (coliderBox != null)
+            Destroy(coliderBox);
     }
 
     public void SetScale(float value)
@@ -73,6 +81,15 @@ public class FittingRoom : MonoBehaviour
     {
         FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         upload.UpdateExistingArtwork();
+    }
+
+    public  void ResetRada()
+    {
+        if (FindObjectOfType<RadarController>())
+        {
+            FindObjectOfType<RadarController>().enabled = false;
+            FindObjectOfType<RadarController>().enabled = true;
+        }
     }
     private IEnumerator StartFittingRoom()
     {

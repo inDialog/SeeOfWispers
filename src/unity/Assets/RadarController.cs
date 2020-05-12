@@ -30,25 +30,10 @@ public class RadarController : MonoBehaviour
         Clear();
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
+
     {
         this.transform.position = mainCH.transform.position;
-        if (!ArtistInfo.hasArt)
-        {
-            if (boxes.Count != asset.infoArwork.Count)
-            {
-                Clear();
-                ShowBorder();
-            }
-        }
-        else
-        {
-            if (boxes.Count != asset.infoArwork.Count - 1)
-            {
-                Clear();
-                ShowBorder();
-            }
-        }
     }
     private void OnTriggerExit(Collider other)
     {

@@ -1,5 +1,4 @@
-﻿///todo add extra check for 1 in XYZ of colider scale
-using System.Collections;
+﻿using System.Collections; 
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -26,7 +25,6 @@ public class UploadForm : MonoBehaviour
 
         if (ArtistInfo.hasArt & ArtistInfo.keepInPlace ) /// change everithing but the artworkInfo
         {
-            /// toDo catch a method for replacing url
        
             toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
             assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
@@ -41,7 +39,7 @@ public class UploadForm : MonoBehaviour
                 if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
                 {
                     ArtistInfo.hasArt = false;
-                    assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
                 }
                 GeneralState.AceptAssets = true;
                 multiplayer.w.SendString(toSend);
@@ -67,7 +65,7 @@ public class UploadForm : MonoBehaviour
                 if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
                 {
                     ArtistInfo.hasArt = false;
-                    assetManager.DestroyObject(ArtistInfo.artistKey.ToString());
+                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
                 }
             }
             else

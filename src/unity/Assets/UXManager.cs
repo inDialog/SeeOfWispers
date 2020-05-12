@@ -123,10 +123,11 @@ public class UXManager : MonoBehaviour
             /// triggers fitting for artist  because artist has art
             if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
                 StartFittingRoom(true);
-
         }
         /// ActivateInspectorMode <!----> < remarks
         inspectorTogggle.interactable = true;
+
+
     }
     /// <summary></summary>
     /// Handels all  the callbacks for managing fiting room interactions and spawning permisions and ui
@@ -227,12 +228,12 @@ public class UXManager : MonoBehaviour
         else
         {
             DestroyColideCjeck();
-            fittingRoom.coliderBox = null;
             StopSecondCamera();
             if(uiAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name== "dropDown")
             uiAnim.Play("GoUp");
             fittingRoom.StopAllCoroutines();
             ArtistInfo.busy = false;
+
             SStartBirdMode();
             return;
         }
@@ -242,10 +243,11 @@ public class UXManager : MonoBehaviour
     {
         if (ArtistInfo.hasArt)
         {
-            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
             {
                 Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
                 Destroy(fittingRoom.coliderBox);
+                fittingRoom.coliderBox = null;
             }
 
 
@@ -351,6 +353,7 @@ public class UXManager : MonoBehaviour
     public void NewArtWorkReques(bool state)
     {
         ArtWorkRequest.interactable = true;
+        fittingRoom.ResetRada();
     }
 
 }

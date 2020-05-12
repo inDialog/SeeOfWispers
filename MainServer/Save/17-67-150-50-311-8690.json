@@ -1,0 +1,34 @@
+{
+  "17-67-150-50-311-8690": {
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "artworkScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "platform": {
+      "x": -99.25188,
+      "y": 0.8890803,
+      "z": 25.84188
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "colideScale": {
+      "x": 10,
+      "y": 10,
+      "z": 10
+    },
+    "url": "https://raw.githubusercontent.com/alecjacobson/computer-graphics-meshes/master/data/bob.obj",
+    "description": "\n\n\n\n",
+    "uploadOptions": "True/True/True/True/True/",
+    "verifiedStatus": "True",
+    "id": "17-67-150-50-311-8690"
+  }
+}

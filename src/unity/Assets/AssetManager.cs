@@ -51,6 +51,7 @@ public class AssetManager : MonoBehaviour
                 {
                     string _id = value[i].id;
                     if (_id == ArtistInfo.artistKey & ArtistInfo.busy & ArtistInfo.hasArt) continue;
+                    FindObjectOfType<FittingRoom>().ResetRada();
 
                     if (!infoArwork.ContainsKey(_id))
                     {
@@ -71,8 +72,7 @@ public class AssetManager : MonoBehaviour
                         }
                         else
                         {
-                            Destroy(infoArwork[_id].@object);
-                            infoArwork.Remove(_id);
+                            DeletArtWork(_id);
                             SpawnArtWork(value, _id, i);
                         }
 
@@ -99,7 +99,6 @@ public class AssetManager : MonoBehaviour
         infoArwork.Add(_id, value[i]);
         infoArwork[_id].@object = Instantiate(prefabBase);
         infoArwork[_id].@object.name = _id;
-        infoArwork[_id].@object.name = value[i].description.Split('\n')[0];
 
         infoArwork[_id].@object.tag = "Base";
         infoArwork[_id].@object.transform.position = value[i].platform;
@@ -136,12 +135,23 @@ public class AssetManager : MonoBehaviour
             moImporter.ImportModelAsync("Tester", path, infoArwork[_id].@object.transform,optionsIm);
         }
     }
-   public void DestroyObject(string _key)
+   public void BroadcastDeleteArtwork(string _key)
     {
-        Destroy(infoArwork[_key].@object);
-        infoArwork.Remove(_key);
-
-        FindObjectOfType<Multiplayer>().w.SendString(_key+ "\t" + "DeleteArtwork");
+        if (infoArwork.ContainsKey(_key))
+        {
+            ArtistInfo.hasArt = false;
+            Destroy(infoArwork[_key].@object);
+            infoArwork.Remove(_key);
+            FindObjectOfType<Multiplayer>().w.SendString(_key + "\t" + "DeleteArtwork");
+        }
+    }
+   public void DeletArtWork(string _key)
+    {
+        if (infoArwork.ContainsKey(_key))
+        {
+            Destroy(infoArwork[_key].@object);
+            infoArwork.Remove(_key);
+        }
     }
     ImportOptions ComposeOptions(InfoArtwork value, bool[] importOption, string status)
     {

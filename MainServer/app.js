@@ -68,10 +68,11 @@ wss.on('connection', function connection (client) {
     				console.error(err)
     				return
 					}
+    		console.log("DeleteArtWroks " + key);
+        	client.send(JSON.stringify("DeleteArtWroks@" + key))
 	    	})
-    		console.log("Delete " + key);
 
-	    	return
+	    	return;
 	    }
 	      if(_data ==  'GetKey' )
 	    {
@@ -164,12 +165,12 @@ function broadcastTextMesege () {
     	console.log('Client deleted');
     	return
     }
+
     var otherPlayersPositions =  Object.keys(messageS).map(udid => messageS[udid])
     client.send(JSON.stringify({messageS: otherPlayersPositions}))
 	// console.log('message,  data:' , otherPlayersPositions);
   })
 }
-
 function CreatePlayer (data,client){
 	var [udid,r,g,b] = data.split('\t');
 	players[udid] = {
@@ -215,6 +216,7 @@ function broadcastUpdate () {
     	return
     }
     // filter out current player by client.udid
+
     var otherPlayers = Object.keys(players).filter(udid => udid !== client.udid)
     // create array from the rest
     var otherPlayersPositions = otherPlayers.map(udid => players[udid])

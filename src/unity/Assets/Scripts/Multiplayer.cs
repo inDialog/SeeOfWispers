@@ -80,6 +80,7 @@ public class Multiplayer : MonoBehaviour
                 {
                     w.SendString(myGUID + "\t" + ExtensionMethods.StringToCollor(myColor) + "\t" + "color");
                     //Debug.Log("color" + myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
+                    message = null;
                     continue;
                 }
                 else if (message.ToString().Contains("Deleted"))
@@ -88,12 +89,14 @@ public class Multiplayer : MonoBehaviour
                     //Debug.Log(" Deleted id: " + otherGUID);
                     Destroy(infoPl[otherGUID].otherPlayer);
                     infoPl.Remove(otherGUID);
+                    message = null;
                     continue;
                 }
                 if (message.ToString().Contains("players"))
                 {
                     Players data = JsonUtility.FromJson<Players>(message);
                     UpdateLocalData(data);
+                    message = null;
                     continue;
 
                 }
@@ -102,6 +105,7 @@ public class Multiplayer : MonoBehaviour
                     TextMessages inMeseges = JsonUtility.FromJson<TextMessages>(message);
                     UpdateText(inMeseges);
                     //Debug.Log(" Mesege : " + message.ToString());
+                    message = null;
                     continue;
                 }
                 if (message.ToString().Contains("artWroks"))
@@ -112,10 +116,19 @@ public class Multiplayer : MonoBehaviour
                     assetManager.UpdateArtwork = listArtworks.artWroks;
                     Debug.Log("ArtworkOnTheServer: " + listArtworks.artWroks.Count);
 
+                    message = null;
                     continue;
                 }
-            
-               
+                if (message.ToString().Contains("DeleteArtWroks"))
+                {
+                    if (message.Split('@')[1]!=ArtistInfo.artistKey) 
+                    assetManager.DeletArtWork(message.Split('@')[1]);
+                    message = null;
+                    continue;
+                }
+
+
+
                 if (message.ToString().Contains("artKey"))
                 {
                     string artKey = message.Split('@')[1];
@@ -128,8 +141,9 @@ public class Multiplayer : MonoBehaviour
                         Debug.Log(ArtistInfo.artistKey);
                         AccountVerified(true);
                     }
+                    message = null;
+                    continue;
                 }
-                continue;
                 //Debug.Log("otherPlayers: " + otherPlayers.Count);
             }
 
@@ -139,7 +153,6 @@ public class Multiplayer : MonoBehaviour
                 Debug.Log("Error: " + w.error);
                 break;
             }
-
             SendPositions();
             yield return 0;
         }
