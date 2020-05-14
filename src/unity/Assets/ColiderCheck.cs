@@ -44,14 +44,22 @@ public class ColiderCheck : MonoBehaviour
         ConstrcutCube();
     }
 
-    void SetMeshTrigger()
+    IEnumerable SetMeshTrigger()
     {
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-        foreach (var item in ms)
+        //Bounds t
+        //foreach (var item in ms)
+        //{
+        //    item.convex = true;
+        //    item.isTrigger = true;
+        //}
+        int i = 0;
+        while (i<ms.Length)
         {
-            item.convex = true;
-            item.isTrigger = true;
+            yield return true;
+            i++;
         }
+     
     }
     void Rever(string key)
     {
@@ -59,8 +67,12 @@ public class ColiderCheck : MonoBehaviour
         foreach (var item in ms)
         {
             bool[] options = ExtensionMethods.ConcertToBool(asset.infoArwork[key].uploadOptions);
-            item.isTrigger = false; //todo set it as option
+            if (item.convex==false)
+                item.isTrigger = false;
+            else
+             item.isTrigger = options[5];
             item.convex = options[4];
+
         }
     }
     private void OnDisable()

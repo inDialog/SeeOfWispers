@@ -14,6 +14,8 @@ public static class ArtistInfo
     public static bool hasArt = false;
     public static bool busy;
     public static Vector3 colderSize;
+    public static Vector3 MeshSizes;
+
     public static string uploadOptionsA = "";
 }
 public static class GeneralState

@@ -32,7 +32,7 @@ public class InfoArtwork
 public class AssetManager : MonoBehaviour
 {
     public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
-    public event Action<bool> NewArtwork;
+    public event Action<bool,string> NewArtwork;
     public GameObject prefabBase;
     MultiObjectImporter moImporter;
     private void Start()
@@ -52,6 +52,7 @@ public class AssetManager : MonoBehaviour
                     string _id = value[i].id;
                     if (_id == ArtistInfo.artistKey & ArtistInfo.busy & ArtistInfo.hasArt) continue;
                     FindObjectOfType<FittingRoom>().ResetRada();
+                    NewArtwork(true, _id);
 
                     if (!infoArwork.ContainsKey(_id))
                     {
@@ -91,7 +92,7 @@ public class AssetManager : MonoBehaviour
                     }
                 }
             }
-            else NewArtwork(true);
+            else NewArtwork(true,"inored");
         }
     }
     void SpawnArtWork(List<InfoArtwork> value, string _id, int i)
@@ -124,7 +125,7 @@ public class AssetManager : MonoBehaviour
             TestDowload(value[i].url, optionsIm, _id);
             infoArwork[_id].SpawnState = "OnlyPlatform";
             if (value[i].verifiedStatus == "True") 
-            NewArtwork(true);
+            NewArtwork(true, "OnlyPlatform");
 
         }
     }
@@ -164,15 +165,17 @@ public class AssetManager : MonoBehaviour
         if (importOption[0])
             optionsIm.boxColiderSize = value.colideScale;
         else
-            optionsIm.boxColiderSize = Vector3.one*2;
+            optionsIm.boxColiderSize = Vector3.one * 2;
         optionsIm.reuseLoaded = false; // todo reload model after first test
-        optionsIm.buildColliders = true; /// todo add as option
-        optionsIm.colliderTrigger = false; ///todo bring back but test 
-        optionsIm.use32bitIndices = false; /// todo bring as ui option
-        optionsIm.litDiffuse = false; // todo  bring in to option menu
-        optionsIm.convertToDoubleSided = importOption[2];
-        optionsIm.zUp = importOption[3];
+        optionsIm.buildColliders = true;
+        optionsIm.use32bitIndices = false;
+
+        optionsIm.convertToDoubleSided = importOption[1];
+        optionsIm.zUp = importOption[2];
+        optionsIm.litDiffuse = importOption[3];
         optionsIm.colliderConvex = importOption[4];
+        optionsIm.colliderTrigger = importOption[5];
+   
         optionsIm.verificationStatus = status;
         return optionsIm;
     }

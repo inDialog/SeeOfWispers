@@ -106,6 +106,7 @@ public class UXManager : MonoBehaviour
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
         SStartBirdMode();
+        fittingRoom.log.text = "Welcome: " + ArtistInfo.artistKey;
     }
 
     void ArtWorkPresent(GameObject gm, string st)
@@ -331,7 +332,7 @@ public class UXManager : MonoBehaviour
     //todo a better action remove call from ObjectBuilder and LoaderObj
     public void BadMeshData(string key, string worning)
     {
-        if (key == ArtistInfo.artistKey & !Worning.activeInHierarchy)
+        if (key == ArtistInfo.artistKey & Worning.active==false)
         {
             FindObjectOfType<Multiplayer>().w.SendString(key + '\t' + "DeleteArtwork");
             Worning.SetActive(true);
@@ -341,7 +342,7 @@ public class UXManager : MonoBehaviour
     }
     public void BadUrl(string url)
     {
-        if (ArtistInfo.urlArt == url & !Worning.activeInHierarchy)
+        if (ArtistInfo.urlArt == url)
         {
             FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + '\t' + "DeleteArtwork");
             Worning.SetActive(true);
@@ -350,10 +351,12 @@ public class UXManager : MonoBehaviour
 
         }
     }
-    public void NewArtWorkReques(bool state)
+    public void NewArtWorkReques(bool state, string id)
     {
-        ArtWorkRequest.interactable = true;
-        fittingRoom.ResetRada();
+        if(ExtensionMethods.CheckKey(id))
+            fittingRoom.ResetRada();
+        else
+            ArtWorkRequest.interactable = true;
     }
 
 }

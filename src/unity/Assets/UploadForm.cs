@@ -36,7 +36,7 @@ public class UploadForm : MonoBehaviour
         
             if (!GeneralState.colided)
             {
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA!=assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
                     assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
@@ -62,7 +62,7 @@ public class UploadForm : MonoBehaviour
                 toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
                 
 
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt)
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
                     assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
@@ -149,6 +149,8 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
         TMP_InputField[] _inputFields = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<TMP_InputField>();
         Toggle[] _toggles = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<Toggle>();
         bool [] states = ExtensionMethods.ConcertToBool(ArtistInfo.uploadOptionsA);
+        if (states[4]==false)
+            states[5] = false;
         for (int i = 0; i < _toggles.Length; i++)
         {
             _toggles[i].isOn = states[i];
@@ -220,6 +222,8 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
         if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
                 assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
         ArtistInfo.uploadOptionsA = "";
+        if (toggles[4].isOn ==false)
+            toggles[5].isOn = false;
         for (int i = 0; i <= toggles.Length - 1; i++)
         {
             ArtistInfo.uploadOptionsA += (toggles[i].isOn.ToString() + '/');

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class FittingRoom : MonoBehaviour
 {
     public Slider mainSlider;
@@ -11,9 +11,11 @@ public class FittingRoom : MonoBehaviour
     public Button DeleteArtwork;
     AssetManager assetManager;
     UploadForm upload;
+    public TMP_Text log;
     // Start is called before the first frame update
     void Start()
     {
+
         assetManager = GetComponent<AssetManager>();
         mainSlider.onValueChanged.AddListener(SetScale);
         upload = FindObjectOfType<UploadForm>();
@@ -32,6 +34,8 @@ public class FittingRoom : MonoBehaviour
         GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
         artwork.transform.localScale = new Vector3(value, value, value);
         UpdateArt();
+        log.text = "SET SCALE :" + value;
+
     }
 
     public void ResetPosition()
@@ -60,6 +64,8 @@ public class FittingRoom : MonoBehaviour
         else
         {
            coliderBox = CreateColider(target);
+           log.text = "perimeter create: " + assetManager.infoArwork[target.name].colideScale;
+
         }
     }
     public GameObject CreateColider(Transform target)
@@ -93,6 +99,7 @@ public class FittingRoom : MonoBehaviour
     }
     private IEnumerator StartFittingRoom()
     {
+        log.text = "Starting Fitting room";
         while (true)
         {
             if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
@@ -141,6 +148,7 @@ public class FittingRoom : MonoBehaviour
                         if (artwork.transform.localPosition != addOn)
                         {
                             artwork.transform.localPosition = addOn;
+                            log.text = "Moved ArtWork :" + artwork.transform.localPosition;
                             UpdateArt();
                         }
                         if (Input.GetKeyUp(KeyCode.C))
