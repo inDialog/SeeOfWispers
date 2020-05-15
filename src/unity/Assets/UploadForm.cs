@@ -8,11 +8,13 @@ public class UploadForm : MonoBehaviour
 {
     Multiplayer multiplayer;
     AssetManager assetManager;
+    TMP_Text log;
     // Start is called before the first frame update
     void Start()
     {
         assetManager = FindObjectOfType<AssetManager>();
         multiplayer = FindObjectOfType<Multiplayer>();
+        log = FindObjectOfType<FittingRoom>().log;
     }
     
     public bool SendArtwork()
@@ -97,10 +99,21 @@ public class UploadForm : MonoBehaviour
         if (!GeneralState.colided)
             multiplayer.w.SendString(toSend);
     }
+    public void UpdateExistingArtwork(bool force)
+    {
+
+        string toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
+            assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
+           assetManager.infoArwork[ArtistInfo.artistKey].colideScale,
+           assetManager.infoArwork[ArtistInfo.artistKey].url,
+           assetManager.infoArwork[ArtistInfo.artistKey].description,
+           assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions,
+            "ArtWork");
+            multiplayer.w.SendString(toSend);
+    }
 
 
-
-public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimeter, string url, string description, string uploadOptions, string type)
+    public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimeter, string url, string description, string uploadOptions, string type)
     {
         return ArtistInfo.artistKey
             + "\t" + artWork.localPosition.x + "\t" + artWork.localPosition.y + "\t" + artWork.localPosition.z
@@ -123,7 +136,6 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
         {
             ArtistInfo.urlArt = inputFields[5].text;
             ArtistInfo.description = ExtensionMethods.ComposeString(inputFields);
-        
             return true;
         }
         else
@@ -133,9 +145,9 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
     {
         ArtistInfo.colderSize = assetManager.infoArwork[ArtistInfo.artistKey].colideScale;
         ArtistInfo.urlArt = assetManager.infoArwork[ArtistInfo.artistKey].url;
-  
         ArtistInfo.uploadOptionsA = assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions;
         //// Artist Information
+        ///
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
         string[] st = assetManager.infoArwork[ArtistInfo.artistKey].description.Split('\n');
         for (int i = 0; i < st.Length; i++)
@@ -235,5 +247,15 @@ public string FormatMessege(Transform artWork, Vector3 platform, Vector3 perimet
     void restartPosition( GameObject obj)
     {
         obj.transform.localScale = Vector3.zero;
+        if (log.IsActive())
+        {
+            log.text =
+                "Mesh out of bounds, Scale set to: 0 and Pos to: 0 " +
+                "WORNING ACTION IS NOT SAVED TILL object ajusted corectly in  the colider!!!!";
+            log.color = Color.red;
+        }
+
+
+
     }
 }

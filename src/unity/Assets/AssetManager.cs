@@ -83,7 +83,7 @@ public class AssetManager : MonoBehaviour
                         ArtistInfo.hasArt = true;
                     }
 
-                    if (i == value.Count - 1)
+                    if (i == value.Count-1)
                     {
                         //if (ArtistInfo.artistKey == "")
                             //Loader.loadedModels.Clear();

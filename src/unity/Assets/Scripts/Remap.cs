@@ -126,7 +126,7 @@ public static class ExtensionMethods
                     foreach (var item2 in meshFilters)
                     {
                         item2.convex = true;
-                        //item2.isTrigger = true;
+                        item2.isTrigger = true;
                     }
                 }
             }
@@ -145,7 +145,8 @@ public static class ExtensionMethods
                         MeshCollider[] meshFilters = _as.infoArwork[wasConverted[i]].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
                         foreach (var item2 in meshFilters)
                         {
-                            item2.convex = false;
+                        item2.isTrigger = false;
+                        item2.convex = false;
                         }
                     }
                 }

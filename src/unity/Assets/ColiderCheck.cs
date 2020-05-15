@@ -26,36 +26,33 @@ public class ColiderCheck : MonoBehaviour
         asset = FindObjectOfType<AssetManager>();
         rb = this.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true;
+  
+        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
+        StartCoroutine("SetMeshTrigger");
         if (ArtistInfo.colderSize == Vector3.zero)
         {
-            bx = this.gameObject.AddComponent<BoxCollider>();
-            hadColider = false;
-            bx.isTrigger = false;
+            //bx = this.gameObject.AddComponent<BoxCollider>();
+            //bx.isTrigger = false;
 
         }
         else
         {
             bx = this.gameObject.GetComponent<BoxCollider>();
             bx.isTrigger = true;
-
+            ConstrcutCube();
         }
-        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
-        SetMeshTrigger();
-        ConstrcutCube();
+
     }
 
     IEnumerable SetMeshTrigger()
     {
+        if (ExtensionMethods.ConcertToBool(asset.infoArwork[ArtistInfo.artistKey].uploadOptions)[5]) StopCoroutine("SetMeshTrigger");
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-        //Bounds t
-        //foreach (var item in ms)
-        //{
-        //    item.convex = true;
-        //    item.isTrigger = true;
-        //}
         int i = 0;
         while (i<ms.Length)
         {
+            ms[i].convex = true;
+            ms[i].isTrigger = true;
             yield return true;
             i++;
         }
@@ -67,23 +64,16 @@ public class ColiderCheck : MonoBehaviour
         foreach (var item in ms)
         {
             bool[] options = ExtensionMethods.ConcertToBool(asset.infoArwork[key].uploadOptions);
-            if (item.convex==false)
-                item.isTrigger = false;
-            else
-             item.isTrigger = options[5];
+            item.isTrigger = options[5];
             item.convex = options[4];
 
         }
     }
     private void OnDisable()
     {
-        bx.isTrigger = true;
         Rever(this.name);
         Destroy(rb);
-        if (!hadColider)
-        {
-            Destroy(bx);
-        }
+
         ExtensionMethods.RestitureConvertedObjects(isNotConvex);
         isNotConvex.Clear();
         StopAllCoroutines();
@@ -105,8 +95,10 @@ public class ColiderCheck : MonoBehaviour
             }
             else
             {
-                bx.isTrigger = false;
-                bx.size = GeneralState.maxColideSize;
+                //bx.isTrigger = false;
+                GeneralState.colided  = SizeCheck();
+                Debug.Log("Size Check :" + GeneralState.colided);
+                break;
             }
 
 
@@ -123,6 +115,22 @@ public class ColiderCheck : MonoBehaviour
             StopAllCoroutines();
             yield return null;
         }
+    }
+
+    bool SizeCheck()
+    {
+        return (ObjectBounds(this.transform.GetChild(1)).size.magnitude > GeneralState.maxColideSize.magnitude);
+    }
+    Bounds ObjectBounds(Transform obj)
+    {
+        Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
+        MeshRenderer[] mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < mrs.Length; i++)
+        {
+            if (i == 0) meshesBounds = mrs[i].bounds;
+            else meshesBounds.Encapsulate(mrs[i].bounds);
+        }
+        return meshesBounds;
     }
 
     bool CheckIfMeshIsContatined()
@@ -257,10 +265,10 @@ public class ColiderCheck : MonoBehaviour
 
     }
 
-    
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag!="Player")
+        if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
             GeneralState.colided = false;
             Debug.Log(other.gameObject.name);
@@ -278,6 +286,7 @@ public class ColiderCheck : MonoBehaviour
     {
         if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
+            Debug.Log(other.transform.root.name + "  " + ArtistInfo.artistKey);
             GeneralState.colided = true;
             Debug.Log(other.gameObject.name);
             MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();

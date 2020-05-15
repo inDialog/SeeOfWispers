@@ -51,7 +51,6 @@ public class UXManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-
         spawnArtwork = SpanArtwork.GetComponentInChildren<Button>();
         keepLocation = SpanArtwork.GetComponentInChildren<Toggle>();
         cm_inspector = GameObject.FindGameObjectWithTag("SecondCamera");
@@ -117,12 +116,12 @@ public class UXManager : MonoBehaviour
             ArtistInfo.hasArt = true;
             GeneralState.AceptAssets = true;
             Debug.LogWarning("Test");
-            upForm.UpdateExistingArtwork();
+            upForm.UpdateExistingArtwork(true);
         }
         else
         {
             /// triggers fitting for artist  because artist has art
-            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
+            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt & !ArtistInfo.busy)
                 StartFittingRoom(true);
         }
         /// ActivateInspectorMode <!----> < remarks
@@ -159,7 +158,8 @@ public class UXManager : MonoBehaviour
 
             }
             uiAnim.Play("GoUp");
-        }
+        } 
+
         if (FindObjectOfType<ColiderCheck>())
             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
 
@@ -190,6 +190,14 @@ public class UXManager : MonoBehaviour
     {
         ArtistInfo.keepInPlace = keepLocation.isOn;
         if (upForm.SendArtwork()) StopRadar();
+        else
+        {
+            fittingRoom.log.text = "Check upload form! You have a bad url or no dats at the other end";
+            fittingRoom.log.color = Color.red;
+        }
+
+
+
     }
 
     public void StartFittingRoom(bool state)
@@ -215,6 +223,7 @@ public class UXManager : MonoBehaviour
                             cm_bird.SetActive(false);
                             fittingRoomUi.SetActive(true);
                             cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
+                            Debug.Log("!");
                             fittingRoom.StartCoroutine("StartFittingRoom");
                             return;
                         }
@@ -326,18 +335,26 @@ public class UXManager : MonoBehaviour
         }
     }
 
+    public void NewArtWorkReques(bool state, string id)
+    {
+        if (ExtensionMethods.CheckKey(id))
+            fittingRoom.ResetRada();
+        else
+            ArtWorkRequest.interactable = true;
+    }
+
     /// <summary>
     /// Callbacks on bad url or mesh data
     /// </summary>
     //todo a better action remove call from ObjectBuilder and LoaderObj
     public void BadMeshData(string key, string worning)
     {
-        if (key == ArtistInfo.artistKey & Worning.active==false)
+        if (key == ArtistInfo.artistKey)
         {
             FindObjectOfType<Multiplayer>().w.SendString(key + '\t' + "DeleteArtwork");
             Worning.SetActive(true);
             Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = worning;
-            FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
+            //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
         }
     }
     public void BadUrl(string url)
@@ -347,17 +364,11 @@ public class UXManager : MonoBehaviour
             FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + '\t' + "DeleteArtwork");
             Worning.SetActive(true);
             Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
-            FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
+            //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
 
         }
     }
-    public void NewArtWorkReques(bool state, string id)
-    {
-        if(ExtensionMethods.CheckKey(id))
-            fittingRoom.ResetRada();
-        else
-            ArtWorkRequest.interactable = true;
-    }
+  
 
 }
 

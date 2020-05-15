@@ -76,26 +76,27 @@ function ComposeString  (callback) {
     if (err) {
         return console.log('Unable to scan directory: ' + err);
     } 
-    var  i =1;
+    var  i =0;
     files.forEach(function (file,index,array) {
-    	// console.log(array)
-
+    	console.log(array)
+      var len = array.length;
     	var [id,type] =file.toString().split('.');
     	if('json'===type){
+        
     		    jsonReader('./Save/' +  file, (err, recived) => {
+                         i++;
    					 if (err) {
        					 console.log(err)
         				return
     					}
-    				console.log("arraySize " + array.length)
+    				console.log("arraySize " + len)
                     console.log("index  " + i)
-                    i+=1;
              
     				artWroks[id] = recived[id]
     				// temp[id] += JSON.stringify(recived[id],null);
     				// var tm = JSON.stringify(recived);
     				// temp[id] += tm
-    				 if (i == array.length){ 
+    				 if (i == len){ 
     				return callback(artWroks)
    						}
 

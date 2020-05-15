@@ -1,26 +1,29 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ArtistInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CameraController.cs">
     <Files>
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="587" Column="44" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="55" Column="38" IsPinned="True" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="82" Column="26" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="117" Column="13" IsPinned="True" />
       <File FileName="Assets/RadarController.cs" Line="24" Column="22" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="177" Column="1" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="67" Column="1" />
       <File FileName="Assets/Scripts/MoveII.cs" />
-      <File FileName="Assets/UXManager.cs" Line="335" Column="59" />
-      <File FileName="Assets/ColiderCheck.cs" Line="67" Column="1" />
-      <File FileName="Assets/ArtistInfo.cs" Line="16" Column="38" />
-      <File FileName="Assets/FittingRoom.cs" Line="67" Column="12" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" Line="225" Column="36" NotebookId="1" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
+      <File FileName="Assets/UXManager.cs" Line="124" Column="84" />
+      <File FileName="Assets/ColiderCheck.cs" Line="122" Column="17" />
+      <File FileName="Assets/ArtistInfo.cs" Line="26" Column="59" />
+      <File FileName="Assets/Plugins/WebSocket.cs" Line="116" Column="19" />
+      <File FileName="Assets/FittingRoom.cs" Line="117" Column="24" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" Line="110" Column="72" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="440" Column="1" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" NotebookId="1" />
-      <File FileName="Assets/InspectorManager.cs" NotebookId="1" />
+      <File FileName="Assets/InspectorManager.cs" Line="41" Column="96" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/Editor/ObjImportWindow.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="148" Column="48" NotebookId="1" />
+      <File FileName="Assets/CameraController.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="047cf55b-50e5-47cb-9c9f-7eac1a0d25b5" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5e318aa4-aeb2-441b-aaea-d2ce0b77bbbe" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

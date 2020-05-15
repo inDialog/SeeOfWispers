@@ -23,7 +23,7 @@ public static class GeneralState
     public static bool AceptAssets;
     public static bool InRangeOfArtWork;
     public static bool colided;
-    public static Vector3 maxColideSize = new Vector3(1000, 1000, 1000);
+    public static Vector3 maxColideSize = Vector3.one * 30;
     public static int artworkLayer =12;
     public static string artworkTag = "Base";
 

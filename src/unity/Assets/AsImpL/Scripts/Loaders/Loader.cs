@@ -493,6 +493,8 @@ namespace AsImpL
                     Vector3 target = obj.transform.position - meshesBounds.center;
                     obj.transform.localPosition = target;
                     Debug.Log("Moved to the center" + target);
+                    if(FindObjectOfType<FittingRoom>().log.IsActive())
+                    FindObjectOfType<FittingRoom>().log.text = "Mesh out of bounds, rescling and moving in the center";
                 }
             }
 

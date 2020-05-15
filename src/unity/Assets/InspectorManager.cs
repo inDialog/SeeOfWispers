@@ -31,6 +31,7 @@ public class InspectorManager : MonoBehaviour
         if (assetManger.infoArwork.Count>1)
         cam2Controller.target = assetManger.infoArwork.ElementAt(count).Value.@object.transform;
 
+
     }
     void NextArtwork()
     {
