@@ -27,11 +27,7 @@ public class UploadForm : MonoBehaviour
         {
             if (!GeneralState.colided)
             {
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
-                {
-                    ArtistInfo.hasArt = false;
-                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
-                }
+              
                 GeneralState.AceptAssets = true;
                 toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
                         assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
@@ -40,6 +36,11 @@ public class UploadForm : MonoBehaviour
                         ArtistInfo.description,
                         ArtistInfo.uploadOptionsA,
                         "ArtWork");
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
+                {
+                    ArtistInfo.hasArt = false;
+                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
+                }
                 multiplayer.w.SendString(toSend);
                 return true;
             }
