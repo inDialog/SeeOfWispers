@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     private float xDeg = 0.0f;
     private float yDeg = 0.0f;
     private float currentDistance;
-    private float desiredDistance;
+    public float desiredDistance;
     private Quaternion currentRotation;
     private Quaternion desiredRotation;
     private Quaternion rotation;
@@ -47,8 +47,8 @@ public class CameraController : MonoBehaviour
             go.transform.position = transform.position + (transform.forward * distance);
             initTargetPosition = go.transform.position;
             target = go.transform;
+            doInit();
         }
-        doInit();
     }
 
     private void doInit()

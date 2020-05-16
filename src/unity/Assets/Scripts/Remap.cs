@@ -6,6 +6,8 @@ using TMPro;
 using System;
 using AsImpL;
 using UnityEngine.UI;
+using System.Linq;
+
 public static class ExtensionMethods
 {
 
@@ -154,6 +156,20 @@ public static class ExtensionMethods
             }
         return true;
     }
-    
+    public static void FillInputText(string tmp_key, Text[] inputField, AssetManager astMan)
+    {
+        if (tmp_key != "" & tmp_key != null)
+        {
+            string[] des_art;
+            des_art = astMan.infoArwork[tmp_key].description.Split('\n');
+            inputField[0].text = "";
+            inputField[1].text = "";
+            inputField[0].text = string.Format("Artist : {0}  -  Title : {1} - Format: {2} - Year : {3}",
+                                               "NAME", des_art[0], des_art[2], (des_art[1].Split('-').Count() < 3 ? "****" : "20" + des_art[1].Split('-')[2]));
+            inputField[1].text = des_art[3];
+        }
+        else
+            Debug.LogWarning("They key for inputing text in the artist description its missing");
+    }
 }
 

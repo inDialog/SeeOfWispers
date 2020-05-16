@@ -65,43 +65,43 @@
   <ItemGroup>
     <Compile Include="Assets\AsImpL\Scripts\Editor\ObjImportWindow.cs" />
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -292,14 +292,14 @@
     <Reference Include="UnityEditor.OSXStandalone.Extensions">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Assets/Plugins/websocket-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Assets/Plugins/websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

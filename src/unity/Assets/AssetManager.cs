@@ -33,6 +33,7 @@ public class AssetManager : MonoBehaviour
 {
     public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
     public event Action<bool,string> NewArtwork;
+    public List<String> artistName;
     public GameObject prefabBase;
     MultiObjectImporter moImporter;
     private void Start()
@@ -116,7 +117,12 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
-                return;
+            /////====addd to list of name  for search bar 
+            if (infoArwork[_id].description.Split('\n')[0] != "")
+                artistName.Add(infoArwork[_id].description.Split('\n')[0]);
+            else
+                artistName.Add("NO NAME");
+            return;
         }
         else
         {
