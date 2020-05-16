@@ -98,9 +98,9 @@ public class UXManager : MonoBehaviour
         {
             ////Fill in Values
             upForm.FillInForms();
-            FindObjectOfType<Multiplayer>().askForArtwork();
             uiAnim.Play("GoUp");
         }
+        FindObjectOfType<Multiplayer>().askForArtwork();
         fittingRoomToggle.interactable = true;
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
@@ -121,7 +121,7 @@ public class UXManager : MonoBehaviour
         else
         {
             /// triggers fitting for artist  because artist has art
-            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt & !ArtistInfo.busy)
+            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
                 StartFittingRoom(true);
         }
         /// ActivateInspectorMode <!----> < remarks
@@ -175,7 +175,7 @@ public class UXManager : MonoBehaviour
             radar = null;
         }
         SpanArtwork.gameObject.SetActive(false);
-
+        
     }
     void CheckForArtWorkAround(bool state)
     {
@@ -190,14 +190,6 @@ public class UXManager : MonoBehaviour
     {
         ArtistInfo.keepInPlace = keepLocation.isOn;
         if (upForm.SendArtwork()) StopRadar();
-        else
-        {
-            fittingRoom.log.text = "Check upload form! You have a bad url or no dats at the other end";
-            fittingRoom.log.color = Color.red;
-        }
-
-
-
     }
 
     public void StartFittingRoom(bool state)

@@ -151,7 +151,6 @@ public class Multiplayer : MonoBehaviour
             if (w.error != null)
             {
                 Debug.Log("Error: " + w.error);
-                StartCoroutine("Multyplayer");
                 break;
             }
             SendPositions();

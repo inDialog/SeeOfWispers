@@ -13,15 +13,22 @@ public class RadarController : MonoBehaviour
     /// as they beysicly do the same function at the beging and end
     /// </summary>
     List<GameObject> boxes = new List<GameObject>();
-
+    BoxCollider bx;
     AssetManager asset;
 
     private void OnEnable()
     {
+        bx = GetComponent<BoxCollider>();
+        if (ArtistInfo.colderSize != Vector3.zero)
+            bx.size = ArtistInfo.colderSize;
         asset = FindObjectOfType<AssetManager>();
         mainCH = GameObject.FindGameObjectWithTag("Player");
         ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
         ShowBorder();
+        if (InRangeOfArtwork != null)
+            InRangeOfArtwork(true);
+        GeneralState.InRangeOfArtWork = true;
+
     }
     private void OnDisable()
     {
@@ -68,7 +75,7 @@ public class RadarController : MonoBehaviour
     {
         foreach (var item in asset.infoArwork)
         {
-            if (item.Key != ArtistInfo.artistKey)
+            if (item.Key != ArtistInfo.artistKey& item.Value.colideScale!=Vector3.zero)
                 boxes.Add(FindObjectOfType<FittingRoom>().CreateColider(item.Value.@object.transform));
 
         }

@@ -1,14 +1,14 @@
 {
   "4-444-800-4-809-1233": {
     "position": {
-      "x": -3,
-      "y": -8,
-      "z": 7
+      "x": 0.9998436,
+      "y": -0.009443283,
+      "z": 0.001167297
     },
     "artworkScale": {
-      "x": 11.02901,
-      "y": 11.02901,
-      "z": 11.02901
+      "x": 12.57314,
+      "y": 12.57314,
+      "z": 12.57314
     },
     "platform": {
       "x": -35.21256,
@@ -21,9 +21,9 @@
       "z": 181.0018
     },
     "colideScale": {
-      "x": 30,
-      "y": 30,
-      "z": 30
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
     "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/master/demo/pirate.obj",
     "description": "Timmy4\n\n\n\n",

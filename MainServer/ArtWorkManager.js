@@ -84,7 +84,7 @@ function ComposeString  (callback) {
     	if('json'===type){
         
     		    jsonReader('./Save/' +  file, (err, recived) => {
-                         i++;
+                         i+=1;
    					 if (err) {
        					 console.log(err)
         				return

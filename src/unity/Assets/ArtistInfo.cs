@@ -23,7 +23,9 @@ public static class GeneralState
     public static bool AceptAssets;
     public static bool InRangeOfArtWork;
     public static bool colided;
-    public static Vector3 maxColideSize = Vector3.one * 30;
+    public static Vector3 maxColideSize = Vector3.one * 20;
+    public static float maxDistance =20;
+
     public static int artworkLayer =12;
     public static string artworkTag = "Base";
 

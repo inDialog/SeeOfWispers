@@ -14,6 +14,7 @@ public class FittingRoom : MonoBehaviour
     AssetManager assetManager;
     UploadForm upload;
     public TMP_Text log;
+    Vector3 original;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +45,7 @@ public class FittingRoom : MonoBehaviour
     public void ResetPosition()
     {
         GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
-        //artwork.transform.position = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position;
-        //artwork.transform.localScale = Vector3.one;
-        //artwork.transform.localEulerAngles = Vector3.zero;
-        //UpdateArt();
-        //AjustPosition(artwork, assetManager.infoArwork[ArtistInfo.artistKey].colideScale);
+        AjustPosition(artwork, assetManager.infoArwork[ArtistInfo.artistKey].colideScale);
     }
 
 
@@ -84,14 +81,13 @@ public class FittingRoom : MonoBehaviour
         _coliderBox.transform.localScale = assetManager.infoArwork[target.name].colideScale;
         _coliderBox.GetComponent<MeshRenderer>().material = normalMaterial;
 
-        Debug.Log(ArtistInfo.colderSize);
+        //Debug.Log(ArtistInfo.colderSize);
         return _coliderBox;
     }
     public void UpdateArt(GameObject artwork)
     {
         FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
         //Debug.Log(ObjectBounds(artwork.transform).size);
-        Debug.Log("1");
         upload.UpdateExistingArtwork();
     }
 
@@ -103,21 +99,11 @@ public class FittingRoom : MonoBehaviour
             FindObjectOfType<RadarController>().enabled = true;
         }
     }
-    //Bounds ObjectBounds(Transform obj, out MeshRenderer [] mrs)
-    //{
-    //    Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
-    //    mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
-    //    for (int i = 0; i < mrs.Length; i++)
-    //    {
-    //        if (i == 0) meshesBounds = mrs[i].bounds;
-    //        else meshesBounds.Encapsulate(mrs[i].bounds);
-    //    }
-    //    return meshesBounds;
-    //}
-    Bounds ObjectBounds(Transform obj)
+
+    Bounds ObjectBounds(Transform obj , out MeshRenderer[] mrs)
     {
         Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
-        MeshRenderer[] mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
+        mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
         for (int i = 0; i < mrs.Length; i++)
         {
             if (i == 0) meshesBounds = mrs[i].bounds;
@@ -125,73 +111,96 @@ public class FittingRoom : MonoBehaviour
         }
         return meshesBounds;
     }
-    //public void AjustPosition(GameObject obj, Vector3 boxSize)
-    //{
-    //    MeshRenderer[] mrs;
-    //    Bounds meshesBounds = ObjectBounds(obj.transform,out mrs);
+    public void AjustPosition(GameObject obj, Vector3 boxSize)
+    {
+        MeshRenderer[] mrs;
+        Bounds meshesBounds = ObjectBounds(obj.transform, out mrs);
 
-    //    if (boxSize == Vector3.zero)
-    //        boxSize = Vector3.one * 10;
+        //if (boxSize == Vector3.zero)
+        //    boxSize = Vector3.one * 10;
 
-    //    float[] distances = new float[3];
-    //    distances[0] = boxSize.x - meshesBounds.size.x;
-    //    distances[1] = boxSize.y - meshesBounds.size.y;
-    //    distances[2] = boxSize.z - meshesBounds.size.z;
+        //float[] distances = new float[3];
+        //distances[0] = boxSize.x - meshesBounds.size.x;
+        //distances[1] = boxSize.y - meshesBounds.size.y;
+        //distances[2] = boxSize.z - meshesBounds.size.z;
 
-    //    if (distances[0] < 0 | distances[1] < 0 | distances[2] < 0)
-    //    {
-    //        float[] temp = distances;
-    //        Array.Sort(temp);
-    //        int axis = Array.IndexOf(distances, temp[0]);
-    //        float ratio = 1;
-    //        if (axis == 0)
-    //        {
-    //            ratio = obj.transform.localScale.x / meshesBounds.size.x;
-    //        }
-    //        if (axis == 1)
-    //        {
-    //            ratio = obj.transform.localScale.x / meshesBounds.size.y;
-    //        }
-    //        if (axis == 2)
-    //        {
-    //            ratio = obj.transform.localScale.x / meshesBounds.size.z;
-    //        }
-    //        obj.transform.localScale = (ratio * obj.transform.localScale) * 2;
+        //if (distances[0] < 0 | distances[1] < 0 | distances[2] < 0)
+        //{
+        //    float[] temp = distances;
+        //    Array.Sort(temp);
+        //    int axis = Array.IndexOf(distances, temp[0]);
+        //    float ratio = 1;
+        //    if (axis == 0)
+        //    {
+        //        ratio = obj.transform.localScale.x / meshesBounds.size.x;
+        //    }
+        //    if (axis == 1)
+        //    {
+        //        ratio = obj.transform.localScale.x / meshesBounds.size.y;
+        //    }
+        //    if (axis == 2)
+        //    {
+        //        ratio = obj.transform.localScale.x / meshesBounds.size.z;
+        //    }
+        //    obj.transform.localScale = (ratio * obj.transform.localScale) * 2;
 
+        //}
+        //    Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + boxSize + "distances" + distances[0]);
+        obj.transform.localScale = Vector3.one / 100;
 
-    //        Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + boxSize+ "distances" + distances[0]);
+        for (int i = 0; i < mrs.Length; i++)
+        {
+            if (i == 0) meshesBounds = mrs[i].bounds;
+            else meshesBounds.Encapsulate(mrs[i].bounds);
+        }
+        Vector3 target = obj.transform.position - meshesBounds.center;
+        obj.transform.localPosition = target;
+        Debug.Log("Moved to the center" + target);
+        log.color = Color.red;
+        log.text = "Re-scale to:" + obj.transform.localScale + " and moving in the center of the platform";
 
-    //        if (meshesBounds.center != obj.transform.position)
-    //        {
-    //            for (int i = 0; i < mrs.Length; i++)
-    //            {
-    //                if (i == 0) meshesBounds = mrs[i].bounds;
-    //                else meshesBounds.Encapsulate(mrs[i].bounds);
-    //            }
+        //}
+    }
+    void SetLog(GameObject artwork,bool state)
+    {
+        if (state)
+        {
+            log.color = Color.white;
+            log.text = "ArtWork pos:" + artwork.transform.localPosition + '\n'
+         + "artwork scale: " + artwork.transform.localScale;
+        }
+        else
+        {
+            log.color = Color.red;
+            log.text = "ArtWork can be eighter :"
+                +'\n' + "   -> outside bounds"
+                +'\n' + "   -> to big "  
+                +'\n' + "   -> to far away from  the  center "
+                +'\n' + "ajust size and position";
+            ;
 
-    //            Vector3 target = obj.transform.position - meshesBounds.center;
-    //            obj.transform.localPosition = target;
-    //            Debug.Log("Moved to the center" + target);
-    //            if (FindObjectOfType<FittingRoom>().log.IsActive())
-    //                FindObjectOfType<FittingRoom>().log.text = "Mesh out of bounds, rescling and moving in the center";
-    //        }
-    //    }
-    //}
+        }
 
+    }
     private IEnumerator StartFittingRoom()
     {
         log.text = "Starting Fitting room";
         Debug.Log("1§");
-
         while (true)
         {
             if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
             {
                 if (assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                 {
+
                     DisplayColider(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform);
                     GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
                     Vector3 addOn = artwork.transform.localPosition;
+                    if (Input.anyKey)
+                    {
+                        SetLog(artwork, !GeneralState.colided);
+                    }
+                 
 
                     if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(0))
                     {
@@ -232,7 +241,6 @@ public class FittingRoom : MonoBehaviour
                         {
                             UpdateArt(artwork);
                             artwork.transform.localPosition = addOn;
-                            log.text = "Moved ArtWork :" + artwork.transform.localPosition;
                         }
                         if (Input.GetKeyUp(KeyCode.C))
                         {

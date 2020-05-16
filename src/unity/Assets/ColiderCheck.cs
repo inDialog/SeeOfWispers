@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+/// <summary>
+/// todo find a better way to change the collor of the material when  is colided
+/// </summary>
 public class ColiderCheck : MonoBehaviour
 {
+    public static List<string> isNotConvex = new List<string>();
+    /// <summary>
+    /// Colider vertex order
+    /// </summary>
     static int[,] order = {
             { 0, 1, 3, 2, 0, 3, 2, 1 },
             { 0, 4, 6, 2, 0, 6, 2, 4 },
@@ -15,48 +21,38 @@ public class ColiderCheck : MonoBehaviour
     };
     BoxCollider bx;
     Rigidbody rb;
-    bool hadColider = true;
     const uint NUM_VERTICES = 8;
-    public static List<string> isNotConvex = new List<string>();
     AssetManager asset;
     Vector3[] POSITION;
+    
     // Start is called before the first frame update
-    private void OnEnable()
+    void OnEnable()
     {
         asset = FindObjectOfType<AssetManager>();
         rb = this.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true;
-  
-        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
-        StartCoroutine("SetMeshTrigger");
-        if (ArtistInfo.colderSize == Vector3.zero)
-        {
-            //bx = this.gameObject.AddComponent<BoxCollider>();
-            //bx.isTrigger = false;
 
-        }
-        else
-        {
+        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
+        SetMeshTrigger();
+        if (ArtistInfo.colderSize != Vector3.zero)
+        { 
             bx = this.gameObject.GetComponent<BoxCollider>();
             bx.isTrigger = true;
             ConstrcutCube();
         }
 
+
     }
 
-    IEnumerable SetMeshTrigger()
+    void SetMeshTrigger()
     {
-        if (ExtensionMethods.ConcertToBool(asset.infoArwork[ArtistInfo.artistKey].uploadOptions)[5]) StopCoroutine("SetMeshTrigger");
+        if (ExtensionMethods.ConcertToBool(asset.infoArwork[ArtistInfo.artistKey].uploadOptions)[5]) return;
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-        int i = 0;
-        while (i<ms.Length)
+        foreach (var item in ms)
         {
-            ms[i].convex = true;
-            ms[i].isTrigger = true;
-            yield return true;
-            i++;
+            item.convex = true;
+            item.isTrigger = true;
         }
-     
     }
     void Rever(string key)
     {
@@ -89,28 +85,35 @@ public class ColiderCheck : MonoBehaviour
 
             if (ArtistInfo.colderSize != Vector3.zero)
             {
+                if (!bx)
+                    bx = this.gameObject.AddComponent<BoxCollider>();
+
                 bx.size = ArtistInfo.colderSize;
                 bx.isTrigger = true;
-
             }
             else
             {
                 //bx.isTrigger = false;
-                GeneralState.colided  = SizeCheck();
+                if (colide == false)
+                    GeneralState.colided = SizeCheck();    //<- check if mesh size and center 
                 Debug.Log("Size Check :" + GeneralState.colided);
+                SetColor(GeneralState.colided);
+
                 break;
             }
 
-
-            GeneralState.colided = CheckIfMeshIsContatined();
+            GeneralState.colided = CheckIfMeshIsContatined();  //<-  check if mesh center is contained in box
+            SetColor(GeneralState.colided);
             Debug.Log("Colisions Check 1" + GeneralState.colided);
             if (GeneralState.colided) break;
 
-            GeneralState.colided = StartTest1();
+            GeneralState.colided = StartTest1();//<- Liht Grid rayPerimiter to search if any part of the mesh passes the perimeter
+            SetColor(GeneralState.colided);
             Debug.Log("Colisions check 2" + GeneralState.colided);
             if (GeneralState.colided) break;
 
-            GeneralState.colided = StartTest2();
+            GeneralState.colided = StartTest2();  //<-  Dense Grid rayPerimiter to search if any part of the mesh passes the perimeter
+            SetColor(GeneralState.colided);
             Debug.Log("Colisions check 3" + GeneralState.colided);
             StopAllCoroutines();
             yield return null;
@@ -119,7 +122,13 @@ public class ColiderCheck : MonoBehaviour
 
     bool SizeCheck()
     {
-        return (ObjectBounds(this.transform.GetChild(1)).size.magnitude > GeneralState.maxColideSize.magnitude);
+
+        GameObject artwork = this.transform.GetChild(1).gameObject;
+        Bounds bs = ObjectBounds(artwork.transform);
+        bool temp = (bs.size.magnitude > GeneralState.maxColideSize.magnitude);
+        if (!temp)
+            temp = Vector3.Distance(bs.center, artwork.transform.parent.position) > GeneralState.maxDistance;
+        return temp;
     }
     Bounds ObjectBounds(Transform obj)
     {
@@ -249,7 +258,6 @@ public class ColiderCheck : MonoBehaviour
             else
             {
                 //Debug.Log("HitSomething" + hit.GetType());
-                //Debug.DrawRay(origin, direction - origin, Color.red);
                 GeneralState.colided = false;
                 return false;
             }
@@ -271,31 +279,35 @@ public class ColiderCheck : MonoBehaviour
         if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
             GeneralState.colided = false;
-            Debug.Log(other.gameObject.name);
-
-            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
-            foreach (var item in ms)
-            {
-                item.material.color = Color.white; ////todo save material to put back in original state
-            }
-
+            SetColor(GeneralState.colided);
+            colide = false;
         }
 
     }
+    bool colide;
     private void OnTriggerStay(Collider other)
     {
         if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
-            Debug.Log(other.transform.root.name + "  " + ArtistInfo.artistKey);
+            colide = true;
             GeneralState.colided = true;
-            Debug.Log(other.gameObject.name);
-            MeshRenderer[] ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
-            foreach (var item in ms)
-            {
-                item.material.color = Color.red;
-            }
-
+            SetColor(GeneralState.colided);
         }
 
+    }
+
+    void SetColor(bool state  )
+    {
+        Color color;
+        if (!state)
+            color = Color.white;
+        else
+            color = Color.red;
+            
+        MeshRenderer []  ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
+            foreach (var item in ms)
+            {
+                item.material.color = color;
+            } 
     }
 }

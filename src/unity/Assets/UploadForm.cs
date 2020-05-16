@@ -8,13 +8,11 @@ public class UploadForm : MonoBehaviour
 {
     Multiplayer multiplayer;
     AssetManager assetManager;
-    TMP_Text log;
     // Start is called before the first frame update
     void Start()
     {
         assetManager = FindObjectOfType<AssetManager>();
         multiplayer = FindObjectOfType<Multiplayer>();
-        log = FindObjectOfType<FittingRoom>().log;
     }
     
     public bool SendArtwork()
@@ -25,25 +23,23 @@ public class UploadForm : MonoBehaviour
         if (!GatherString()) return false;
         if (!GatherColiderData()) return false;
 
-        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace ) /// change everithing but the artworkInfo
+        if (ArtistInfo.hasArt & ArtistInfo.keepInPlace) /// change everithing but the artworkInfo
         {
-       
-            toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
-            assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
-            ArtistInfo.colderSize,
-            ArtistInfo.urlArt,
-            ArtistInfo.description,
-            ArtistInfo.uploadOptionsA,
-            "ArtWork");
-        
             if (!GeneralState.colided)
             {
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA!=assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
+                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
                     assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
                 }
                 GeneralState.AceptAssets = true;
+                toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
+                        assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
+                        ArtistInfo.colderSize,
+                        ArtistInfo.urlArt,
+                        ArtistInfo.description,
+                        ArtistInfo.uploadOptionsA,
+                        "ArtWork");
                 multiplayer.w.SendString(toSend);
                 return true;
             }
@@ -59,10 +55,11 @@ public class UploadForm : MonoBehaviour
             {
                 if (GeneralState.colided)
                 {
-                    restartPosition(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
+                    FindObjectOfType<FittingRoom>().ResetPosition();
+                    //restartPosition(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
                 }
                 toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
-                
+
 
                 if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
                 {
@@ -246,14 +243,16 @@ public class UploadForm : MonoBehaviour
 
     void restartPosition( GameObject obj)
     {
-        obj.transform.localScale = Vector3.zero;
-        if (log.IsActive())
-        {
-            log.text =
-                "Mesh out of bounds, Scale set to: 0 and Pos to: 0 " +
-                "WORNING ACTION IS NOT SAVED TILL object ajusted corectly in  the colider!!!!";
-            log.color = Color.red;
-        }
+        FindObjectOfType<FittingRoom>().ResetPosition();
+
+        //obj.transform.localScale = Vector3.zero;
+        //if (log.IsActive())
+        //{
+        //    log.text =
+        //        "Mesh out of bounds, Scale set to: 0 and Pos to: 0 " +
+        //        "WORNING ACTION IS NOT SAVED TILL object ajusted corectly in  the colider!!!!";
+        //    log.color = Color.red;
+        //}
 
 
 

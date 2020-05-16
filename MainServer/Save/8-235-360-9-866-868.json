@@ -1,14 +1,14 @@
 {
   "8-235-360-9-866-868": {
     "position": {
-      "x": 2,
-      "y": -4,
-      "z": 0
+      "x": -7,
+      "y": -8,
+      "z": 5
     },
     "artworkScale": {
-      "x": 2.409924,
-      "y": 2.409924,
-      "z": 2.409924
+      "x": 20,
+      "y": 20,
+      "z": 20
     },
     "platform": {
       "x": -8.855924,
@@ -21,9 +21,9 @@
       "z": 147.2579
     },
     "colideScale": {
-      "x": 10,
-      "y": 10,
-      "z": 10
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
     "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/master/demo/pirate.obj",
     "description": "Timmy9\n\n\n\n",

@@ -85,8 +85,6 @@ public class AssetManager : MonoBehaviour
 
                     if (i == value.Count-1)
                     {
-                        //if (ArtistInfo.artistKey == "")
-                            //Loader.loadedModels.Clear();
                         GeneralState.AceptAssets = false;
                         return;
                     }

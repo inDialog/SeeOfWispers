@@ -6,9 +6,9 @@
       "z": 0
     },
     "artworkScale": {
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 14.5619,
+      "y": 14.5619,
+      "z": 14.5619
     },
     "platform": {
       "x": 19.38236,
@@ -21,9 +21,9 @@
       "z": 0
     },
     "colideScale": {
-      "x": 10,
-      "y": 10,
-      "z": 10
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
     "url": "https://raw.githubusercontent.com/assimp/assimp/master/test/models/OBJ/box.obj",
     "description": "Timmy15\n\n\n\n",
