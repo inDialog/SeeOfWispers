@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\ArtistInfo.cs" />
     <Compile Include="Assets\ArtistLogIn.cs" />
+    <Compile Include="Assets\ArtistTextManager.cs" />
     <Compile Include="Assets\AsImpL\Examples\Scripts\AsImpLSample.cs" />
     <Compile Include="Assets\AsImpL\Examples\Scripts\Util\EditorLikeCameraController.cs" />
     <Compile Include="Assets\AsImpL\Scripts\Dataset\DataSet.cs" />
@@ -94,12 +95,10 @@
     <Compile Include="Assets\Fallow.cs" />
     <Compile Include="Assets\FittingRoom.cs" />
     <Compile Include="Assets\InspectorManager.cs" />
-    <Compile Include="Assets\MoveIII.cs" />
     <Compile Include="Assets\PlayerUX.cs" />
     <Compile Include="Assets\RadarController.cs" />
     <Compile Include="Assets\Scripts\AniMainCharacter.cs" />
     <Compile Include="Assets\Scripts\AnimationCharacter.cs" />
-    <Compile Include="Assets\Scripts\ArtistTextManager.cs" />
     <Compile Include="Assets\Scripts\Disable_input.cs" />
     <Compile Include="Assets\Scripts\Experimental\DDASampling.cs" />
     <Compile Include="Assets\Scripts\Experimental\L0_Isolines.cs" />
@@ -116,6 +115,7 @@
     <Compile Include="Assets\Scripts\Remap.cs" />
     <Compile Include="Assets\Scripts\StructuredVolumeSampling.cs" />
     <Compile Include="Assets\Scripts\TextManager.cs" />
+    <Compile Include="Assets\Scripts\UXTools.cs" />
     <Compile Include="Assets\Scripts\Utils\FollowSceneCam.cs" />
     <Compile Include="Assets\Scripts\Utils\HiResScreenShots.cs" />
     <Compile Include="Assets\Scripts\Utils\ScreenCapture.cs" />
@@ -128,6 +128,7 @@
     <Compile Include="Assets\UiFunctions.cs" />
     <Compile Include="Assets\Unlock.cs" />
     <Compile Include="Assets\UploadForm.cs" />
+    <Compile Include="Assets\UserExperienceManager.cs" />
     <Compile Include="Assets\WebGLSupport\WebGLInput\Detail\RebuildChecker.cs" />
     <Compile Include="Assets\WebGLSupport\WebGLInput\WebGLInput.cs" />
     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\IInputField.cs" />
@@ -168,37 +169,37 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -378,7 +379,7 @@
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>/Users/segalcodin/Documents/GitHub/SeeOfWispers/src/unity/Assets/Plugins/websocket-sharp.dll</HintPath>
+      <HintPath>/Users/segalcodin/Documents/Programing/Unity/unity/Assets/Plugins/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.3f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

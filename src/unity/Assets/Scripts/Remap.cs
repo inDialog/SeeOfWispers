@@ -108,9 +108,9 @@ public static class ExtensionMethods
         Color.b;
     }
 
-    public static Vector3 Trip (Vector3 Original, Vector3 target,Transform space)
+    public static Vector3 Trip(Vector3 Original, Vector3 target, Transform space)
     {
-       return  space.InverseTransformPoint(Original) -target;
+        return space.InverseTransformPoint(Original) - target;
 
     }
     public static void ConvertConvexObjects(Dictionary<string, InfoArtwork> infoArwork, out List<string> converted)
@@ -137,23 +137,23 @@ public static class ExtensionMethods
     public static bool RestitureConvertedObjects(List<string> wasConverted)
     {
         AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
-        int i =0;
-            while (i < wasConverted.Count)
+        int i = 0;
+        while (i < wasConverted.Count)
+        {
+            if (_as.infoArwork.ContainsKey(wasConverted[i]))
             {
-                if (_as.infoArwork.ContainsKey(wasConverted[i]))
+                if (_as.infoArwork[wasConverted[i]].@object)
                 {
-                    if (_as.infoArwork[wasConverted[i]].@object)
+                    MeshCollider[] meshFilters = _as.infoArwork[wasConverted[i]].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+                    foreach (var item2 in meshFilters)
                     {
-                        MeshCollider[] meshFilters = _as.infoArwork[wasConverted[i]].@object.transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
-                        foreach (var item2 in meshFilters)
-                        {
                         item2.isTrigger = false;
                         item2.convex = false;
-                        }
                     }
                 }
-                i++;
             }
+            i++;
+        }
         return true;
     }
     public static void FillInputText(string tmp_key, Text[] inputField, AssetManager astMan)
@@ -171,5 +171,51 @@ public static class ExtensionMethods
         else
             Debug.LogWarning("They key for inputing text in the artist description its missing");
     }
+    public static Bounds ObjectBounds(Transform obj)
+    {
+        Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
+        MeshRenderer[] mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
+        for (int i = 0; i < mrs.Length; i++)
+        {
+            if (i == 0) meshesBounds = mrs[i].bounds;
+            else meshesBounds.Encapsulate(mrs[i].bounds);
+        }
+        return meshesBounds;
+    }
+    public static Vector3 LocationTeleport(string artKey, AssetManager astMan)
+    {
+        Vector3 pos;
+        pos = Vector3.zero;
+        if (artKey != "" & artKey != null)
+        {
+            GameObject artContainer;
+            GameObject containerMesh;
+            artContainer = astMan.infoArwork[artKey].@object;
+            if (artContainer.transform.childCount < 2)
+            {
+                Debug.LogWarning("There is no artwork at this key");
+                return pos;
+            }
+            containerMesh = artContainer.transform.GetChild(1).gameObject;
+            Bounds tmp_mesh_bounds;
+            tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+            float biggest_side = Check_Sides_Values(tmp_mesh_bounds.size);
+            pos = tmp_mesh_bounds.center - new Vector3(0, 0, biggest_side);
+        }
+        else
+            Debug.LogWarning("They key for teleporting object its missing");
+        return pos;
+    }
+    public static float Check_Sides_Values(Vector3 vec3)
+    {
+        float tmp;
+        tmp = 0;
+        if (vec3.x > vec3.y && vec3.x > vec3.z)
+            tmp = vec3.x;
+        else if (vec3.y > vec3.x && vec3.y > vec3.z)
+            tmp = vec3.y;
+        else if (vec3.z > vec3.y && vec3.z > vec3.x)
+            tmp = vec3.z;
+        return (tmp);
+    }
 }
-

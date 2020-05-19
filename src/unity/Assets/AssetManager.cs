@@ -33,12 +33,14 @@ public class AssetManager : MonoBehaviour
 {
     public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
     public event Action<bool,string> NewArtwork;
-    public List<String> artistName;
     public GameObject prefabBase;
+    public List<String> artistName;
     MultiObjectImporter moImporter;
+    private int index_duplicate;
     private void Start()
     {
         moImporter = GetComponent<MultiObjectImporter>();
+        index_duplicate = 0;
     }
 
     public List<InfoArtwork> UpdateArtwork
@@ -119,7 +121,19 @@ public class AssetManager : MonoBehaviour
             infoArwork[_id].SpawnState = "FullySpawn";
             /////====addd to list of name  for search bar 
             if (infoArwork[_id].description.Split('\n')[0] != "")
-                artistName.Add(infoArwork[_id].description.Split('\n')[0]);
+            {
+                if (!artistName.Contains(infoArwork[_id].description.Split('\n')[0]))
+                {
+                    artistName.Add(infoArwork[_id].description.Split('\n')[0]);
+                }
+                else
+                {
+                    artistName.Add(infoArwork[_id].description.Split('\n')[0] + "*" + index_duplicate);
+                    Debug.LogWarning("I all ready have the name");
+                    index_duplicate += 1;
+                }
+                
+            }
             else
                 artistName.Add("NO NAME");
             return;
@@ -156,6 +170,7 @@ public class AssetManager : MonoBehaviour
         {
             Destroy(infoArwork[_key].@object);
             infoArwork.Remove(_key);
+            //artistName.Remove(infoArwork[_key].description.Split('\n')[0]);
         }
     }
     ImportOptions ComposeOptions(InfoArtwork value, bool[] importOption, string status)

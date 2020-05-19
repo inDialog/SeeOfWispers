@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AniMainCharacter
     - ArtistLogIn
+    - ArtistTextManager
     - AsImpL.MultiObjectImporter
     - AsImpL.ObjectImporterUI
     - AsImpL.PathSettings
@@ -10,12 +11,17 @@ ScriptsOnlyBuild:
     - CameraController
     - CameraMode
     - Disable_input
+    - FittingRoom
+    - InspectorManager
     - MoveII
     - MoveOthers
     - Multiplayer
+    - RadarController
     - TextManager
     - TriggerText
     - UXManager
+    - UploadForm
+    - UserExperienceManager
     - WebGLSupport.WebGLInput
     Unity.Postprocessing.Runtime.dll:
     - UnityEngine.Rendering.PostProcessing.AmbientOcclusion
@@ -143,75 +149,87 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11492}
     - Class: 114
-      Script: {instanceID: 11520}
+      Script: {instanceID: 11512}
     - Class: 114
-      Script: {instanceID: 11624}
+      Script: {instanceID: 11522}
     - Class: 114
-      Script: {instanceID: 11716}
+      Script: {instanceID: 11626}
     - Class: 114
-      Script: {instanceID: 11732}
+      Script: {instanceID: 11718}
     - Class: 114
-      Script: {instanceID: 11840}
+      Script: {instanceID: 11734}
     - Class: 114
-      Script: {instanceID: 11862}
+      Script: {instanceID: 11842}
     - Class: 114
-      Script: {instanceID: 11936}
+      Script: {instanceID: 11864}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 11940}
     - Class: 114
-      Script: {instanceID: 11996}
+      Script: {instanceID: 11958}
     - Class: 114
-      Script: {instanceID: 12146}
+      Script: {instanceID: 11970}
     - Class: 114
-      Script: {instanceID: 12208}
+      Script: {instanceID: 12002}
     - Class: 114
-      Script: {instanceID: 12238}
+      Script: {instanceID: 12152}
     - Class: 114
-      Script: {instanceID: 12320}
+      Script: {instanceID: 12214}
     - Class: 114
-      Script: {instanceID: 12376}
+      Script: {instanceID: 12244}
     - Class: 114
-      Script: {instanceID: 12400}
+      Script: {instanceID: 12294}
     - Class: 114
-      Script: {instanceID: 12548}
+      Script: {instanceID: 12328}
     - Class: 114
-      Script: {instanceID: 12580}
+      Script: {instanceID: 12384}
     - Class: 114
-      Script: {instanceID: 12582}
+      Script: {instanceID: 12408}
+    - Class: 114
+      Script: {instanceID: 12556}
     - Class: 114
       Script: {instanceID: 12588}
     - Class: 114
-      Script: {instanceID: 12634}
+      Script: {instanceID: 12590}
     - Class: 114
-      Script: {instanceID: 12638}
+      Script: {instanceID: 12596}
     - Class: 114
-      Script: {instanceID: 12654}
+      Script: {instanceID: 12642}
     - Class: 114
-      Script: {instanceID: 12764}
+      Script: {instanceID: 12646}
     - Class: 114
-      Script: {instanceID: 12872}
+      Script: {instanceID: 12662}
     - Class: 114
-      Script: {instanceID: 12942}
+      Script: {instanceID: 12672}
     - Class: 114
-      Script: {instanceID: 13094}
+      Script: {instanceID: 12774}
     - Class: 114
-      Script: {instanceID: 13114}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13216}
+      Script: {instanceID: 12952}
     - Class: 114
-      Script: {instanceID: 13226}
+      Script: {instanceID: 13106}
     - Class: 114
-      Script: {instanceID: 13260}
+      Script: {instanceID: 13126}
     - Class: 114
-      Script: {instanceID: 13320}
+      Script: {instanceID: 13200}
     - Class: 114
-      Script: {instanceID: 13346}
+      Script: {instanceID: 13230}
     - Class: 114
-      Script: {instanceID: 13366}
+      Script: {instanceID: 13240}
     - Class: 114
-      Script: {instanceID: 13386}
+      Script: {instanceID: 13274}
     - Class: 114
-      Script: {instanceID: 13408}
+      Script: {instanceID: 13336}
+    - Class: 114
+      Script: {instanceID: 13354}
+    - Class: 114
+      Script: {instanceID: 13364}
+    - Class: 114
+      Script: {instanceID: 13384}
+    - Class: 114
+      Script: {instanceID: 13404}
+    - Class: 114
+      Script: {instanceID: 13426}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -321,7 +339,7 @@ ScriptsOnlyBuild:
     className: MotionBlur
   - hash:
       serializedVersion: 2
-      Hash: 6fa37d425f6b1714c34332424dd3d1b4
+      Hash: 58b1007138ebee1271c5f03b59a74a6d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UXManager
@@ -373,6 +391,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 796366a2b734cded98b241a3eebf2706
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FittingRoom
   - hash:
       serializedVersion: 2
       Hash: f542c1afca5bb4022f91fdda19b8d622
@@ -465,7 +489,7 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
-      Hash: 36b47d882cfc43a88f6409b353459835
+      Hash: 906c17a1dd81ea714e5cc8e6cff8edaa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Multiplayer
@@ -495,7 +519,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: 9794ffceb2c82db96b867235f61d4931
+      Hash: 0c62d611082e60db64acae794bdac117
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AssetManager
@@ -525,6 +549,12 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RadarController
+  - hash:
+      serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -543,7 +573,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: c7ebc267ac34e4f8291246fc076932cb
+      Hash: 8b68603b9da5a86d19dd75645e6d82d2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ArtistLogIn
@@ -615,13 +645,19 @@ ScriptsOnlyBuild:
     className: AutoExposure
   - hash:
       serializedVersion: 2
+      Hash: ca8a7699623b0ce66cd1ac79a65023e2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UserExperienceManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
-      Hash: 08b84a60787a3760aa8ddea4bce70316
+      Hash: 9baee321894620f5280e19d2530f578f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraController
@@ -705,7 +741,7 @@ ScriptsOnlyBuild:
     className: PathSettings
   - hash:
       serializedVersion: 2
-      Hash: 7d80dc2a72874cd13e8a4f26f30937b2
+      Hash: 20cbc04a6db4a2df92c506e017b3103e
     assemblyName: Assembly-CSharp.dll
     namespaceName: AsImpL
     className: MultiObjectImporter
@@ -771,6 +807,12 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UploadForm
+  - hash:
+      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -795,7 +837,7 @@ ScriptsOnlyBuild:
     className: ScreenCapture
   - hash:
       serializedVersion: 2
-      Hash: 3cdc784b80917bf58ddd4a094e9cc651
+      Hash: 489e9b9f06cfcf30cd50af57bd375fd6
     assemblyName: Assembly-CSharp.dll
     namespaceName: AsImpL.Examples
     className: AsImpLSample
@@ -825,6 +867,12 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ColiderCheck
+  - hash:
+      serializedVersion: 2
       Hash: 245b339d4ba41202ebe1b43b3e170bfe
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -849,7 +897,7 @@ ScriptsOnlyBuild:
     className: TurbulentMotion
   - hash:
       serializedVersion: 2
-      Hash: 2af43f00c0156578a630a91f81023b43
+      Hash: da106be3723ff4c74cd2e1eefdab7fd1
     assemblyName: Assembly-CSharp.dll
     namespaceName: AsImpL
     className: LoaderObj
@@ -883,6 +931,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: sceneManger
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ArtistTextManager
   - hash:
       serializedVersion: 2
       Hash: d5630f96bd5a6a6eed7e1754c3fb8703
@@ -975,6 +1029,12 @@ ScriptsOnlyBuild:
     className: Dropdown
   - hash:
       serializedVersion: 2
+      Hash: 7e38817adc3b410b71e29a2b8a4cf63a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InspectorManager
+  - hash:
+      serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -1018,4 +1078,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - Assets/Scenes/Template.unity
-  playerPath: /Users/segalcalin/Documents/GitHub/Server_S.O.W/Export
+  playerPath: /Users/segalcodin/Documents/Programing/Unity/Builds/test_webgl_COC

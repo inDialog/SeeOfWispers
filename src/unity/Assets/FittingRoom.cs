@@ -18,7 +18,6 @@ public class FittingRoom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         assetManager = GetComponent<AssetManager>();
         mainSlider.onValueChanged.AddListener(SetScale);
         upload = FindObjectOfType<UploadForm>();
@@ -182,6 +181,17 @@ public class FittingRoom : MonoBehaviour
         }
 
     }
+
+    void RotateAroundPoint(Transform aTrans, Vector3 aPoint, Vector3 aAxis, float aAngle)
+    {
+        var dir = aTrans.position - aPoint;
+        var q = Quaternion.AngleAxis(aAngle, aAxis);
+        aTrans.position = aPoint + q * dir;
+        aTrans.rotation = q * aTrans.rotation;
+    }
+
+
+
     private IEnumerator StartFittingRoom()
     {
         log.text = "Starting Fitting room";
@@ -202,7 +212,7 @@ public class FittingRoom : MonoBehaviour
                     }
                  
 
-                    if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(0))
+                    if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(1))
                     {
                         float horizontalSpeed = 5.0F;
                         float verticalSpeed = 5.0F;

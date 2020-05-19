@@ -18,6 +18,7 @@ public class InspectorManager : MonoBehaviour
     private TMP_InputField searchField;
     private Text[] inputfields_ArtistInfo;
     private int count;
+    private bool MoveAlsoCharacter;
 
     private void Awake() //// activates ones time 
     {
@@ -28,7 +29,7 @@ public class InspectorManager : MonoBehaviour
         searchField = navigationUI.GetComponentInChildren<TMP_InputField>();
         Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
         inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
-        teleportButton = GameObject.FindWithTag("BtnTeleport");
+        teleportButton = GameObject.FindWithTag("Teleport");
         Button telButton = teleportButton.GetComponent<Button>();
 
         telButton.onClick.AddListener(MoveCharacter);
@@ -37,6 +38,11 @@ public class InspectorManager : MonoBehaviour
         dropDown.onValueChanged.AddListener(ChangeDropDownValue);
         searchField.onEndEdit.AddListener(SearchForArtist);
         navigationUI.SetActive(false);
+        FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
+    }
+    void FillTextOnCollision(string key)
+    {
+        ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
     }
 
     private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
@@ -46,8 +52,39 @@ public class InspectorManager : MonoBehaviour
             MoveCamera(cam2Controller, assetManger.infoArwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
             ExtensionMethods.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo, assetManger);
+            MoveAlsoCharacter = true;
         }
     }
+
+    private void OnGUI()
+    {
+        Event e = Event.current;
+        ChangeCameraPosition(e);
+    }
+
+    void ChangeCameraPosition(Event e)
+    {
+        if (e.button == 1 && e.isMouse && e.type == EventType.MouseDown)
+        {
+            Camera activeCamere = UXTools.FindActiveCamera();
+            string tmp_key = UXTools.GetKeyFromRay(activeCamere);
+            if (tmp_key != null && assetManger.infoArwork.ContainsKey(tmp_key))
+            {
+                string name;
+                name = assetManger.infoArwork[tmp_key].description.Split('\n')[0];
+                dropDown.value = assetManger.artistName.IndexOf(name);
+                if (MoveAlsoCharacter)
+                {
+                    MoveCharacter();
+                }
+            }
+            else
+            {
+                Debug.LogWarning("This key its not valid in Change Camera Inspector");
+            }
+        }
+    }
+
     void SearchForArtist(string artist)
     {
         if (artist != "")
@@ -83,21 +120,7 @@ public class InspectorManager : MonoBehaviour
                 return tmp_keyvalue;
         return "";
     }
-    //void FillInputText(string tmp_key, Text[] inputField, AssetManager astMan)
-    //{
-    //    if (tmp_key != "" & tmp_key != null)
-    //    {
-    //        string[] des_art;
-    //        des_art = astMan.infoArwork[tmp_key].description.Split('\n');
-    //        inputField[0].text = "";
-    //        inputField[1].text = "";
-    //        inputField[0].text = string.Format("Artist : {0}  -  Title : {1} - Format: {2} - Year : {3}",
-    //                                           "NAME", des_art[0], des_art[2], (des_art[1].Split('-').Count() < 3 ? "****" : "20" + des_art[1].Split('-')[2]));
-    //        inputField[1].text = des_art[3];
-    //    }
-    //    else
-    //        Debug.LogWarning("They key for inputing text in the artist description its missing");
-    //}
+
     void InstantiateDropDown(List<string> artistName)
     {
         if (artistName.Count > 0)
@@ -141,8 +164,8 @@ public class InspectorManager : MonoBehaviour
         }
         Bounds tmp_mesh_bounds;
         GameObject tmp_target = new GameObject();
-        tmp_mesh_bounds = ObjectBounds(containerMesh.transform);
-        float biggest_side = Check_Sides_Values(tmp_mesh_bounds.size);
+        tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+        float biggest_side = ExtensionMethods.Check_Sides_Values(tmp_mesh_bounds.size);
         tmp_target.transform.position = tmp_mesh_bounds.center;
         camCon.target = tmp_target.transform;
         camCon.desiredDistance = tmp_mesh_bounds.size.magnitude + biggest_side / 2;
@@ -157,56 +180,6 @@ public class InspectorManager : MonoBehaviour
         index_artwork = dropDown.value;
         artistSelected = dropDown.options[index_artwork].text;
         key = GETartistKey(artistSelected);
-        Debug.Log(key);
-        Teleport(key, Bird);
-    }
-
-    void Teleport(string artKey, GameObject obj)
-    {
-        if (artKey != "" & artKey != null)
-        {
-            GameObject artContainer;
-            GameObject containerMesh;
-            if (!(artContainer = assetManger.infoArwork[artKey].@object))
-            {
-                Debug.LogWarning("No Art container associated with this key");
-                return;
-            }
-            if (!(containerMesh = artContainer.transform.GetChild(1).gameObject))
-            {
-                Debug.LogWarning("No mesh container associated with this Art Container");
-                return;
-            }
-            Bounds tmp_mesh_bounds;
-            tmp_mesh_bounds = ObjectBounds(containerMesh.transform);
-            float biggest_side = Check_Sides_Values(tmp_mesh_bounds.size);
-            obj.transform.position = tmp_mesh_bounds.center - new Vector3(0, 0, biggest_side);
-        }
-        else
-            Debug.LogWarning("They key for teleporting object its missing");
-    }
-    float Check_Sides_Values(Vector3 vec3)
-    {
-        float tmp;
-        tmp = 0;
-        if (vec3.x > vec3.y && vec3.x > vec3.z)
-            tmp = vec3.x;
-        else if (vec3.y > vec3.x && vec3.y > vec3.z)
-            tmp = vec3.y;
-        else if (vec3.z > vec3.y && vec3.z > vec3.x)
-            tmp = vec3.z;
-        return (tmp);
-    }
-
-    Bounds ObjectBounds(Transform obj)
-    {
-        Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
-        MeshRenderer[] mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
-        for (int i = 0; i < mrs.Length; i++)
-        {
-            if (i == 0) meshesBounds = mrs[i].bounds;
-            else meshesBounds.Encapsulate(mrs[i].bounds);
-        }
-        return meshesBounds;
+        Bird.transform.position = ExtensionMethods.LocationTeleport(key, assetManger);
     }
 }
