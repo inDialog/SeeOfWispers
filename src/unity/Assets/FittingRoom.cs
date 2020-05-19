@@ -162,7 +162,7 @@ public class FittingRoom : MonoBehaviour
     }
     void SetLog(GameObject artwork,bool state)
     {
-        if (state)
+        if (!state)
         {
             log.color = Color.white;
             log.text = "ArtWork pos:" + artwork.transform.localPosition + '\n'
@@ -208,7 +208,7 @@ public class FittingRoom : MonoBehaviour
                     Vector3 addOn = artwork.transform.localPosition;
                     if (Input.anyKey)
                     {
-                        SetLog(artwork, !GeneralState.colided);
+                        SetLog(artwork, GeneralState.colided);
                     }
                  
 
@@ -249,8 +249,8 @@ public class FittingRoom : MonoBehaviour
                         //Debug.Log("Colision state = "+GeneralState.colided);
                         if (artwork.transform.localPosition != addOn)
                         {
-                            UpdateArt(artwork);
                             artwork.transform.localPosition = addOn;
+                            UpdateArt(artwork);
                         }
                         if (Input.GetKeyUp(KeyCode.C))
                         {

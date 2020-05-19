@@ -66,9 +66,16 @@ public static class ExtensionMethods
     }
     public static string ComposeString(TMP_InputField[] inputFields)
     {
-        return inputFields[0].text + "\n" + inputFields[1].text + "\n" + inputFields[2].text + "\n" + inputFields[3].text + "\n" + inputFields[4].text;
+        string temp = "";
+        for (int i = 0; i < inputFields.Length; i++)
+        {
+            if (i == inputFields.Length - 1)
+                temp += inputFields[i].text;
+            else
+                temp += inputFields[i].text + "\n";
+        }
+        return temp;
     }
-
     public static bool CheckURl(string url)
     {
         if (url == "")
