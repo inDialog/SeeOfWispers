@@ -28,14 +28,14 @@ public class UploadForm : MonoBehaviour
         {
             if (!GeneralState.colided)
             {
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
+                if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
                     assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
                 }
                 GeneralState.AceptAssets = true;
-                toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
-                        assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
+                toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
+                        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
                         ArtistInfo.colderSize,
                         ArtistInfo.urlArt,
                         ArtistInfo.description,
@@ -57,12 +57,12 @@ public class UploadForm : MonoBehaviour
                 if (GeneralState.colided)
                 {
                     FindObjectOfType<FittingRoom>().ResetPosition();
-                    //restartPosition(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
+                    //restartPosition(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
                 }
-                toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
+                toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
 
 
-                if (assetManager.infoArwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions)
+                if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
                     assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
@@ -87,12 +87,12 @@ public class UploadForm : MonoBehaviour
     public void UpdateExistingArtwork()
     {
 
-        string toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
-            assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
-           assetManager.infoArwork[ArtistInfo.artistKey].colideScale,
-           assetManager.infoArwork[ArtistInfo.artistKey].url,
-           assetManager.infoArwork[ArtistInfo.artistKey].description,
-           assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions,
+        string toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
+            assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].url,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].description,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions,
             "ArtWork");
         if (!GeneralState.colided)
             multiplayer.w.SendString(toSend);
@@ -100,12 +100,12 @@ public class UploadForm : MonoBehaviour
     public void UpdateExistingArtwork(bool force)
     {
 
-        string toSend = FormatMessege(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
-            assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.position,
-           assetManager.infoArwork[ArtistInfo.artistKey].colideScale,
-           assetManager.infoArwork[ArtistInfo.artistKey].url,
-           assetManager.infoArwork[ArtistInfo.artistKey].description,
-           assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions,
+        string toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
+            assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].url,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].description,
+           assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions,
             "ArtWork");
             multiplayer.w.SendString(toSend);
     }
@@ -141,19 +141,19 @@ public class UploadForm : MonoBehaviour
     }
     public void FillInForms()
     {
-        ArtistInfo.colderSize = assetManager.infoArwork[ArtistInfo.artistKey].colideScale;
-        ArtistInfo.urlArt = assetManager.infoArwork[ArtistInfo.artistKey].url;
-        ArtistInfo.uploadOptionsA = assetManager.infoArwork[ArtistInfo.artistKey].uploadOptions;
+        ArtistInfo.colderSize = assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale;
+        ArtistInfo.urlArt = assetManager.InfoArtwork[ArtistInfo.artistKey].url;
+        ArtistInfo.uploadOptionsA = assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions;
         //// Artist Information
         ///
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
-        string[] st = assetManager.infoArwork[ArtistInfo.artistKey].description.Split('\n');
+        string[] st = assetManager.InfoArtwork[ArtistInfo.artistKey].description.Split('\n');
         for (int i = 0; i < st.Length; i++)
         {
             inputFields[i].text = st[i];
         }
 
-        UrlImput.text = assetManager.infoArwork[ArtistInfo.artistKey].url;
+        UrlImput.text = assetManager.InfoArtwork[ArtistInfo.artistKey].url;
         //// Upload uptions
         ///
         TMP_InputField[] _inputFields = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<TMP_InputField>();
@@ -238,8 +238,8 @@ public class UploadForm : MonoBehaviour
         {
             ArtistInfo.colderSize = Vector3.zero;
         }
-        if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
-            assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
+        if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
+            assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
         ArtistInfo.uploadOptionsA = "";
         if (toggles[4].isOn == false)
             toggles[5].isOn = false;

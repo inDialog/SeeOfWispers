@@ -23,7 +23,7 @@ public class RadarController : MonoBehaviour
             bx.size = ArtistInfo.colderSize;
         asset = FindObjectOfType<AssetManager>();
         mainCH = GameObject.FindGameObjectWithTag("Player");
-        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
+        ExtensionMethods.ConvertConvexObjects(asset.InfoArtwork, out isNotConvex);
         ShowBorder();
         if (InRangeOfArtwork != null)
             InRangeOfArtwork(true);
@@ -73,7 +73,7 @@ public class RadarController : MonoBehaviour
     }
     void ShowBorder()
     {
-        foreach (var item in asset.infoArwork)
+        foreach (var item in asset.InfoArtwork)
         {
             if (item.Key != ArtistInfo.artistKey& item.Value.colideScale!=Vector3.zero)
                 boxes.Add(FindObjectOfType<FittingRoom>().CreateColider(item.Value.@object.transform));

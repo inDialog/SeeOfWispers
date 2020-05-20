@@ -31,8 +31,8 @@ public class InfoArtwork
 
 public class AssetManager : MonoBehaviour
 {
-    public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
-    public event Action<bool,string> NewArtwork;
+    private Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
+    public event Action<bool, string> NewArtwork;
     public GameObject prefabBase;
     public List<String> artistName;
     MultiObjectImporter moImporter;
@@ -42,6 +42,8 @@ public class AssetManager : MonoBehaviour
         moImporter = GetComponent<MultiObjectImporter>();
         index_duplicate = 0;
     }
+    public Dictionary<string, InfoArtwork> InfoArtwork { get { return infoArwork; } }
+        
 
     public List<InfoArtwork> UpdateArtwork
     {

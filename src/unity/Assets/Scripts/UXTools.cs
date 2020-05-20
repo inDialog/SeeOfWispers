@@ -138,7 +138,7 @@ public static class UXTools
     {
         string[] des_art;
         string FinalString;
-        des_art = astMan.infoArwork[_key].description.Split('\n');
+        des_art = astMan.InfoArtwork[_key].description.Split('\n');
         FinalString = "";
         FinalString = string.Format("Artist : {0}  -  Title : {1} - Format: {2} - Year : {3}",
                                            "NAME", des_art[0], des_art[2], (des_art[1].Split('-').Count() < 3 ? "****" : "20" + des_art[1].Split('-')[2]));
@@ -166,7 +166,7 @@ public static class UXTools
             else
             {
                 tmp_key = hits[i].transform.root.name;
-                if (astMan.infoArwork.ContainsKey(tmp_key))
+                if (astMan.InfoArtwork.ContainsKey(tmp_key))
                     return tmp_key;
                 else
                 {

@@ -1,17 +1,22 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UXManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AssetManager.cs">
     <Files>
       <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="694" Column="1" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="202" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="298" Column="1" />
-      <File FileName="Assets/UXManager.cs" Line="136" Column="10" />
+      <File FileName="Assets/AssetManager.cs" Line="45" Column="55" IsPinned="True" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="245" Column="12" />
+      <File FileName="Assets/UXManager.cs" Line="137" Column="40" />
       <File FileName="Assets/ArtistInfo.cs" />
-      <File FileName="Assets/FittingRoom.cs" Line="254" Column="26" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" Line="184" Column="43" NotebookId="1" />
+      <File FileName="Assets/ArtistTextManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="163" Column="1" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="163" Column="1" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="163" Column="1" />
+      <File FileName="Assets/FittingRoom.cs" Line="37" Column="1" NotebookId="1" />
+      <File FileName="Assets/UploadForm.cs" NotebookId="1" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="68" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/Remap.cs" NotebookId="1" />
       <File FileName="Assets/CameraController.cs" NotebookId="1" />
-      <File FileName="Assets/RadarController.cs" Line="16" Column="20" NotebookId="1" />
+      <File FileName="Assets/RadarController.cs" Line="26" Column="64" NotebookId="1" />
+      <File FileName="Assets/ColiderCheck.cs" Line="62" Column="78" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -19,7 +24,7 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dc0fdca3-bbbb-4cdb-8c9a-5e3f5c922f73" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bc10aebb-89ab-4b0c-b84c-1f9f486095db" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

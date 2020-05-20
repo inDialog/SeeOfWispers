@@ -47,9 +47,9 @@ public class InspectorManager : MonoBehaviour
 
     private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
     {
-        if (assetManger.infoArwork.Count > 0)
+        if (assetManger.InfoArtwork.Count > 0)
         {
-            MoveCamera(cam2Controller, assetManger.infoArwork.ElementAt(count).Value.@object);
+            MoveCamera(cam2Controller, assetManger.InfoArtwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
             ExtensionMethods.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo, assetManger);
             MoveAlsoCharacter = true;
@@ -68,10 +68,10 @@ public class InspectorManager : MonoBehaviour
         {
             Camera activeCamere = UXTools.FindActiveCamera();
             string tmp_key = UXTools.GetKeyFromRay(activeCamere);
-            if (tmp_key != null && assetManger.infoArwork.ContainsKey(tmp_key))
+            if (tmp_key != null && assetManger.InfoArtwork.ContainsKey(tmp_key))
             {
                 string name;
-                name = assetManger.infoArwork[tmp_key].description.Split('\n')[0];
+                name = assetManger.InfoArtwork[tmp_key].description.Split('\n')[0];
                 dropDown.value = assetManger.artistName.IndexOf(name);
                 if (MoveAlsoCharacter)
                 {
@@ -92,7 +92,7 @@ public class InspectorManager : MonoBehaviour
             string tmp_key = "";
             tmp_key = GETartistKey(artist);
             if (tmp_key != "")
-                dropDown.value = assetManger.infoArwork.Keys.ToList().FindIndex(tmp => tmp == tmp_key);
+                dropDown.value = assetManger.InfoArtwork.Keys.ToList().FindIndex(tmp => tmp == tmp_key);
             else
                 Debug.LogWarning("There was no given key associated with this name in SearchBar");
         }
@@ -104,7 +104,7 @@ public class InspectorManager : MonoBehaviour
         string key = GETartistKey(artistSelected);
         if (key != "")
         {
-            MoveCamera(cam2Controller, assetManger.infoArwork[key].@object);
+            MoveCamera(cam2Controller, assetManger.InfoArtwork[key].@object);
             ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
         }
         else
@@ -113,10 +113,10 @@ public class InspectorManager : MonoBehaviour
     string GETartistKey(string artistNAME)
     {
         string tmp_keyvalue;
-        tmp_keyvalue = assetManger.infoArwork.Where(temp => temp.Value.description.Split('\n')[0] == artistNAME)
+        tmp_keyvalue = assetManger.InfoArtwork.Where(temp => temp.Value.description.Split('\n')[0] == artistNAME)
                                              .Select(tmp => tmp.Key).FirstOrDefault();
         if (tmp_keyvalue != null)
-            if (assetManger.infoArwork.ContainsKey(tmp_keyvalue))
+            if (assetManger.InfoArtwork.ContainsKey(tmp_keyvalue))
                 return tmp_keyvalue;
         return "";
     }
@@ -134,7 +134,7 @@ public class InspectorManager : MonoBehaviour
 
     void NextArtwork()
     {
-        if (count <= assetManger.infoArwork.Count - 2)
+        if (count <= assetManger.InfoArtwork.Count - 2)
             count++;
         else
             count = 0;
@@ -145,7 +145,7 @@ public class InspectorManager : MonoBehaviour
         if (count != 0)
             count--;
         else
-            count = assetManger.infoArwork.Count - 1;
+            count = assetManger.InfoArtwork.Count - 1;
         dropDown.value = count;
     }
 

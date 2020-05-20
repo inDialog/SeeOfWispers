@@ -7,22 +7,70 @@ using System.Linq;
 using System;
 public class FittingRoom : MonoBehaviour
 {
-    public Slider mainSlider;
+    public Slider SpliderScale;
     public GameObject coliderBox;
     public Material worningMaterial, normalMaterial;
     public Button DeleteArtwork;
+    public InputField SetStep;
+    public InputField SetMoveStep;
+    private float step = 1;
+    
     AssetManager assetManager;
     UploadForm upload;
     public TMP_Text log;
-    Vector3 original;
     // Start is called before the first frame update
     void Start()
     {
+
         assetManager = GetComponent<AssetManager>();
-        mainSlider.onValueChanged.AddListener(SetScale);
+        SpliderScale.onValueChanged.AddListener(SetScale);
         upload = FindObjectOfType<UploadForm>();
         DeleteArtwork.onClick.AddListener(DestroyObject);
+        SetStep.onEndEdit.AddListener(setScaleTreashold);
+        SetMoveStep.onEndEdit.AddListener(setMoveStep);
+
     }
+    public void MoveArtwork(string direction)
+    {
+        if (!ArtistInfo.hasArt) return;
+        Vector3 addOn = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position;
+        switch (direction)
+        {
+            case "Right":
+                addOn = new Vector3(addOn.x, addOn.y, addOn.z + step);
+                break;
+            case "Left":
+                addOn = new Vector3(addOn.x, addOn.y, addOn.z - step);
+                break;
+            case "Up":
+                addOn = new Vector3(addOn.x, addOn.y + step, addOn.z);
+                break;
+            case "Down":
+                addOn = new Vector3(addOn.x, addOn.y - step, addOn.z);
+                break;
+            case "Fonnt":
+                addOn = new Vector3(addOn.x + step, addOn.y , addOn.z);
+                break;
+            case "Back":
+                addOn = new Vector3(addOn.x - step, addOn.y, addOn.z);
+                break;
+            default:
+                break;
+
+        }
+        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position = addOn;
+    }
+    void setScaleTreashold (string input)
+    {
+        int value = 0;
+        int.TryParse(input, out value);
+        SpliderScale.maxValue = value;
+    }
+    void setMoveStep(string input)
+    {
+        float.TryParse(input, out step);
+    }
+
     void DestroyObject()
     {
         if(ArtistInfo.hasArt)
@@ -33,7 +81,8 @@ public class FittingRoom : MonoBehaviour
 
     public void SetScale(float value)
     {
-        GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+        if (!ArtistInfo.hasArt) return;
+        GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
         artwork.transform.localScale = new Vector3(value, value, value);
         UpdateArt(artwork);
         log.text = "SET SCALE :" + value;
@@ -43,8 +92,8 @@ public class FittingRoom : MonoBehaviour
 
     public void ResetPosition()
     {
-        GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
-        AjustPosition(artwork, assetManager.infoArwork[ArtistInfo.artistKey].colideScale);
+        GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+        AjustPosition(artwork, assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale);
     }
 
 
@@ -64,7 +113,7 @@ public class FittingRoom : MonoBehaviour
         else
         {
            coliderBox = CreateColider(target);
-           log.text = "perimeter create: " + assetManager.infoArwork[target.name].colideScale;
+           log.text = "perimeter create: " + assetManager.InfoArtwork[target.name].colideScale;
 
         }
     }
@@ -77,7 +126,7 @@ public class FittingRoom : MonoBehaviour
         _coliderBox.layer = 12;
         _coliderBox.transform.rotation = target.rotation;
         _coliderBox.transform.rotation = target.rotation;
-        _coliderBox.transform.localScale = assetManager.infoArwork[target.name].colideScale;
+        _coliderBox.transform.localScale = assetManager.InfoArtwork[target.name].colideScale;
         _coliderBox.GetComponent<MeshRenderer>().material = normalMaterial;
 
         //Debug.Log(ArtistInfo.colderSize);
@@ -114,37 +163,6 @@ public class FittingRoom : MonoBehaviour
     {
         MeshRenderer[] mrs;
         Bounds meshesBounds = ObjectBounds(obj.transform, out mrs);
-
-        //if (boxSize == Vector3.zero)
-        //    boxSize = Vector3.one * 10;
-
-        //float[] distances = new float[3];
-        //distances[0] = boxSize.x - meshesBounds.size.x;
-        //distances[1] = boxSize.y - meshesBounds.size.y;
-        //distances[2] = boxSize.z - meshesBounds.size.z;
-
-        //if (distances[0] < 0 | distances[1] < 0 | distances[2] < 0)
-        //{
-        //    float[] temp = distances;
-        //    Array.Sort(temp);
-        //    int axis = Array.IndexOf(distances, temp[0]);
-        //    float ratio = 1;
-        //    if (axis == 0)
-        //    {
-        //        ratio = obj.transform.localScale.x / meshesBounds.size.x;
-        //    }
-        //    if (axis == 1)
-        //    {
-        //        ratio = obj.transform.localScale.x / meshesBounds.size.y;
-        //    }
-        //    if (axis == 2)
-        //    {
-        //        ratio = obj.transform.localScale.x / meshesBounds.size.z;
-        //    }
-        //    obj.transform.localScale = (ratio * obj.transform.localScale) * 2;
-
-        //}
-        //    Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + boxSize + "distances" + distances[0]);
         obj.transform.localScale = Vector3.one / 100;
 
         for (int i = 0; i < mrs.Length; i++)
@@ -198,13 +216,13 @@ public class FittingRoom : MonoBehaviour
         Debug.Log("1§");
         while (true)
         {
-            if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
+            if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
             {
-                if (assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
+                if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                 {
 
-                    DisplayColider(assetManager.infoArwork[ArtistInfo.artistKey].@object.transform);
-                    GameObject artwork = assetManager.infoArwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+                    DisplayColider(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform);
+                    GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
                     Vector3 addOn = artwork.transform.localPosition;
                     if (Input.anyKey)
                     {
@@ -227,24 +245,24 @@ public class FittingRoom : MonoBehaviour
                         {
                             if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y + 1, addOn.z);
                             else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z + 1);
+                                addOn = new Vector3(addOn.x, addOn.y, addOn.z + step);
 
                         }
                         if (Input.GetKeyDown(KeyCode.DownArrow))
                         {
                             if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y - 1, addOn.z);
                             else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z - 1);
+                                addOn = new Vector3(addOn.x, addOn.y, addOn.z - step);
 
                         }
                         if (Input.GetKeyDown(KeyCode.RightArrow))
                         {
-                            addOn = new Vector3(addOn.x + 1, addOn.y, addOn.z);
+                            addOn = new Vector3(addOn.x + step, addOn.y, addOn.z);
 
                         }
                         if (Input.GetKeyDown(KeyCode.LeftArrow))
                         {
-                            addOn = new Vector3(addOn.x - 1, addOn.y, addOn.z);
+                            addOn = new Vector3(addOn.x - step, addOn.y, addOn.z);
                         }
                         //Debug.Log("Colision state = "+GeneralState.colided);
                         if (artwork.transform.localPosition != addOn)

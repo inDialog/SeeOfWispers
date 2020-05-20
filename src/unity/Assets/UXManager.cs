@@ -37,7 +37,6 @@ public class UXManager : MonoBehaviour
     public Image Compas;
 
     GameObject cm_inspector;
-    //GameObject navigationUI;
     GameObject radar;
     GameObject cm_bird;
     CameraMode cmMode;
@@ -47,7 +46,6 @@ public class UXManager : MonoBehaviour
     FittingRoom fittingRoom;
     CameraController cam2Controller;
 
-    //int count;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -98,7 +96,7 @@ public class UXManager : MonoBehaviour
         FindObjectOfType<Multiplayer>().askForArtwork();
 
         /// Allow fitting room button to be active 
-        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+        if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
         {
             ////Fill in Values
             ///find
@@ -131,7 +129,7 @@ public class UXManager : MonoBehaviour
         else
         {
             /// triggers fitting for artist  because artist has art
-            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
+            if (assetManger.InfoArtwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
             {
                 fittingRoomToggle.isOn = true;
                 StartFittingRoom(true);
@@ -214,21 +212,21 @@ public class UXManager : MonoBehaviour
             /// Fitting Room
             if (ArtistInfo.hasArt)
             {
-                if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+                if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
 
-                    if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
-                        if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
+                    if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object != null)
+                        if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                         {
                             ArtistInfo.busy = true;
 
-                            if (!assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
-                                assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
+                            if (!assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
+                                assetManger.InfoArtwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
 
                             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
 
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);
-                            cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
+                            cam2Controller.target = assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform;
                             Debug.Log("!");
                             fittingRoom.StartCoroutine("StartFittingRoom");
                             return;
@@ -259,9 +257,9 @@ public class UXManager : MonoBehaviour
     {
         if (ArtistInfo.hasArt)
         {
-            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
+            if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
             {
-                Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
+                Destroy(assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
                 Destroy(fittingRoom.coliderBox);
                 fittingRoom.coliderBox = null;
             }
@@ -279,7 +277,7 @@ public class UXManager : MonoBehaviour
         fittingRoomUi.SetActive(!state);
         assetManger.StopAllCoroutines();
         cm_bird.SetActive(!state);
-        if (state & assetManger.infoArwork.Count > 1)
+        if (state & assetManger.InfoArtwork.Count > 1)
         {
             cm_inspector.SetActive(state);
         }
