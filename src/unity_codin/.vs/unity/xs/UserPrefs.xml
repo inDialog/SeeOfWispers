@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveOthers.cs">
+    <Files>
+      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="587" Column="44" IsPinned="True" />
+      <File FileName="Assets/AssetManager.cs" Line="131" Column="83" IsPinned="True" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="246" Column="6" />
+      <File FileName="Assets/Scripts/MoveII.cs" />
+      <File FileName="Assets/ColiderCheck.cs" />
+      <File FileName="Assets/ArtistInfo.cs" />
+      <File FileName="Assets/Plugins/WebSocket.cs" />
+      <File FileName="Assets/UXManager.cs" />
+      <File FileName="Assets/UserExperienceManager.cs" />
+      <File FileName="Assets/AsImpL/Scripts/MultiObjectImporter.cs" />
+      <File FileName="Assets/Scripts/MoveOthers.cs" Line="127" Column="77" />
+      <File FileName="Assets/InspectorManager.cs" Line="45" Column="1" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/ArtistTextManager.cs" Line="23" Column="87" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/FittingRoom.cs" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="106" Column="36" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/UploadForm.cs" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" NotebookId="1" />
+      <File FileName="Assets/AsImpL/Scripts/Editor/ObjImportWindow.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="164" Column="1" NotebookId="1" />
+      <File FileName="Assets/CameraController.cs" NotebookId="1" />
+      <File FileName="Assets/RadarController.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Disable_input.cs" NotebookId="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5203d248-e84e-427d-a052-5b1459c24aa5" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
