@@ -8,6 +8,7 @@ public class UploadForm : MonoBehaviour
 {
     Multiplayer multiplayer;
     AssetManager assetManager;
+    public TMP_InputField UrlImput;
     // Start is called before the first frame update
     void Start()
     {
@@ -124,19 +125,19 @@ public class UploadForm : MonoBehaviour
 
     public bool GatherString()
     {
-        TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
+    
+        //if (ExtensionMethods.CheckURl(UrlImput.text)) /// toDO chaeck name
+        //{
+        //    ArtistInfo.urlArt = UrlImput.text;
+            TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
+            if (inputFields[0].text == "")
+                inputFields[0].text = "Timmy" + ArtistInfo.artistKey.Split('-')[3];
 
-        if (inputFields[0].text == "")
-            inputFields[0].text = "Timmy" + ArtistInfo.artistKey.Split('-')[3];
-
-        if (ExtensionMethods.CheckURl(inputFields[5].text))
-        {
-            ArtistInfo.urlArt = inputFields[5].text;
             ArtistInfo.description = ExtensionMethods.ComposeString(inputFields);
             return true;
-        }
-        else
-            return false;
+        //}
+        //else
+        //    return false;
     }
     public void FillInForms()
     {
@@ -151,8 +152,8 @@ public class UploadForm : MonoBehaviour
         {
             inputFields[i].text = st[i];
         }
-    
-        inputFields[5].text = assetManager.infoArwork[ArtistInfo.artistKey].url;
+
+        UrlImput.text = assetManager.infoArwork[ArtistInfo.artistKey].url;
         //// Upload uptions
         ///
         TMP_InputField[] _inputFields = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<TMP_InputField>();
@@ -175,9 +176,18 @@ public class UploadForm : MonoBehaviour
 
     public bool GatherColiderData()
     {
+        if (!ExtensionMethods.CheckURl(UrlImput.text))
+        {
+            UrlImput.image.color = Color.yellow;
+            return false;
+        }
+        UrlImput.image.color = Color.white;
+        ArtistInfo.urlArt = UrlImput.text;
+
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<TMP_InputField>();
         Toggle[] toggles = FindObjectOfType<UXManager>().OptionsUpload.GetComponentsInChildren<Toggle>();
         ArtistInfo.uploadOptionsA = "";
+
         foreach (var item in inputFields)
         {
             item.image.color = Color.white;
@@ -194,7 +204,7 @@ public class UploadForm : MonoBehaviour
             }
             else
             {
-                int max =(int)GeneralState.maxColideSize.x;
+                int max = (int)GeneralState.maxColideSize.x;
                 float x = 1, y = 1, z = 1;
                 float.TryParse(inputFields[0].text, out x);
                 float.TryParse(inputFields[1].text, out y);
@@ -229,9 +239,9 @@ public class UploadForm : MonoBehaviour
             ArtistInfo.colderSize = Vector3.zero;
         }
         if (assetManager.infoArwork.ContainsKey(ArtistInfo.artistKey))
-                assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
+            assetManager.infoArwork[ArtistInfo.artistKey].colideScale = ArtistInfo.colderSize;
         ArtistInfo.uploadOptionsA = "";
-        if (toggles[4].isOn ==false)
+        if (toggles[4].isOn == false)
             toggles[5].isOn = false;
         for (int i = 0; i <= toggles.Length - 1; i++)
         {

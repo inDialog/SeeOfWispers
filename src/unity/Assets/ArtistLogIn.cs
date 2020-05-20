@@ -10,6 +10,7 @@ public class ArtistLogIn : MonoBehaviour
     public Button GetKey;
     public Button LogIn;
     public Button SignIn;
+    public Button Upload;
     public GameObject Wanternty;
     public TMP_InputField[] IdText;
 
@@ -20,7 +21,6 @@ public class ArtistLogIn : MonoBehaviour
         multiplayer = FindObjectOfType<Multiplayer>();
         GetKey.onClick.AddListener(GetKeyFromWeb);
         LogIn.onClick.AddListener(VerifyKey);
-        SignIn.onClick.AddListener(SignInStart);
         FindObjectOfType<Multiplayer>().AccountVerified += FillID;
 
     }
@@ -43,9 +43,12 @@ public class ArtistLogIn : MonoBehaviour
             Debug.LogWarning("KeyWrong");
         }
     }
-    void SignInStart()
+    public void SignInStart(bool recurentUser)
     {
-        Wanternty.SetActive(true);
+        if (!recurentUser)
+            Wanternty.SetActive(true);
+
+        Upload.gameObject.SetActive(false);
     }
     void FillID(bool tr)
     {

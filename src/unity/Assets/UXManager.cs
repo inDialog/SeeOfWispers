@@ -79,11 +79,12 @@ public class UXManager : MonoBehaviour
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
 
         SpanArtwork.gameObject.SetActive(false);
-        cm_inspector.SetActive(false);
         Compas.gameObject.SetActive(false);
-        inspectorTogggle.interactable = false;
-        fittingRoomToggle.interactable = false;
+        fittingRoomToggle.gameObject.SetActive(false);
         fittingRoomUi.SetActive(false);
+
+        inspectorTogggle.interactable = false;
+        cm_inspector.SetActive(false);
 
     }
 
@@ -93,19 +94,28 @@ public class UXManager : MonoBehaviour
 
     void AfterAccountVerification(bool state)
     {
+        uiAnim.Play("GoUp",0,1);
+        FindObjectOfType<Multiplayer>().askForArtwork();
+
         /// Allow fitting room button to be active 
         if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
         {
             ////Fill in Values
+            ///find
+            FindObjectOfType<ArtistLogIn>().SignInStart(true);
             upForm.FillInForms();
-            uiAnim.Play("GoUp");
         }
-        FindObjectOfType<Multiplayer>().askForArtwork();
+        else
+        {
+            FindObjectOfType<ArtistLogIn>().SignInStart(false);
+        }
+        fittingRoomToggle.gameObject.SetActive(true);
         fittingRoomToggle.interactable = true;
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
-        SStartBirdMode();
         fittingRoom.log.text = "Welcome: " + ArtistInfo.artistKey;
+
+        SStartBirdMode();
     }
 
     void ArtWorkPresent(GameObject gm, string st)
@@ -122,7 +132,10 @@ public class UXManager : MonoBehaviour
         {
             /// triggers fitting for artist  because artist has art
             if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
+            {
+                fittingRoomToggle.isOn = true;
                 StartFittingRoom(true);
+            }
         }
         /// ActivateInspectorMode <!----> < remarks
         inspectorTogggle.interactable = true;
@@ -194,6 +207,8 @@ public class UXManager : MonoBehaviour
 
     public void StartFittingRoom(bool state)
     {
+        fittingRoomUi.SetActive(state);
+
         if (state)
         {
             /// Fitting Room
@@ -213,7 +228,6 @@ public class UXManager : MonoBehaviour
 
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);
-                            fittingRoomUi.SetActive(true);
                             cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
                             Debug.Log("!");
                             fittingRoom.StartCoroutine("StartFittingRoom");
@@ -223,7 +237,7 @@ public class UXManager : MonoBehaviour
             else
             {
                 /// there is no artwork present so default fill in form 
-                uiAnim.Play("dropDown");
+                //uiAnim.Play("dropDown");
                 return;
             }
         }
