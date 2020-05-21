@@ -1,10 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
-using System;
 public class FittingRoom : MonoBehaviour
 {
     public Slider SpliderScale;
@@ -14,10 +11,12 @@ public class FittingRoom : MonoBehaviour
     public InputField SetStep;
     public InputField SetMoveStep;
     private float step = 1;
-    
+    public InputField[] XYZinputs;
+
     AssetManager assetManager;
     UploadForm upload;
     public TMP_Text log;
+    Transform Artwork;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,50 +29,42 @@ public class FittingRoom : MonoBehaviour
         SetMoveStep.onEndEdit.AddListener(setMoveStep);
 
     }
-    public void MoveArtwork(string direction)
+    InputField[] XYZ_I
+    {
+        set
+        {
+            value[0].text = Artwork.transform.localPosition.x.ToString();
+            value[1].text = Artwork.transform.localPosition.y.ToString();
+            value[2].text = Artwork.transform.localPosition.z.ToString();
+        }
+    }
+    public void PositionXYZ()
     {
         if (!ArtistInfo.hasArt) return;
-        Vector3 addOn = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position;
-        switch (direction)
+        float[] posion = new float[3];
+        for (int i = 0; i < 4; i++)
         {
-            case "Right":
-                addOn = new Vector3(addOn.x, addOn.y, addOn.z + step);
-                break;
-            case "Left":
-                addOn = new Vector3(addOn.x, addOn.y, addOn.z - step);
-                break;
-            case "Up":
-                addOn = new Vector3(addOn.x, addOn.y + step, addOn.z);
-                break;
-            case "Down":
-                addOn = new Vector3(addOn.x, addOn.y - step, addOn.z);
-                break;
-            case "Fonnt":
-                addOn = new Vector3(addOn.x + step, addOn.y , addOn.z);
-                break;
-            case "Back":
-                addOn = new Vector3(addOn.x - step, addOn.y, addOn.z);
-                break;
-            default:
-                break;
-
+            float.TryParse(XYZinputs[i].text, out posion[i]);
         }
-        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position = addOn;
+        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position
+            = new Vector3(posion[0], posion[1], posion[2]);
     }
     void setScaleTreashold (string input)
     {
+        if (!ArtistInfo.hasArt) return;
         int value = 0;
         int.TryParse(input, out value);
         SpliderScale.maxValue = value;
     }
     void setMoveStep(string input)
     {
+        if (!ArtistInfo.hasArt) return;
         float.TryParse(input, out step);
     }
 
     void DestroyObject()
     {
-        if(ArtistInfo.hasArt)
+        if (!ArtistInfo.hasArt) return;
         assetManager.BroadcastDeleteArtwork(ArtistInfo.artistKey);
         if (coliderBox != null)
             Destroy(coliderBox);
@@ -84,7 +75,7 @@ public class FittingRoom : MonoBehaviour
         if (!ArtistInfo.hasArt) return;
         GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
         artwork.transform.localScale = new Vector3(value, value, value);
-        UpdateArt(artwork);
+        UpdateArt();
         log.text = "SET SCALE :" + value;
         log.color = Color.white;
 
@@ -95,8 +86,6 @@ public class FittingRoom : MonoBehaviour
         GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
         AjustPosition(artwork, assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale);
     }
-
-
 
     void DisplayColider(Transform target)
     {
@@ -128,14 +117,11 @@ public class FittingRoom : MonoBehaviour
         _coliderBox.transform.rotation = target.rotation;
         _coliderBox.transform.localScale = assetManager.InfoArtwork[target.name].colideScale;
         _coliderBox.GetComponent<MeshRenderer>().material = normalMaterial;
-
-        //Debug.Log(ArtistInfo.colderSize);
         return _coliderBox;
     }
-    public void UpdateArt(GameObject artwork)
+    public void UpdateArt()
     {
         FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
-        //Debug.Log(ObjectBounds(artwork.transform).size);
         upload.UpdateExistingArtwork();
     }
 
@@ -164,7 +150,6 @@ public class FittingRoom : MonoBehaviour
         MeshRenderer[] mrs;
         Bounds meshesBounds = ObjectBounds(obj.transform, out mrs);
         obj.transform.localScale = Vector3.one / 100;
-
         for (int i = 0; i < mrs.Length; i++)
         {
             if (i == 0) meshesBounds = mrs[i].bounds;
@@ -172,19 +157,18 @@ public class FittingRoom : MonoBehaviour
         }
         Vector3 target = obj.transform.position - meshesBounds.center;
         obj.transform.localPosition = target;
-        Debug.Log("Moved to the center" + target);
+        //// log
         log.color = Color.red;
         log.text = "Re-scale to:" + obj.transform.localScale + " and moving in the center of the platform";
-
-        //}
+        Debug.Log("Moved to the center" + target);
     }
-    void SetLog(GameObject artwork,bool state)
+    void SetLog(Transform artwork,bool state)
     {
         if (!state)
         {
             log.color = Color.white;
-            log.text = "ArtWork pos:" + artwork.transform.localPosition + '\n'
-         + "artwork scale: " + artwork.transform.localScale;
+            log.text = "ArtWork pos:" + artwork.localPosition + '\n'
+         + "artwork scale: " + artwork.localScale;
         }
         else
         {
@@ -220,65 +204,91 @@ public class FittingRoom : MonoBehaviour
             {
                 if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                 {
-
+                    if (Artwork == null)
+                        Artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform;
+                    XYZ_I = XYZinputs;
                     DisplayColider(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform);
-                    GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
-                    Vector3 addOn = artwork.transform.localPosition;
                     if (Input.anyKey)
                     {
-                        SetLog(artwork, GeneralState.colided);
+                        SetLog(Artwork, GeneralState.colided);
                     }
-                 
-
                     if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(1))
                     {
                         float horizontalSpeed = 5.0F;
                         float verticalSpeed = 5.0F;
                         float h = horizontalSpeed * Input.GetAxis("Mouse X");
                         float v = verticalSpeed * Input.GetAxis("Mouse Y");
-                        artwork.transform.Rotate(v, h, 0);
+                        Artwork.transform.Rotate(v, h, 0);
                     }
-                    else
+                    else if (Input.GetKeyUp(KeyCode.C))
                     {
-             
-                        if (Input.GetKeyDown(KeyCode.UpArrow))
-                        {
-                            if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y + 1, addOn.z);
-                            else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z + step);
+                        UpdateArt();
+                    }
 
-                        }
-                        if (Input.GetKeyDown(KeyCode.DownArrow))
-                        {
-                            if (Input.GetKey(KeyCode.Space)) addOn = new Vector3(addOn.x, addOn.y - 1, addOn.z);
-                            else
-                                addOn = new Vector3(addOn.x, addOn.y, addOn.z - step);
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        if (Input.GetKey(KeyCode.Space))
+                            MoveArtwork("Up");
+                        else
+                            MoveArtwork("Right");
 
-                        }
-                        if (Input.GetKeyDown(KeyCode.RightArrow))
-                        {
-                            addOn = new Vector3(addOn.x + step, addOn.y, addOn.z);
+                    }
+                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        if (Input.GetKey(KeyCode.Space))
+                            MoveArtwork("Down");
 
-                        }
-                        if (Input.GetKeyDown(KeyCode.LeftArrow))
-                        {
-                            addOn = new Vector3(addOn.x - step, addOn.y, addOn.z);
-                        }
-                        //Debug.Log("Colision state = "+GeneralState.colided);
-                        if (artwork.transform.localPosition != addOn)
-                        {
-                            artwork.transform.localPosition = addOn;
-                            UpdateArt(artwork);
-                        }
-                        if (Input.GetKeyUp(KeyCode.C))
-                        {
-                            UpdateArt(artwork);
-                        }
+                        else
+                            MoveArtwork("Left");
+
+                    }
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        MoveArtwork("Fonnt");
+
+                    }
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        MoveArtwork("Back");
                     }
                 }
+
             }
             yield return null;
         }
+    }
+    public void MoveArtwork(string direction)
+    {
+        GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
+        if (!ArtistInfo.hasArt) return;
+        Vector3 addOn = artwork.transform.position;
+        switch (direction)
+        {
+            case "Right":
+                addOn = new Vector3(addOn.x, addOn.y, addOn.z + step);
+                break;
+            case "Left":
+                addOn = new Vector3(addOn.x, addOn.y, addOn.z - step);
+                break;
+            case "Up":
+                addOn = new Vector3(addOn.x, addOn.y + step, addOn.z);
+                break;
+            case "Down":
+                addOn = new Vector3(addOn.x, addOn.y - step, addOn.z);
+                break;
+            case "Fonnt":
+                addOn = new Vector3(addOn.x + step, addOn.y, addOn.z);
+                break;
+            case "Back":
+                addOn = new Vector3(addOn.x - step, addOn.y, addOn.z);
+                break;
+            default:
+                break;
+
+        }
+        artwork.transform.position = addOn;
+        UpdateArt();
+
     }
 }
 
