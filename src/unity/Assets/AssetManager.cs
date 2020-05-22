@@ -121,23 +121,7 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
-            /////====addd to list of name  for search bar 
-            if (infoArwork[_id].description.Split('\n')[0] != "")
-            {
-                if (!artistName.Contains(infoArwork[_id].description.Split('\n')[0]))
-                {
-                    artistName.Add(infoArwork[_id].description.Split('\n')[0]);
-                }
-                else
-                {
-                    artistName.Add(infoArwork[_id].description.Split('\n')[0] + "*" + index_duplicate);
-                    Debug.LogWarning("I all ready have the name");
-                    index_duplicate += 1;
-                }
-                
-            }
-            else
-                artistName.Add("NO NAME");
+            artistName.Add(infoArwork[_id].description.Split('§')[0]);
             return;
         }
         else

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 public class FittingRoom : MonoBehaviour
 {
     public Slider SpliderScale;
@@ -11,7 +12,9 @@ public class FittingRoom : MonoBehaviour
     public InputField SetStep;
     public InputField SetMoveStep;
     private float step = 1;
-    public InputField[] XYZinputs;
+    public InputField[] XYZ_Move;
+    public InputField[] XYZ_Rotate;
+    public GameObject ArtForm;
 
     AssetManager assetManager;
     UploadForm upload;
@@ -29,7 +32,7 @@ public class FittingRoom : MonoBehaviour
         SetMoveStep.onEndEdit.AddListener(setMoveStep);
 
     }
-    InputField[] XYZ_I
+    InputField[] XYZ_M
     {
         set
         {
@@ -38,15 +41,35 @@ public class FittingRoom : MonoBehaviour
             value[2].text = Artwork.transform.localPosition.z.ToString();
         }
     }
+    InputField[] XYZ_R
+    {
+        set
+        {
+            value[0].text = Artwork.transform.localEulerAngles.x.ToString();
+            value[1].text = Artwork.transform.localEulerAngles.y.ToString();
+            value[2].text = Artwork.transform.localEulerAngles.z.ToString();
+        }
+    }
     public void PositionXYZ()
     {
         if (!ArtistInfo.hasArt) return;
         float[] posion = new float[3];
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
-            float.TryParse(XYZinputs[i].text, out posion[i]);
+            float.TryParse(XYZ_Move[i].text, out posion[i]);
         }
-        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.position
+        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.localPosition
+            = new Vector3(posion[0], posion[1], posion[2]);
+    }
+    public void RotationSet()
+    {
+        if (!ArtistInfo.hasArt) return;
+        float[] posion = new float[3];
+        for (int i = 0; i < 3; i++)
+        {
+            float.TryParse(XYZ_Rotate[i].text, out posion[i]);
+        }
+        assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform.localEulerAngles
             = new Vector3(posion[0], posion[1], posion[2]);
     }
     void setScaleTreashold (string input)
@@ -193,70 +216,86 @@ public class FittingRoom : MonoBehaviour
     }
 
 
-
     private IEnumerator StartFittingRoom()
     {
         log.text = "Starting Fitting room";
         Debug.Log("1§");
         while (true)
         {
+            ArtForm.SetActive(false);
             if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
             {
                 if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                 {
                     if (Artwork == null)
                         Artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform;
-                    XYZ_I = XYZinputs;
+
+                    if (EventSystem.current.currentSelectedGameObject!=null)
+                        if( EventSystem.current.currentSelectedGameObject.layer == 13)
+                        {
+                            yield return null;
+                            continue;
+                        }
+
+                    XYZ_M = XYZ_Move;
+                    XYZ_R = XYZ_Rotate;
                     DisplayColider(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform);
+
                     if (Input.anyKey)
                     {
                         SetLog(Artwork, GeneralState.colided);
                     }
-                    if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(1))
-                    {
-                        float horizontalSpeed = 5.0F;
-                        float verticalSpeed = 5.0F;
-                        float h = horizontalSpeed * Input.GetAxis("Mouse X");
-                        float v = verticalSpeed * Input.GetAxis("Mouse Y");
-                        Artwork.transform.Rotate(v, h, 0);
-                    }
-                    else if (Input.GetKeyUp(KeyCode.C))
-                    {
-                        UpdateArt();
-                    }
 
-                    if (Input.GetKeyDown(KeyCode.UpArrow))
-                    {
-                        if (Input.GetKey(KeyCode.Space))
-                            MoveArtwork("Up");
-                        else
-                            MoveArtwork("Right");
-
-                    }
-                    if (Input.GetKeyDown(KeyCode.DownArrow))
-                    {
-                        if (Input.GetKey(KeyCode.Space))
-                            MoveArtwork("Down");
-
-                        else
-                            MoveArtwork("Left");
-
-                    }
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        MoveArtwork("Fonnt");
-
-                    }
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        MoveArtwork("Back");
-                    }
+                    Controller();
                 }
 
             }
             yield return null;
         }
     }
+    void Controller()
+    {
+        if (Input.GetKey(KeyCode.C) & Input.GetMouseButton(0))
+        {
+            float horizontalSpeed = 5.0F;
+            float verticalSpeed = 5.0F;
+            float h = horizontalSpeed * Input.GetAxis("Mouse X");
+            float v = verticalSpeed * Input.GetAxis("Mouse Y");
+            Artwork.transform.Rotate(v, h, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.C))
+        {
+            UpdateArt();
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (Input.GetKey(KeyCode.Space))
+                MoveArtwork("Up");
+            else
+                MoveArtwork("Right");
+
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (Input.GetKey(KeyCode.Space))
+                MoveArtwork("Down");
+
+            else
+                MoveArtwork("Left");
+
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            MoveArtwork("Fonnt");
+
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            MoveArtwork("Back");
+        }
+    }
+
     public void MoveArtwork(string direction)
     {
         GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;

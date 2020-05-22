@@ -28,7 +28,6 @@ public class InspectorManager : MonoBehaviour
         dropDown = navigationUI.GetComponentInChildren<TMP_Dropdown>();
         searchField = navigationUI.GetComponentInChildren<TMP_InputField>();
         Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
-        inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
         teleportButton = GameObject.FindWithTag("Teleport");
         Button telButton = teleportButton.GetComponent<Button>();
 
@@ -39,10 +38,12 @@ public class InspectorManager : MonoBehaviour
         searchField.onEndEdit.AddListener(SearchForArtist);
         navigationUI.SetActive(false);
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
+        inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
+
     }
     void FillTextOnCollision(string key)
     {
-        ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
+        UXTools.FillInputText(key, inputfields_ArtistInfo);
     }
 
     private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
@@ -51,13 +52,14 @@ public class InspectorManager : MonoBehaviour
         {
             MoveCamera(cam2Controller, assetManger.InfoArtwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
-            ExtensionMethods.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo, assetManger);
+            UXTools.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo);
             MoveAlsoCharacter = true;
         }
     }
 
     private void OnGUI()
     {
+        if (!this.isActiveAndEnabled | (ArtistInfo.busy & !Application.isPlaying)) return;
         Event e = Event.current;
         ChangeCameraPosition(e);
     }
@@ -71,7 +73,7 @@ public class InspectorManager : MonoBehaviour
             if (tmp_key != null && assetManger.InfoArtwork.ContainsKey(tmp_key))
             {
                 string name;
-                name = assetManger.InfoArtwork[tmp_key].description.Split('\n')[0];
+                name = assetManger.InfoArtwork[tmp_key].description.Split('§')[0];
                 dropDown.value = assetManger.artistName.IndexOf(name);
                 if (MoveAlsoCharacter)
                 {
@@ -105,7 +107,7 @@ public class InspectorManager : MonoBehaviour
         if (key != "")
         {
             MoveCamera(cam2Controller, assetManger.InfoArtwork[key].@object);
-            ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
+            UXTools.FillInputText(key, inputfields_ArtistInfo);
         }
         else
             Debug.LogWarning("No value found for this given name in DropDown");
@@ -113,7 +115,7 @@ public class InspectorManager : MonoBehaviour
     string GETartistKey(string artistNAME)
     {
         string tmp_keyvalue;
-        tmp_keyvalue = assetManger.InfoArtwork.Where(temp => temp.Value.description.Split('\n')[0] == artistNAME)
+        tmp_keyvalue = assetManger.InfoArtwork.Where(temp => temp.Value.description.Split('§')[0] == artistNAME)
                                              .Select(tmp => tmp.Key).FirstOrDefault();
         if (tmp_keyvalue != null)
             if (assetManger.InfoArtwork.ContainsKey(tmp_keyvalue))

@@ -28,11 +28,7 @@ public class UploadForm : MonoBehaviour
         {
             if (!GeneralState.colided)
             {
-                if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
-                {
-                    ArtistInfo.hasArt = false;
-                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
-                }
+             
                 GeneralState.AceptAssets = true;
                 toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
                         assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
@@ -41,6 +37,11 @@ public class UploadForm : MonoBehaviour
                         ArtistInfo.description,
                         ArtistInfo.uploadOptionsA,
                         "ArtWork");
+                if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
+                {
+                    ArtistInfo.hasArt = false;
+                    assetManager.DeletArtWork(ArtistInfo.artistKey.ToString());
+                }
                 multiplayer.w.SendString(toSend);
                 return true;
             }
@@ -60,8 +61,6 @@ public class UploadForm : MonoBehaviour
                     //restartPosition(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
                 }
                 toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
-
-
                 if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
                 {
                     ArtistInfo.hasArt = false;
@@ -86,7 +85,7 @@ public class UploadForm : MonoBehaviour
     }
     public void UpdateExistingArtwork()
     {
-
+        if (!GatherString()) return;
         string toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
             assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
            assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale,
@@ -99,7 +98,7 @@ public class UploadForm : MonoBehaviour
     }
     public void UpdateExistingArtwork(bool force)
     {
-
+        if (!GatherString()) return;
         string toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform,
             assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.position,
            assetManager.InfoArtwork[ArtistInfo.artistKey].colideScale,
@@ -125,19 +124,13 @@ public class UploadForm : MonoBehaviour
 
     public bool GatherString()
     {
-    
-        //if (ExtensionMethods.CheckURl(UrlImput.text)) /// toDO chaeck name
-        //{
-        //    ArtistInfo.urlArt = UrlImput.text;
             TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
             if (inputFields[0].text == "")
                 inputFields[0].text = "Timmy" + ArtistInfo.artistKey.Split('-')[3];
-
             ArtistInfo.description = ExtensionMethods.ComposeString(inputFields);
+        if(ArtistInfo.hasArt)
+            assetManager.InfoArtwork[ArtistInfo.artistKey].description = ArtistInfo.description;
             return true;
-        //}
-        //else
-        //    return false;
     }
     public void FillInForms()
     {
@@ -147,7 +140,7 @@ public class UploadForm : MonoBehaviour
         //// Artist Information
         ///
         TMP_InputField[] inputFields = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>();
-        string[] st = assetManager.InfoArtwork[ArtistInfo.artistKey].description.Split('\n');
+        string[] st = assetManager.InfoArtwork[ArtistInfo.artistKey].description.Split('§');
         for (int i = 0; i < st.Length; i++)
         {
             inputFields[i].text = st[i];

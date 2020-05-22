@@ -1,16 +1,21 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Multiplayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ArtistTextManager.cs">
     <Files>
-      <File FileName="Assets/FittingRoom.cs" Line="189" Column="6" />
-      <File FileName="Assets/UploadForm.cs" Line="271" Column="1" />
+      <File FileName="Assets/FittingRoom.cs" Line="17" Column="30" />
+      <File FileName="Assets/UploadForm.cs" Line="132" Column="9" />
       <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="228" Column="2" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="170" Column="50" />
       <File FileName="Assets/CameraController.cs" />
       <File FileName="Assets/RadarController.cs" Line="86" Column="1" />
       <File FileName="Assets/ColiderCheck.cs" Line="314" Column="1" />
       <File FileName="Assets/ArtistLogIn.cs" Line="24" Column="56" />
-      <File FileName="Assets/ArtistInfo.cs" Line="5" Column="21" />
+      <File FileName="Assets/ArtistInfo.cs" Line="25" Column="24" />
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="24" Column="31" />
+      <File FileName="Assets/InspectorManager.cs" Line="46" Column="39" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="159" Column="69" />
+      <File FileName="Assets/AssetManager.cs" Line="181" Column="34" />
+      <File FileName="Assets/ArtistTextManager.cs" Line="21" Column="31" />
+      <File FileName="Assets/UXManager.cs" Line="323" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

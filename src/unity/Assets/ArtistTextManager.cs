@@ -18,12 +18,17 @@ public class ArtistTextManager : MonoBehaviour
         keyCollision = "";
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (keyCollision != other.gameObject.transform.root.name)
         {
             keyCollision = other.gameObject.transform.root.name;
             Colided(keyCollision);
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Colided("Null");
+        keyCollision = "";
     }
 }

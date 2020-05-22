@@ -25,6 +25,7 @@ public class UserExperienceManager : MonoBehaviour
     }
     private void OnGUI()
     {
+        if (ArtistInfo.busy & !Application.isPlaying) return;
         Event e = Event.current;
         UXTools.MouseEvents(e);
 

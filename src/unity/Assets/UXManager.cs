@@ -274,7 +274,7 @@ public class UXManager : MonoBehaviour
     /// <param name="InspectorMode"></param>
     void InspectorMode(bool state)
     {
-        fittingRoomUi.SetActive(!state);
+        fittingRoomUi.SetActive(false);
         assetManger.StopAllCoroutines();
         cm_bird.SetActive(!state);
         if (state & assetManger.InfoArtwork.Count > 1)
@@ -315,8 +315,6 @@ public class UXManager : MonoBehaviour
     {
         cm_bird.SetActive(true);
         cm_inspector.SetActive(false);
-        cmMode.StartReset();
-        assetManger.StopAllCoroutines();
     }
 
     /// <summary>

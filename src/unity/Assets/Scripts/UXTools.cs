@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class UXTools
 {
@@ -133,19 +132,53 @@ public static class UXTools
             yield return null;
         }
     }
-
+    public static void FillInputText(string tmp_key, Text[] inputField)
+    {
+        if (tmp_key == "Null")
+        {
+            inputField[0].text = "Welcome to MAD";
+            inputField[1].text = "";
+            return;
+        }
+        AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
+        if (_as.InfoArtwork.ContainsKey(tmp_key))
+        {
+            string[] des_art = _as.InfoArtwork[tmp_key].description.Split('§');
+            inputField[0].text = FormtCartel(des_art);
+            inputField[1].text = FormateDEscription(des_art);
+        }
+        else
+            Debug.LogWarning("They key for inputing text in the artist description its missing");
+    }
     static void GenerateRectangleOnGUI(string _key, AssetManager astMan)
     {
         string[] des_art;
         string FinalString;
-        des_art = astMan.InfoArtwork[_key].description.Split('\n');
-        FinalString = "";
-        FinalString = string.Format("Artist : {0}  -  Title : {1} - Format: {2} - Year : {3}",
-                                           "NAME", des_art[0], des_art[2], (des_art[1].Split('-').Count() < 3 ? "****" : "20" + des_art[1].Split('-')[2]));
+        des_art = astMan.InfoArtwork[_key].description.Split('§');
+        FinalString = FormtCartel(des_art);
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.name = FinalString;
         guiStyle.normal.textColor = Color.yellow;
         GUI.Label(new Rect(Input.mousePosition.x - 10, Screen.height - Input.mousePosition.y, 100, 100), "" + FinalString, guiStyle);
+    }
+    static string FormtCartel(string[] des_art)
+    {
+        return string.Format(
+            "Title : <color=orange><b>{0}</b></color> " +
+          "|| Artis : <color=orange><b>{1}</b></color> " +
+         "|| Format : <color=orange><b>{2}</b></color> " +
+           "|| Date : <color=orange><b>{3}</b></color> ",
+                                    des_art[0], des_art[2], des_art[3], des_art[1]);
+    }
+    static string FormateDEscription(string[] des_art)
+    {
+        return string.Format(
+            "Title : <i>{0}</i>" + '\n' +
+            "   Artist : {1}" + '\n'+
+            " " + '\n' +
+            "Description :" + '\n' +
+            "<i>{2}</i>" + '\n' ,
+                                    des_art[0], des_art[2], des_art[4]);;
     }
     public static string GetKeyFromRay(Camera tmp_cam)
     {
@@ -157,6 +190,7 @@ public static class UXTools
         hits = Physics.RaycastAll(ray2, Mathf.Infinity);
         for (int i = 0; i < hits.Length; i++)
         {
+            if (hits[i].transform.gameObject.layer == 5) return null;
             MeshCollider meshCollider = hits[i].collider as MeshCollider;
             if (meshCollider == null || meshCollider.sharedMesh == null)
             {
