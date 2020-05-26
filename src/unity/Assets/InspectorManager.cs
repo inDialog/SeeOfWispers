@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using AsImpL;
 using TMPro;
 public class InspectorManager : MonoBehaviour
 {
@@ -16,7 +14,7 @@ public class InspectorManager : MonoBehaviour
     private AssetManager assetManger;
     private TMP_Dropdown dropDown;
     private TMP_InputField searchField;
-    private Text[] inputfields_ArtistInfo;
+    public Text[] inputfields_ArtistInfo;
     private int count;
     private bool MoveAlsoCharacter;
 
@@ -24,10 +22,9 @@ public class InspectorManager : MonoBehaviour
     {
         assetManger = FindObjectOfType<AssetManager>();
         cam2Controller = GetComponentInChildren<CameraController>();
-        GameObject navigationUI = InspectorMode.GetComponentsInChildren<Transform>(true)[4].gameObject;
-        dropDown = navigationUI.GetComponentInChildren<TMP_Dropdown>();
-        searchField = navigationUI.GetComponentInChildren<TMP_InputField>();
-        Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
+        dropDown = InspectorMode.GetComponentInChildren<TMP_Dropdown>();
+        searchField = InspectorMode.GetComponentInChildren<TMP_InputField>();
+        Button[] buttons = InspectorMode.gameObject.GetComponentsInChildren<Button>();
         teleportButton = GameObject.FindWithTag("Teleport");
         Button telButton = teleportButton.GetComponent<Button>();
 
@@ -36,20 +33,25 @@ public class InspectorManager : MonoBehaviour
         buttons[0].onClick.AddListener(PrviousArtwork);
         dropDown.onValueChanged.AddListener(ChangeDropDownValue);
         searchField.onEndEdit.AddListener(SearchForArtist);
-        navigationUI.SetActive(false);
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
         inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
+        InspectorMode.SetActive(false);
+        UXTools.FillInputText(inputfields_ArtistInfo);
 
     }
     void FillTextOnCollision(string key)
     {
         UXTools.FillInputText(key, inputfields_ArtistInfo);
     }
-
+    private void OnDisable()
+    {
+        InspectorMode.SetActive(false);
+    }
     private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
     {
         if (assetManger.InfoArtwork.Count > 0)
         {
+            InspectorMode.SetActive(true);
             MoveCamera(cam2Controller, assetManger.InfoArtwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
             UXTools.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo);
@@ -59,9 +61,10 @@ public class InspectorManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if (!this.isActiveAndEnabled | (ArtistInfo.busy & !Application.isPlaying)) return;
-        Event e = Event.current;
-        ChangeCameraPosition(e);
+        //if (!Event.current.isMouse) return;
+        //if (!this.isActiveAndEnabled | (ArtistInfo.busy & !Application.isPlaying)) return;
+        //Event e = Event.current;
+        //ChangeCameraPosition(e);
     }
 
     void ChangeCameraPosition(Event e)
@@ -158,18 +161,16 @@ public class InspectorManager : MonoBehaviour
             Debug.LogWarning("There is not values for Camera Controller or Transform target in MoveCamera");
             return;
         }
-        GameObject containerMesh;
-        if (!(containerMesh = ArtContainer.transform.GetChild(1).gameObject))
+        if (!(ArtContainer.transform.GetChild(1)))
         {
-            Debug.LogWarning("No mesh container associated with this Art Container");
+            Debug.LogWarning("No artwork container associated with this Art Container");
             return;
         }
-        Bounds tmp_mesh_bounds;
-        GameObject tmp_target = new GameObject();
-        tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+        GameObject containerMesh = ArtContainer.transform.GetChild(1).gameObject;
+        Bounds tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+        camCon.target = containerMesh.transform;
+        camCon.targetOffset =   containerMesh.transform.position - tmp_mesh_bounds.center;
         float biggest_side = ExtensionMethods.Check_Sides_Values(tmp_mesh_bounds.size);
-        tmp_target.transform.position = tmp_mesh_bounds.center;
-        camCon.target = tmp_target.transform;
         camCon.desiredDistance = tmp_mesh_bounds.size.magnitude + biggest_side / 2;
     }
 

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using AsImpL;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
 public class UXManager : MonoBehaviour
 {
     public GameObject logInForm;
@@ -27,10 +28,11 @@ public class UXManager : MonoBehaviour
     public Toggle fittingRoomToggle;
     public Toggle inspectorTogggle;
     public Toggle fpCameraToggle;
+    public Toggle[] DopDownnTogles;
     Toggle keepLocation;
     Button spawnArtwork;
 
-
+    public GameObject ArtistInfoDr;
     public GameObject fittingRoomUi;
     public Animator uiAnim;
     public Button ArtWorkRequest;
@@ -45,7 +47,7 @@ public class UXManager : MonoBehaviour
     UploadForm upForm;
     FittingRoom fittingRoom;
     CameraController cam2Controller;
-
+    InspectorManager im;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -66,7 +68,7 @@ public class UXManager : MonoBehaviour
     void Start()
     {
 
-
+        im = FindObjectOfType<InspectorManager>();
         FindObjectOfType<ObjectImporter>().ImportedModel += ArtWorkPresent;
         FindObjectOfType<Multiplayer>().AccountVerified += AfterAccountVerification;
         assetManger.NewArtwork += NewArtWorkReques;
@@ -75,6 +77,8 @@ public class UXManager : MonoBehaviour
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
         spawnArtwork.onClick.AddListener(SendMessegeToSpawn);
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
+        DopDownnTogles[0].onValueChanged.AddListener(FillInArtistInfo);
+        DopDownnTogles[1].onValueChanged.AddListener(LogInDropDown);
 
         SpanArtwork.gameObject.SetActive(false);
         Compas.gameObject.SetActive(false);
@@ -83,11 +87,51 @@ public class UXManager : MonoBehaviour
 
         inspectorTogggle.interactable = false;
         cm_inspector.SetActive(false);
+        logInForm.SetActive(false);
+
 
     }
+    void LogInDropDown(bool state)
+    {
+        if (state)
+        {
+            uiAnim.Play("dropDown");
+            logInForm.SetActive(true);
+            ArtistInfoDr.SetActive(false);
+        }
+        else
+        {
+            if(!DopDownnTogles[0].isOn)
+                uiAnim.Play("GoUp");
+            //logInForm.SetActive(false);
+            //ArtistInfoDr.SetActive(true);
+        }
+    }
 
-
-
+    void FillInArtistInfo(bool state)
+    {
+        logInForm.SetActive(false);
+        if (state)
+        {
+            UXTools.FillInputText(im.inputfields_ArtistInfo);
+            uiAnim.Play("dropDown");
+            if (ArtistInfo.busy & ArtistInfo.hasArt)
+            {
+                uploadForm.SetActive(true);
+                ArtistInfoDr.SetActive(false);
+            }
+            else
+            {
+                uploadForm.SetActive(false);
+                ArtistInfoDr.SetActive(true);
+            }
+        }
+        else
+        {
+            if (!DopDownnTogles[1].isOn | ArtistInfo.artistKey!="")
+                uiAnim.Play("GoUp");
+        }
+    }
 
 
     void AfterAccountVerification(bool state)
@@ -323,6 +367,7 @@ public class UXManager : MonoBehaviour
     void OnGUI()
     {
         Event e = Event.current;
+        if (e.isMouse) return;
         if (e.isKey)
         {
             if (e.keyCode == KeyCode.Escape)

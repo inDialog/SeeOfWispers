@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 /// <summary>
 /// Things to do :
@@ -25,10 +22,10 @@ public class UserExperienceManager : MonoBehaviour
     }
     private void OnGUI()
     {
-        if (ArtistInfo.busy & !Application.isPlaying) return;
-        Event e = Event.current;
-        UXTools.MouseEvents(e);
-
+        //if (ArtistInfo.busy & !Application.isPlaying) return;
+        //Event e = Event.current;
+        //if (e.isMouse)
+        //    UXTools.MouseEvents(e);
     }
 
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_PixelRect:
     serializedVersion: 2
     x: 56
-    y: 45
+    y: 46
     width: 1624
     height: 1005
   m_ShowMode: 4
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 56
-    y: 75
+    y: 76
     width: 1624
     height: 936
   m_ViewDataDictionary: {fileID: 0}

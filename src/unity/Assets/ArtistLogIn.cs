@@ -10,7 +10,7 @@ public class ArtistLogIn : MonoBehaviour
     public Button GetKey;
     public Button LogIn;
     public Button SignIn;
-    public Button Upload;
+    public GameObject UploadToggle;
     public GameObject Wanternty;
     public TMP_InputField[] IdText;
 
@@ -48,10 +48,11 @@ public class ArtistLogIn : MonoBehaviour
         if (!recurentUser)
             Wanternty.SetActive(true);
 
-        Upload.gameObject.SetActive(false);
+        UploadToggle.gameObject.SetActive(false);
     }
     void FillID(bool tr)
     {
+        Debug.Log(ArtistInfo.artistKey +"haha");
         SetId = IdText;
     }
 
@@ -61,7 +62,6 @@ public class ArtistLogIn : MonoBehaviour
         {
             for (int i = 0; i < value.Length; i++)
             {
-                if (value[i].IsActive())
                     value[i].text = ArtistInfo.artistKey;
             }
         }

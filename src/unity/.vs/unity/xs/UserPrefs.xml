@@ -1,21 +1,20 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ArtistTextManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ArtistLogIn.cs">
     <Files>
       <File FileName="Assets/FittingRoom.cs" Line="17" Column="30" />
-      <File FileName="Assets/UploadForm.cs" Line="132" Column="9" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="170" Column="50" />
-      <File FileName="Assets/CameraController.cs" />
-      <File FileName="Assets/RadarController.cs" Line="86" Column="1" />
-      <File FileName="Assets/ColiderCheck.cs" Line="314" Column="1" />
-      <File FileName="Assets/ArtistLogIn.cs" Line="24" Column="56" />
-      <File FileName="Assets/ArtistInfo.cs" Line="25" Column="24" />
+      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" Line="1" Column="1" />
+      <File FileName="Assets/UploadForm.cs" Line="129" Column="49" />
+      <File FileName="Assets/Scripts/Remap.cs" Line="75" Column="49" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="48" Column="30" />
+      <File FileName="Assets/InspectorManager.cs" Line="60" Column="23" />
+      <File FileName="Assets/UserExperienceManager.cs" Line="28" Column="38" />
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="24" Column="31" />
-      <File FileName="Assets/InspectorManager.cs" Line="46" Column="39" />
-      <File FileName="Assets/Scripts/UXTools.cs" Line="159" Column="69" />
-      <File FileName="Assets/AssetManager.cs" Line="181" Column="34" />
-      <File FileName="Assets/ArtistTextManager.cs" Line="21" Column="31" />
-      <File FileName="Assets/UXManager.cs" Line="323" Column="10" />
+      <File FileName="Assets/ArtistInfo.cs" Line="7" Column="26" />
+      <File FileName="Assets/UXManager.cs" Line="358" Column="33" NotebookId="1" />
+      <File FileName="Assets/ArtistTextManager.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/AssetManager.cs" Line="4" Column="34" NotebookId="1" />
+      <File FileName="Assets/CameraController.cs" Line="133" Column="21" NotebookId="1" />
+      <File FileName="Assets/ArtistLogIn.cs" Line="55" Column="1" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -23,7 +22,7 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bc10aebb-89ab-4b0c-b84c-1f9f486095db" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4a1bd281-d75f-4d27-bba8-a90be270ac0a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
