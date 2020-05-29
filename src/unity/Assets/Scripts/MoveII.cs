@@ -101,6 +101,7 @@ public class MoveII : MonoBehaviour
 		}
 		_rigidbody.AddForce(jump);
 		grounded = false;
+		myPlayerInfo.curPosition = this.transform;
 	}
 
 	private void OnTriggerStay(Collider other)

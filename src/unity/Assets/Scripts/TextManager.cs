@@ -26,7 +26,7 @@ public class TextManager : MonoBehaviour
     }
     private void Update()
     {
-        numberOfPlayer.text = multiplayer.infoPl.Count.ToString();
+        numberOfPlayer.text = NetworkPlayerManager.infoPl.Count.ToString();
         if (active)
         {
             if (Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift))
