@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using AsImpL;
 using TMPro;
 public class InspectorManager : MonoBehaviour
 {
     public GameObject InspectorMode;
-    public GameObject ArtistInfoDropDown;
+    public GameObject PublicArtistInfo;
     public GameObject Bird;
 
     private CameraController cam2Controller;
@@ -16,7 +14,7 @@ public class InspectorManager : MonoBehaviour
     private AssetManager assetManger;
     private TMP_Dropdown dropDown;
     private TMP_InputField searchField;
-    private Text[] inputfields_ArtistInfo;
+    public Text[] inputfields_ArtistInfo;
     private int count;
     private bool MoveAlsoCharacter;
 
@@ -24,11 +22,9 @@ public class InspectorManager : MonoBehaviour
     {
         assetManger = FindObjectOfType<AssetManager>();
         cam2Controller = GetComponentInChildren<CameraController>();
-        GameObject navigationUI = InspectorMode.GetComponentsInChildren<Transform>(true)[4].gameObject;
-        dropDown = navigationUI.GetComponentInChildren<TMP_Dropdown>();
-        searchField = navigationUI.GetComponentInChildren<TMP_InputField>();
-        Button[] buttons = navigationUI.GetComponentsInChildren<Button>();
-        inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
+        dropDown = InspectorMode.GetComponentInChildren<TMP_Dropdown>();
+        searchField = InspectorMode.GetComponentInChildren<TMP_InputField>();
+        Button[] buttons = InspectorMode.gameObject.GetComponentsInChildren<Button>();
         teleportButton = GameObject.FindWithTag("Teleport");
         Button telButton = teleportButton.GetComponent<Button>();
 
@@ -37,29 +33,38 @@ public class InspectorManager : MonoBehaviour
         buttons[0].onClick.AddListener(PrviousArtwork);
         dropDown.onValueChanged.AddListener(ChangeDropDownValue);
         searchField.onEndEdit.AddListener(SearchForArtist);
-        navigationUI.SetActive(false);
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
+        inputfields_ArtistInfo = PublicArtistInfo.GetComponentsInChildren<Text>();
+        InspectorMode.SetActive(false);
+        UXTools.FillInputText(inputfields_ArtistInfo);
+
     }
     void FillTextOnCollision(string key)
     {
-        ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
+        UXTools.FillInputText(key, inputfields_ArtistInfo);
     }
-
+    private void OnDisable()
+    {
+        InspectorMode.SetActive(false);
+    }
     private void OnEnable() /// is callled every the inspectore mode in toggled in uxMnaganger
     {
-        if (assetManger.infoArwork.Count > 0)
+        if (assetManger.InfoArtwork.Count > 0)
         {
-            MoveCamera(cam2Controller, assetManger.infoArwork.ElementAt(count).Value.@object);
+            InspectorMode.SetActive(true);
+            MoveCamera(cam2Controller, assetManger.InfoArtwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
-            ExtensionMethods.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo, assetManger);
+            UXTools.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo);
             MoveAlsoCharacter = true;
         }
     }
 
     private void OnGUI()
     {
-        Event e = Event.current;
-        ChangeCameraPosition(e);
+        //if (!Event.current.isMouse) return;
+        //if (!this.isActiveAndEnabled | (ArtistInfo.busy & !Application.isPlaying)) return;
+        //Event e = Event.current;
+        //ChangeCameraPosition(e);
     }
 
     void ChangeCameraPosition(Event e)
@@ -68,10 +73,10 @@ public class InspectorManager : MonoBehaviour
         {
             Camera activeCamere = UXTools.FindActiveCamera();
             string tmp_key = UXTools.GetKeyFromRay(activeCamere);
-            if (tmp_key != null && assetManger.infoArwork.ContainsKey(tmp_key))
+            if (tmp_key != null && assetManger.InfoArtwork.ContainsKey(tmp_key))
             {
                 string name;
-                name = assetManger.infoArwork[tmp_key].description.Split('\n')[0];
+                name = assetManger.InfoArtwork[tmp_key].description.Split('§')[0];
                 dropDown.value = assetManger.artistName.IndexOf(name);
                 if (MoveAlsoCharacter)
                 {
@@ -92,7 +97,7 @@ public class InspectorManager : MonoBehaviour
             string tmp_key = "";
             tmp_key = GETartistKey(artist);
             if (tmp_key != "")
-                dropDown.value = assetManger.infoArwork.Keys.ToList().FindIndex(tmp => tmp == tmp_key);
+                dropDown.value = assetManger.InfoArtwork.Keys.ToList().FindIndex(tmp => tmp == tmp_key);
             else
                 Debug.LogWarning("There was no given key associated with this name in SearchBar");
         }
@@ -104,8 +109,8 @@ public class InspectorManager : MonoBehaviour
         string key = GETartistKey(artistSelected);
         if (key != "")
         {
-            MoveCamera(cam2Controller, assetManger.infoArwork[key].@object);
-            ExtensionMethods.FillInputText(key, inputfields_ArtistInfo, assetManger);
+            MoveCamera(cam2Controller, assetManger.InfoArtwork[key].@object);
+            UXTools.FillInputText(key, inputfields_ArtistInfo);
         }
         else
             Debug.LogWarning("No value found for this given name in DropDown");
@@ -113,10 +118,10 @@ public class InspectorManager : MonoBehaviour
     string GETartistKey(string artistNAME)
     {
         string tmp_keyvalue;
-        tmp_keyvalue = assetManger.infoArwork.Where(temp => temp.Value.description.Split('\n')[0] == artistNAME)
+        tmp_keyvalue = assetManger.InfoArtwork.Where(temp => temp.Value.description.Split('§')[0] == artistNAME)
                                              .Select(tmp => tmp.Key).FirstOrDefault();
         if (tmp_keyvalue != null)
-            if (assetManger.infoArwork.ContainsKey(tmp_keyvalue))
+            if (assetManger.InfoArtwork.ContainsKey(tmp_keyvalue))
                 return tmp_keyvalue;
         return "";
     }
@@ -134,7 +139,7 @@ public class InspectorManager : MonoBehaviour
 
     void NextArtwork()
     {
-        if (count <= assetManger.infoArwork.Count - 2)
+        if (count <= assetManger.InfoArtwork.Count - 2)
             count++;
         else
             count = 0;
@@ -145,7 +150,7 @@ public class InspectorManager : MonoBehaviour
         if (count != 0)
             count--;
         else
-            count = assetManger.infoArwork.Count - 1;
+            count = assetManger.InfoArtwork.Count - 1;
         dropDown.value = count;
     }
 
@@ -156,18 +161,16 @@ public class InspectorManager : MonoBehaviour
             Debug.LogWarning("There is not values for Camera Controller or Transform target in MoveCamera");
             return;
         }
-        GameObject containerMesh;
-        if (!(containerMesh = ArtContainer.transform.GetChild(1).gameObject))
+        if (ArtContainer.transform.childCount<1)
         {
-            Debug.LogWarning("No mesh container associated with this Art Container");
+            Debug.LogWarning("No artwork container associated with this Art Container");
             return;
         }
-        Bounds tmp_mesh_bounds;
-        GameObject tmp_target = new GameObject();
-        tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+        GameObject containerMesh = ArtContainer.transform.GetChild(1).gameObject;
+        Bounds tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
+        camCon.target = containerMesh.transform;
+        camCon.targetOffset =   containerMesh.transform.position - tmp_mesh_bounds.center;
         float biggest_side = ExtensionMethods.Check_Sides_Values(tmp_mesh_bounds.size);
-        tmp_target.transform.position = tmp_mesh_bounds.center;
-        camCon.target = tmp_target.transform;
         camCon.desiredDistance = tmp_mesh_bounds.size.magnitude + biggest_side / 2;
     }
 

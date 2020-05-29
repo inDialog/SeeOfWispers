@@ -80,8 +80,6 @@ public class Multiplayer : MonoBehaviour
                 {
                     w.SendString(myGUID + "\t" + ExtensionMethods.StringToCollor(myColor) + "\t" + "color");
                     //Debug.Log("color" + myGUID + "\t" + StringToCollor(myColor) + "\t" + "color");
-                    message = null;
-                    continue;
                 }
                 else if (message.ToString().Contains("Deleted"))
                 {
@@ -89,15 +87,11 @@ public class Multiplayer : MonoBehaviour
                     //Debug.Log(" Deleted id: " + otherGUID);
                     Destroy(infoPl[otherGUID].otherPlayer);
                     infoPl.Remove(otherGUID);
-                    message = null;
-                    continue;
                 }
                 if (message.ToString().Contains("players"))
                 {
                     Players data = JsonUtility.FromJson<Players>(message);
                     UpdateLocalData(data);
-                    message = null;
-                    continue;
 
                 }
                 if (message.ToString().Contains("messageS"))
@@ -105,8 +99,6 @@ public class Multiplayer : MonoBehaviour
                     TextMessages inMeseges = JsonUtility.FromJson<TextMessages>(message);
                     UpdateText(inMeseges);
                     //Debug.Log(" Mesege : " + message.ToString());
-                    message = null;
-                    continue;
                 }
                 if (message.ToString().Contains("artWroks"))
                 {
@@ -116,18 +108,12 @@ public class Multiplayer : MonoBehaviour
                     assetManager.UpdateArtwork = listArtworks.artWroks;
                     Debug.Log("ArtworkOnTheServer: " + listArtworks.artWroks.Count);
 
-                    message = null;
-                    continue;
                 }
                 if (message.ToString().Contains("DeleteArtWroks"))
                 {
                     if (message.Split('@')[1]!=ArtistInfo.artistKey) 
                     assetManager.DeletArtWork(message.Split('@')[1]);
-                    message = null;
-                    continue;
                 }
-
-
 
                 if (message.ToString().Contains("artKey"))
                 {
@@ -141,9 +127,8 @@ public class Multiplayer : MonoBehaviour
                         Debug.Log(ArtistInfo.artistKey);
                         AccountVerified(true);
                     }
-                    message = null;
-                    continue;
                 }
+                message = null;
                 //Debug.Log("otherPlayers: " + otherPlayers.Count);
             }
 
@@ -237,9 +222,8 @@ public class Multiplayer : MonoBehaviour
     private void SendPositions()
     {
         // check if player moved
-        if (Vector3.Distance(prevPosition , myPlayer.transform.position)>0.1f)
+        if (Vector3.Distance(prevPosition, myPlayer.transform.position) > 0.1f)
         {
-            // send update if position had changed
             w.SendString(FormatMessege(myPlayer.transform));
             prevPosition = myPlayer.transform.position;
         }

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using AsImpL;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
 public class UXManager : MonoBehaviour
 {
     public GameObject logInForm;
@@ -18,7 +19,7 @@ public class UXManager : MonoBehaviour
     public GameObject OptionsUpload;
 
     //public GameObject InspectorMode;
-    public GameObject Worning;
+    public GameObject WorningPopUp;
     public GameObject PrefabRadar;
     public GameObject SpanArtwork;
 
@@ -27,17 +28,17 @@ public class UXManager : MonoBehaviour
     public Toggle fittingRoomToggle;
     public Toggle inspectorTogggle;
     public Toggle fpCameraToggle;
+    public Toggle[] DopDownnTogles;
     Toggle keepLocation;
     Button spawnArtwork;
 
-
+    public GameObject PublicArtistInfo;
     public GameObject fittingRoomUi;
     public Animator uiAnim;
     public Button ArtWorkRequest;
-    public Image Compas;
+    public Button Compas;
 
     GameObject cm_inspector;
-    //GameObject navigationUI;
     GameObject radar;
     GameObject cm_bird;
     CameraMode cmMode;
@@ -46,8 +47,6 @@ public class UXManager : MonoBehaviour
     UploadForm upForm;
     FittingRoom fittingRoom;
     CameraController cam2Controller;
-
-    //int count;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -57,7 +56,7 @@ public class UXManager : MonoBehaviour
         cm_bird = GameObject.FindGameObjectWithTag("MainCamera");
         cmMode = FindObjectOfType<CameraMode>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
-        upForm = GetComponent<UploadForm>();
+        upForm = FindObjectOfType<UploadForm>();
         fittingRoom = FindObjectOfType<FittingRoom>();
 
         assetManger = FindObjectOfType<AssetManager>();
@@ -68,7 +67,6 @@ public class UXManager : MonoBehaviour
     void Start()
     {
 
-
         FindObjectOfType<ObjectImporter>().ImportedModel += ArtWorkPresent;
         FindObjectOfType<Multiplayer>().AccountVerified += AfterAccountVerification;
         assetManger.NewArtwork += NewArtWorkReques;
@@ -77,6 +75,8 @@ public class UXManager : MonoBehaviour
         fittingRoomToggle.onValueChanged.AddListener(StartFittingRoom);
         spawnArtwork.onClick.AddListener(SendMessegeToSpawn);
         fpCameraToggle.onValueChanged.AddListener(ActivateFPView);
+        DopDownnTogles[0].onValueChanged.AddListener(FillInArtistInfo);
+        DopDownnTogles[1].onValueChanged.AddListener(LogInDropDown);
 
         SpanArtwork.gameObject.SetActive(false);
         Compas.gameObject.SetActive(false);
@@ -85,11 +85,48 @@ public class UXManager : MonoBehaviour
 
         inspectorTogggle.interactable = false;
         cm_inspector.SetActive(false);
+        logInForm.SetActive(false);
+
 
     }
+    void LogInDropDown(bool state)
+    {
+        if (state)
+        {
+            uiAnim.Play("dropDown");
+            logInForm.SetActive(true);
+            PublicArtistInfo.SetActive(false);
+        }
+        else
+        {
+            if(!DopDownnTogles[0].isOn)
+                uiAnim.Play("GoUp");
+        }
+    }
 
-
-
+    void FillInArtistInfo(bool state)
+    {
+        logInForm.SetActive(false);
+        if (state)
+        {
+            uiAnim.Play("dropDown");
+            if (ArtistInfo.busy & ArtistInfo.hasArt)
+            {
+                uploadForm.SetActive(true);
+                PublicArtistInfo.SetActive(false);
+            }
+            else
+            {
+                uploadForm.SetActive(false);
+                PublicArtistInfo.SetActive(true);
+            }
+        }
+        else
+        {
+            if (!DopDownnTogles[1].isOn | ArtistInfo.artistKey!="")
+                uiAnim.Play("GoUp");
+        }
+    }
 
 
     void AfterAccountVerification(bool state)
@@ -98,10 +135,9 @@ public class UXManager : MonoBehaviour
         FindObjectOfType<Multiplayer>().askForArtwork();
 
         /// Allow fitting room button to be active 
-        if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+        if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
         {
             ////Fill in Values
-            ///find
             FindObjectOfType<ArtistLogIn>().SignInStart(true);
             upForm.FillInForms();
         }
@@ -131,7 +167,7 @@ public class UXManager : MonoBehaviour
         else
         {
             /// triggers fitting for artist  because artist has art
-            if (assetManger.infoArwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
+            if (assetManger.InfoArtwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
             {
                 fittingRoomToggle.isOn = true;
                 StartFittingRoom(true);
@@ -193,9 +229,9 @@ public class UXManager : MonoBehaviour
     void CheckForArtWorkAround(bool state)
     {
         if (state)
-            Compas.color = Color.red;
+            Compas.image.color = Color.yellow;
         else
-            Compas.color = Color.blue;
+            Compas.image.color = Color.red;
 
     }
 
@@ -214,32 +250,28 @@ public class UXManager : MonoBehaviour
             /// Fitting Room
             if (ArtistInfo.hasArt)
             {
-                if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey))
+                if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
 
-                    if (assetManger.infoArwork[ArtistInfo.artistKey].@object != null)
-                        if (assetManger.infoArwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
+                    if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object != null)
+                        if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
                         {
                             ArtistInfo.busy = true;
 
-                            if (!assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
-                                assetManger.infoArwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
+                            if (!assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
+                                assetManger.InfoArtwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
 
                             FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
 
                             cm_inspector.SetActive(true);
                             cm_bird.SetActive(false);
-                            cam2Controller.target = assetManger.infoArwork[ArtistInfo.artistKey].@object.transform;
+                            cam2Controller.target = assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform;
                             Debug.Log("!");
                             fittingRoom.StartCoroutine("StartFittingRoom");
                             return;
                         }
             }
             else
-            {
-                /// there is no artwork present so default fill in form 
-                //uiAnim.Play("dropDown");
                 return;
-            }
         }
         else
         {
@@ -259,9 +291,9 @@ public class UXManager : MonoBehaviour
     {
         if (ArtistInfo.hasArt)
         {
-            if (assetManger.infoArwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
+            if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
             {
-                Destroy(assetManger.infoArwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
+                Destroy(assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
                 Destroy(fittingRoom.coliderBox);
                 fittingRoom.coliderBox = null;
             }
@@ -276,10 +308,10 @@ public class UXManager : MonoBehaviour
     /// <param name="InspectorMode"></param>
     void InspectorMode(bool state)
     {
-        fittingRoomUi.SetActive(!state);
+        fittingRoomUi.SetActive(false);
         assetManger.StopAllCoroutines();
         cm_bird.SetActive(!state);
-        if (state & assetManger.infoArwork.Count > 1)
+        if (state & assetManger.InfoArtwork.Count > 1)
         {
             cm_inspector.SetActive(state);
         }
@@ -317,8 +349,6 @@ public class UXManager : MonoBehaviour
     {
         cm_bird.SetActive(true);
         cm_inspector.SetActive(false);
-        cmMode.StartReset();
-        assetManger.StopAllCoroutines();
     }
 
     /// <summary>
@@ -327,6 +357,7 @@ public class UXManager : MonoBehaviour
     void OnGUI()
     {
         Event e = Event.current;
+        if (e.isMouse) return;
         if (e.isKey)
         {
             if (e.keyCode == KeyCode.Escape)
@@ -358,8 +389,8 @@ public class UXManager : MonoBehaviour
         if (key == ArtistInfo.artistKey)
         {
             FindObjectOfType<Multiplayer>().w.SendString(key + '\t' + "DeleteArtwork");
-            Worning.SetActive(true);
-            Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = worning;
+            WorningPopUp.SetActive(true);
+            WorningPopUp.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = worning;
             //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
         }
     }
@@ -368,8 +399,8 @@ public class UXManager : MonoBehaviour
         if (ArtistInfo.urlArt == url)
         {
             FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + '\t' + "DeleteArtwork");
-            Worning.SetActive(true);
-            Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
+            WorningPopUp.SetActive(true);
+            WorningPopUp.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
             //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
 
         }

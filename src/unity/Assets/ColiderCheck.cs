@@ -32,7 +32,7 @@ public class ColiderCheck : MonoBehaviour
         rb = this.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true;
 
-        ExtensionMethods.ConvertConvexObjects(asset.infoArwork, out isNotConvex);
+        ExtensionMethods.ConvertConvexObjects(asset.InfoArtwork, out isNotConvex);
         SetMeshTrigger();
         if (ArtistInfo.colderSize != Vector3.zero)
         { 
@@ -46,7 +46,7 @@ public class ColiderCheck : MonoBehaviour
 
     void SetMeshTrigger()
     {
-        if (ExtensionMethods.ConcertToBool(asset.infoArwork[ArtistInfo.artistKey].uploadOptions)[5]) return;
+        if (ExtensionMethods.ConcertToBool(asset.InfoArtwork[ArtistInfo.artistKey].uploadOptions)[5]) return;
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
         foreach (var item in ms)
         {
@@ -59,7 +59,7 @@ public class ColiderCheck : MonoBehaviour
         MeshCollider[] ms = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
         foreach (var item in ms)
         {
-            bool[] options = ExtensionMethods.ConcertToBool(asset.infoArwork[key].uploadOptions);
+            bool[] options = ExtensionMethods.ConcertToBool(asset.InfoArtwork[key].uploadOptions);
             item.isTrigger = options[5];
             item.convex = options[4];
 
@@ -298,16 +298,17 @@ public class ColiderCheck : MonoBehaviour
 
     void SetColor(bool state  )
     {
-        Color color;
-        if (!state)
-            color = Color.white;
-        else
-            color = Color.red;
+     
             
         MeshRenderer []  ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
             foreach (var item in ms)
             {
-                item.material.color = color;
-            } 
+            if (!state)
+                item.material.color = Color.white;
+
+            else
+                item.material.color = Color.red;
+
+        }
     }
 }

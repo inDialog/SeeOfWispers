@@ -31,9 +31,11 @@ public class InfoArtwork
 
 public class AssetManager : MonoBehaviour
 {
-    public Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
-    public event Action<bool,string> NewArtwork;
+    private Dictionary<string, InfoArtwork> infoArwork = new Dictionary<string, InfoArtwork>();
+    public event Action<bool, string> NewArtwork;
     public GameObject prefabBase;
+    public GameObject prefabFlag;
+
     public List<String> artistName;
     MultiObjectImporter moImporter;
     private int index_duplicate;
@@ -42,6 +44,8 @@ public class AssetManager : MonoBehaviour
         moImporter = GetComponent<MultiObjectImporter>();
         index_duplicate = 0;
     }
+    public Dictionary<string, InfoArtwork> InfoArtwork { get { return infoArwork; } }
+        
 
     public List<InfoArtwork> UpdateArtwork
     {
@@ -105,9 +109,10 @@ public class AssetManager : MonoBehaviour
         infoArwork[_id].@object.tag = "Base";
         infoArwork[_id].@object.transform.position = value[i].platform;
         infoArwork[_id].uploadOptions = value[i].uploadOptions;
-
         bool[] importOption = ExtensionMethods.ConcertToBool(value[i].uploadOptions);
         ImportOptions optionsIm = ComposeOptions(value[i], importOption, value[i].verifiedStatus);
+
+       
 
         if (importOption[0])
             infoArwork[_id].@object.GetComponent<BoxCollider>().size = value[i].colideScale;
@@ -119,24 +124,7 @@ public class AssetManager : MonoBehaviour
         {
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
-            /////====addd to list of name  for search bar 
-            if (infoArwork[_id].description.Split('\n')[0] != "")
-            {
-                if (!artistName.Contains(infoArwork[_id].description.Split('\n')[0]))
-                {
-                    artistName.Add(infoArwork[_id].description.Split('\n')[0]);
-                }
-                else
-                {
-                    artistName.Add(infoArwork[_id].description.Split('\n')[0] + "*" + index_duplicate);
-                    Debug.LogWarning("I all ready have the name");
-                    index_duplicate += 1;
-                }
-                
-            }
-            else
-                artistName.Add("NO NAME");
-            return;
+            artistName.Add(infoArwork[_id].description.Split('§')[0]);
         }
         else
         {
@@ -145,6 +133,19 @@ public class AssetManager : MonoBehaviour
             if (value[i].verifiedStatus == "True") 
             NewArtwork(true, "OnlyPlatform");
 
+        }
+        if (!importOption[6])
+        {
+            if (infoArwork[_id].@object.transform.GetChild(0).GetChild(0).gameObject)
+            {
+                Destroy(infoArwork[_id].@object.transform.GetChild(0).GetChild(0).gameObject);
+                if (infoArwork[_id].SpawnState == "OnlyPlatform")
+                {
+                    GameObject temp = Instantiate(prefabFlag, infoArwork[_id].@object.transform);
+                    temp.transform.localPosition = infoArwork[_id].position;
+                    temp.transform.localScale = infoArwork[_id].artworkScale;
+                }
+            }
         }
     }
     void TestDowload(string path, ImportOptions optionsIm, string _id)

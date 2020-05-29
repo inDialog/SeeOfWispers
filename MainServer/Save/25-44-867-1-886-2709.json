@@ -1,0 +1,34 @@
+{
+  "25-44-867-1-886-2709": {
+    "position": {
+      "x": -0.04951906,
+      "y": -0.3853045,
+      "z": 1.040351
+    },
+    "artworkScale": {
+      "x": 0.02627016,
+      "y": 0.02627016,
+      "z": 0.02627016
+    },
+    "platform": {
+      "x": 3.489162,
+      "y": -3.644885,
+      "z": -11.60759
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "colideScale": {
+      "x": 10,
+      "y": 10,
+      "z": 10
+    },
+    "url": "https://raw.githubusercontent.com/cacheflowe/haxademic/master/data/models/unicorn-head-lowpoly.obj",
+    "description": "Timmy1\n\n\n\n",
+    "uploadOptions": "True/True/True/True/False/False/",
+    "verifiedStatus": "True",
+    "id": "25-44-867-1-886-2709"
+  }
+}

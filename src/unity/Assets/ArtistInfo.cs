@@ -4,25 +4,25 @@ using UnityEngine;
 
 public static class ArtistInfo 
 {
-    public static string artistKey;
-    public static bool activ;
-    public static bool keepInPlace;
+    public static string artistKey = "";
+    public static bool activ= false;
+    public static bool keepInPlace = false;
 
-    public static string urlArt;
-    public static string description;
+    public static string urlArt ="";
+    public static string description="";
 
     public static bool hasArt = false;
-    public static bool busy;
-    public static Vector3 colderSize;
-    public static Vector3 MeshSizes;
+    public static bool busy = false;
+    public static Vector3 colderSize = new Vector3(0,0,0);
+    public static Vector3 MeshSizes = new Vector3(0, 0, 0);
 
     public static string uploadOptionsA = "";
 }
 public static class GeneralState
 {
-    public static bool AceptAssets;
-    public static bool InRangeOfArtWork;
-    public static bool colided;
+    public static bool AceptAssets = false;
+    public static bool InRangeOfArtWork = false;
+    public static bool colided = false;
     public static Vector3 maxColideSize = Vector3.one * 20;
     public static float maxDistance =20;
 
@@ -30,7 +30,6 @@ public static class GeneralState
     public static string artworkTag = "Base";
 
 }
-public static class ArtWorkFunctions
-{
-}
+
+
 

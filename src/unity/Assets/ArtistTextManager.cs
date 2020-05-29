@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using System.Linq;
+﻿using UnityEngine;
 using System;
 public class ArtistTextManager : MonoBehaviour
 {
@@ -18,12 +13,17 @@ public class ArtistTextManager : MonoBehaviour
         keyCollision = "";
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (keyCollision != other.gameObject.transform.root.name)
         {
             keyCollision = other.gameObject.transform.root.name;
             Colided(keyCollision);
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Colided("Null");
+        keyCollision = "";
     }
 }

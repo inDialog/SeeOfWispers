@@ -1,17 +1,21 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UXManager.cs">
     <Files>
-      <File FileName="Assets/AsImpL/Scripts/Loaders/LoaderObj.cs" Line="694" Column="1" IsPinned="True" />
-      <File FileName="Assets/AssetManager.cs" Line="202" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" Line="298" Column="1" />
-      <File FileName="Assets/UXManager.cs" Line="136" Column="10" />
+      <File FileName="Assets/FittingRoom.cs" Line="17" Column="38" />
+      <File FileName="Assets/UploadForm.cs" />
+      <File FileName="Assets/Scripts/Remap.cs" />
+      <File FileName="Assets/Scripts/UXTools.cs" />
+      <File FileName="Assets/InspectorManager.cs" Line="9" Column="39" />
+      <File FileName="Assets/UserExperienceManager.cs" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" />
       <File FileName="Assets/ArtistInfo.cs" />
-      <File FileName="Assets/FittingRoom.cs" Line="254" Column="26" NotebookId="1" />
-      <File FileName="Assets/UploadForm.cs" Line="184" Column="43" NotebookId="1" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Remap.cs" Line="68" Column="6" NotebookId="1" />
-      <File FileName="Assets/CameraController.cs" NotebookId="1" />
-      <File FileName="Assets/RadarController.cs" Line="16" Column="20" NotebookId="1" />
+      <File FileName="Assets/UXManager.cs" Line="22" Column="35" />
+      <File FileName="Assets/Scripts/MoveII.cs" />
+      <File FileName="Assets/AssetManager.cs" />
+      <File FileName="Assets/RadarController.cs" />
+      <File FileName="Assets/ColiderCheck.cs" />
+      <File FileName="Assets/Scripts/MoveOthers.cs" />
+      <File FileName="Assets/ArtistLogIn.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -19,9 +23,11 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dc0fdca3-bbbb-4cdb-8c9a-5e3f5c922f73" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d1ec57da-58f3-4034-8b56-b28bd9fa6673" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Assets/UXManager.cs" relfile="Assets/UXManager.cs" line="400" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
