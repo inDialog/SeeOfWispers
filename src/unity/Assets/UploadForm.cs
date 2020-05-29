@@ -9,13 +9,46 @@ public class UploadForm : MonoBehaviour
     Multiplayer multiplayer;
     AssetManager assetManager;
     public TMP_InputField UrlImput;
+    TMP_InputField nameInput;
     // Start is called before the first frame update
     void Start()
     {
         assetManager = FindObjectOfType<AssetManager>();
         multiplayer = FindObjectOfType<Multiplayer>();
+        nameInput = FindObjectOfType<UXManager>().uploadForm.GetComponentsInChildren<TMP_InputField>()[0];
+        nameInput.onEndEdit.AddListener(CheckForrecurentName);
     }
-    
+   public void UpdateInformation()
+    {
+        if (!CheckifNameIsRecurent(nameInput.text)) return;
+        else
+        {
+            UpdateExistingArtwork();
+            FindObjectOfType<UXManager>().uiAnim.Play("GoUp");
+        }
+    }
+    void CheckForrecurentName(string name)
+    {
+        CheckifNameIsRecurent(name);
+    }
+
+    private bool CheckifNameIsRecurent(string name)
+    {
+        string myName = assetManager.InfoArtwork[ArtistInfo.artistKey].description.Split('§')[0];
+        Debug.Log(myName);
+        if (assetManager.artistName.Contains(name) && name != myName)
+        {
+            nameInput.image.color = Color.yellow;
+            return false;
+        }
+        else
+        {
+            nameInput.image.color = Color.white;
+            return true;
+        }
+
+    }
+
     public bool SendArtwork()
     {
         if (FindObjectOfType<ColiderCheck>())
@@ -48,7 +81,6 @@ public class UploadForm : MonoBehaviour
             else
                 return false;
         }
-
         else /// change the position or  respwon a new object all together 
         {
             Vector3 frontalVector = multiplayer.crena.transform.position - multiplayer.crena.transform.forward * (-10);
@@ -58,7 +90,6 @@ public class UploadForm : MonoBehaviour
                 if (GeneralState.colided)
                 {
                     FindObjectOfType<FittingRoom>().ResetPosition();
-                    //restartPosition(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject);
                 }
                 toSend = FormatMessege(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject.transform, frontalVector, ArtistInfo.colderSize, ArtistInfo.urlArt, ArtistInfo.description, ArtistInfo.uploadOptionsA, "ArtWork");
                 if (assetManager.InfoArtwork[ArtistInfo.artistKey].url != ArtistInfo.urlArt | ArtistInfo.uploadOptionsA != assetManager.InfoArtwork[ArtistInfo.artistKey].uploadOptions)
@@ -81,7 +112,10 @@ public class UploadForm : MonoBehaviour
             else
                 return false;
         }
-
+    }
+    public void SpawnArtwork()
+    {
+        SendArtwork();
     }
     public void UpdateExistingArtwork()
     {
@@ -244,20 +278,4 @@ public class UploadForm : MonoBehaviour
         return true;
     }
 
-    void restartPosition( GameObject obj)
-    {
-        FindObjectOfType<FittingRoom>().ResetPosition();
-
-        //obj.transform.localScale = Vector3.zero;
-        //if (log.IsActive())
-        //{
-        //    log.text =
-        //        "Mesh out of bounds, Scale set to: 0 and Pos to: 0 " +
-        //        "WORNING ACTION IS NOT SAVED TILL object ajusted corectly in  the colider!!!!";
-        //    log.color = Color.red;
-        //}
-
-
-
-    }
 }

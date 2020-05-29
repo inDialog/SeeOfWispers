@@ -95,6 +95,7 @@
     <Compile Include="Assets\Fallow.cs" />
     <Compile Include="Assets\FittingRoom.cs" />
     <Compile Include="Assets\InspectorManager.cs" />
+    <Compile Include="Assets\LinkToWebSitte.cs" />
     <Compile Include="Assets\PlayerUX.cs" />
     <Compile Include="Assets\RadarController.cs" />
     <Compile Include="Assets\Scripts\AniMainCharacter.cs" />

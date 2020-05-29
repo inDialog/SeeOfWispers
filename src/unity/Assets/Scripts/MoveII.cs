@@ -75,7 +75,7 @@ public class MoveII : MonoBehaviour
 		if (small)
 			newSpeed /= 10;
 
-		speed = newSpeed;
+		speed = newSpeed*Time.deltaTime*10;
 		// Jump
 		if (Input.GetButton("Jump"))
 		{

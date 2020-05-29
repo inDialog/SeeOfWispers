@@ -91,13 +91,11 @@ public class TriggerText : MonoBehaviour
 #else
     void CustomButton_onClick()
     {
-
         if (urlArtis.Contains("www"))
         {
             Application.OpenURL("http://" + urlArtis + "/");
             print("App");
         }
-
     }
 #endif
 }

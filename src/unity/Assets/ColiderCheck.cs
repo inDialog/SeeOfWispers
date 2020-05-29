@@ -298,16 +298,17 @@ public class ColiderCheck : MonoBehaviour
 
     void SetColor(bool state  )
     {
-        Color color;
-        if (!state)
-            color = Color.white;
-        else
-            color = Color.red;
+     
             
         MeshRenderer []  ms = transform.GetChild(1).GetComponentsInChildren<MeshRenderer>();
             foreach (var item in ms)
             {
-                item.material.color = color;
-            } 
+            if (!state)
+                item.material.color = Color.white;
+
+            else
+                item.material.color = Color.red;
+
+        }
     }
 }

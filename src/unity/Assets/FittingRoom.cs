@@ -14,7 +14,7 @@ public class FittingRoom : MonoBehaviour
     private float step = 1;
     public InputField[] XYZ_Move;
     public InputField[] XYZ_Rotate;
-    public GameObject ArtForm;
+    public GameObject PublicInfoPagge;
 
     AssetManager assetManager;
     UploadForm upload;
@@ -24,7 +24,7 @@ public class FittingRoom : MonoBehaviour
     void Start()
     {
 
-        assetManager = GetComponent<AssetManager>();
+        assetManager = FindObjectOfType<AssetManager>();
         SpliderScale.onValueChanged.AddListener(SetScale);
         upload = FindObjectOfType<UploadForm>();
         DeleteArtwork.onClick.AddListener(DestroyObject);
@@ -85,7 +85,7 @@ public class FittingRoom : MonoBehaviour
         float.TryParse(input, out step);
     }
 
-    void DestroyObject()
+    public void DestroyObject()
     {
         if (!ArtistInfo.hasArt) return;
         assetManager.BroadcastDeleteArtwork(ArtistInfo.artistKey);
@@ -134,12 +134,13 @@ public class FittingRoom : MonoBehaviour
         GameObject _coliderBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
         _coliderBox.name = "MyCube";
         Destroy(_coliderBox.GetComponent<BoxCollider>());
-        _coliderBox.transform.position = target.position;
-        _coliderBox.layer = 12;
-        _coliderBox.transform.rotation = target.rotation;
-        _coliderBox.transform.rotation = target.rotation;
         _coliderBox.transform.localScale = assetManager.InfoArtwork[target.name].colideScale;
+        _coliderBox.transform.position = assetManager.InfoArtwork[target.name].@object.transform.position;
+        _coliderBox.transform.parent = assetManager.InfoArtwork[target.name].@object.transform;
+        _coliderBox.transform.localPosition = Vector3.zero;
+        _coliderBox.transform.rotation = target.rotation;
         _coliderBox.GetComponent<MeshRenderer>().material = normalMaterial;
+        _coliderBox.layer = 12;
         return _coliderBox;
     }
     public void UpdateArt()
@@ -219,10 +220,9 @@ public class FittingRoom : MonoBehaviour
     private IEnumerator StartFittingRoom()
     {
         log.text = "Starting Fitting room";
-        Debug.Log("1§");
         while (true)
         {
-            ArtForm.SetActive(false);
+            PublicInfoPagge.SetActive(false);
             if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
             {
                 if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)

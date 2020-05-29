@@ -77,7 +77,6 @@ public class RadarController : MonoBehaviour
         {
             if (item.Key != ArtistInfo.artistKey& item.Value.colideScale!=Vector3.zero)
                 boxes.Add(FindObjectOfType<FittingRoom>().CreateColider(item.Value.@object.transform));
-
         }
     }
 

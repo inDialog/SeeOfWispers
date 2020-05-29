@@ -3,6 +3,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+public static class UxInfo
+{
+    public static string curentArtisUrl = "";
+}
+
 public static class UXTools
 {
     private static MonoBehaviour forCoroutine;
@@ -106,7 +111,7 @@ public static class UXTools
         float elapsedTime = 0;
         float startDistance = Vector3.Distance(Character.transform.position, endPos.transform.position);
         float StartTime = Time.time;
-
+        Vector3 startPos = Character.transform.position;
         Quaternion lookOnLook = Quaternion.LookRotation(endPos.transform.position - Character.transform.position);
         while (true)
         {
@@ -123,7 +128,7 @@ public static class UXTools
             }
             else
             {
-                Character.transform.position = Vector3.Lerp(Character.transform.position, endPos.transform.position, fractionOfJourney);
+                Character.transform.position = Vector3.Lerp(startPos, endPos.transform.position, fractionOfJourney);
                 if (percentage <= 20f)
                 {
                     Character.transform.rotation = Quaternion.Lerp(Character.transform.rotation, Quaternion.identity, fractionOfJourney);
@@ -200,10 +205,12 @@ public static class UXTools
             string[] des_art = _as.InfoArtwork[tmp_key].description.Split('§');
             inputField[0].text = FormtCartel(des_art);
             inputField[1].text = FormateDEscription(des_art);
+            UxInfo.curentArtisUrl = des_art[5];
         }
         else
             Debug.LogWarning("They key for inputing text in the artist description its missing");
     }
+
     static void GenerateRectangleOnGUI(string _key, AssetManager astMan)
     {
         string[] des_art;

@@ -6,7 +6,7 @@ using TMPro;
 public class InspectorManager : MonoBehaviour
 {
     public GameObject InspectorMode;
-    public GameObject ArtistInfoDropDown;
+    public GameObject PublicArtistInfo;
     public GameObject Bird;
 
     private CameraController cam2Controller;
@@ -34,7 +34,7 @@ public class InspectorManager : MonoBehaviour
         dropDown.onValueChanged.AddListener(ChangeDropDownValue);
         searchField.onEndEdit.AddListener(SearchForArtist);
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
-        inputfields_ArtistInfo = ArtistInfoDropDown.GetComponentsInChildren<Text>();
+        inputfields_ArtistInfo = PublicArtistInfo.GetComponentsInChildren<Text>();
         InspectorMode.SetActive(false);
         UXTools.FillInputText(inputfields_ArtistInfo);
 
@@ -161,7 +161,7 @@ public class InspectorManager : MonoBehaviour
             Debug.LogWarning("There is not values for Camera Controller or Transform target in MoveCamera");
             return;
         }
-        if (!(ArtContainer.transform.GetChild(1)))
+        if (ArtContainer.transform.childCount<1)
         {
             Debug.LogWarning("No artwork container associated with this Art Container");
             return;

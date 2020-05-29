@@ -222,9 +222,8 @@ public class Multiplayer : MonoBehaviour
     private void SendPositions()
     {
         // check if player moved
-        if (Vector3.Distance(prevPosition, myPlayer.transform.position) > 0.01f)
+        if (Vector3.Distance(prevPosition, myPlayer.transform.position) > 0.1f)
         {
-            // send update if position had changed
             w.SendString(FormatMessege(myPlayer.transform));
             prevPosition = myPlayer.transform.position;
         }

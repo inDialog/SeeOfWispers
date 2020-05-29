@@ -19,7 +19,7 @@ public class UXManager : MonoBehaviour
     public GameObject OptionsUpload;
 
     //public GameObject InspectorMode;
-    public GameObject Worning;
+    public GameObject WorningPopUp;
     public GameObject PrefabRadar;
     public GameObject SpanArtwork;
 
@@ -32,11 +32,11 @@ public class UXManager : MonoBehaviour
     Toggle keepLocation;
     Button spawnArtwork;
 
-    public GameObject ArtistInfoDr;
+    public GameObject PublicArtistInfo;
     public GameObject fittingRoomUi;
     public Animator uiAnim;
     public Button ArtWorkRequest;
-    public Image Compas;
+    public Button Compas;
 
     GameObject cm_inspector;
     GameObject radar;
@@ -47,7 +47,6 @@ public class UXManager : MonoBehaviour
     UploadForm upForm;
     FittingRoom fittingRoom;
     CameraController cam2Controller;
-    InspectorManager im;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -57,7 +56,7 @@ public class UXManager : MonoBehaviour
         cm_bird = GameObject.FindGameObjectWithTag("MainCamera");
         cmMode = FindObjectOfType<CameraMode>();
         toggleGroup = FindObjectOfType<ToggleGroup>();
-        upForm = GetComponent<UploadForm>();
+        upForm = FindObjectOfType<UploadForm>();
         fittingRoom = FindObjectOfType<FittingRoom>();
 
         assetManger = FindObjectOfType<AssetManager>();
@@ -68,7 +67,6 @@ public class UXManager : MonoBehaviour
     void Start()
     {
 
-        im = FindObjectOfType<InspectorManager>();
         FindObjectOfType<ObjectImporter>().ImportedModel += ArtWorkPresent;
         FindObjectOfType<Multiplayer>().AccountVerified += AfterAccountVerification;
         assetManger.NewArtwork += NewArtWorkReques;
@@ -97,14 +95,12 @@ public class UXManager : MonoBehaviour
         {
             uiAnim.Play("dropDown");
             logInForm.SetActive(true);
-            ArtistInfoDr.SetActive(false);
+            PublicArtistInfo.SetActive(false);
         }
         else
         {
             if(!DopDownnTogles[0].isOn)
                 uiAnim.Play("GoUp");
-            //logInForm.SetActive(false);
-            //ArtistInfoDr.SetActive(true);
         }
     }
 
@@ -113,17 +109,16 @@ public class UXManager : MonoBehaviour
         logInForm.SetActive(false);
         if (state)
         {
-            UXTools.FillInputText(im.inputfields_ArtistInfo);
             uiAnim.Play("dropDown");
             if (ArtistInfo.busy & ArtistInfo.hasArt)
             {
                 uploadForm.SetActive(true);
-                ArtistInfoDr.SetActive(false);
+                PublicArtistInfo.SetActive(false);
             }
             else
             {
                 uploadForm.SetActive(false);
-                ArtistInfoDr.SetActive(true);
+                PublicArtistInfo.SetActive(true);
             }
         }
         else
@@ -143,7 +138,6 @@ public class UXManager : MonoBehaviour
         if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
         {
             ////Fill in Values
-            ///find
             FindObjectOfType<ArtistLogIn>().SignInStart(true);
             upForm.FillInForms();
         }
@@ -235,9 +229,9 @@ public class UXManager : MonoBehaviour
     void CheckForArtWorkAround(bool state)
     {
         if (state)
-            Compas.color = Color.red;
+            Compas.image.color = Color.yellow;
         else
-            Compas.color = Color.blue;
+            Compas.image.color = Color.red;
 
     }
 
@@ -277,11 +271,7 @@ public class UXManager : MonoBehaviour
                         }
             }
             else
-            {
-                /// there is no artwork present so default fill in form 
-                //uiAnim.Play("dropDown");
                 return;
-            }
         }
         else
         {
@@ -399,8 +389,8 @@ public class UXManager : MonoBehaviour
         if (key == ArtistInfo.artistKey)
         {
             FindObjectOfType<Multiplayer>().w.SendString(key + '\t' + "DeleteArtwork");
-            Worning.SetActive(true);
-            Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = worning;
+            WorningPopUp.SetActive(true);
+            WorningPopUp.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = worning;
             //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
         }
     }
@@ -409,8 +399,8 @@ public class UXManager : MonoBehaviour
         if (ArtistInfo.urlArt == url)
         {
             FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + '\t' + "DeleteArtwork");
-            Worning.SetActive(true);
-            Worning.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
+            WorningPopUp.SetActive(true);
+            WorningPopUp.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Bad url";
             //FindObjectOfType<Multiplayer>().w.SendString(ArtistInfo.artistKey + "DeleteArtwork");
 
         }

@@ -11,7 +11,7 @@ public class ArtistLogIn : MonoBehaviour
     public Button LogIn;
     public Button SignIn;
     public GameObject UploadToggle;
-    public GameObject Wanternty;
+    public GameObject NewUserPOPUP;
     public TMP_InputField[] IdText;
 
     public TMP_InputField TextLogIn;
@@ -46,7 +46,7 @@ public class ArtistLogIn : MonoBehaviour
     public void SignInStart(bool recurentUser)
     {
         if (!recurentUser)
-            Wanternty.SetActive(true);
+            NewUserPOPUP.SetActive(true);
 
         UploadToggle.gameObject.SetActive(false);
     }
