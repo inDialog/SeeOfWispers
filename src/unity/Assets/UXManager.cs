@@ -150,7 +150,11 @@ public class UXManager : MonoBehaviour
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
         fittingRoom.log.text = "Welcome: " + ArtistInfo.artistKey;
-
+        if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
+        {
+            fittingRoomToggle.isOn = true;
+            StartFittingRoom(true);
+        }else
         SStartBirdMode();
     }
 
