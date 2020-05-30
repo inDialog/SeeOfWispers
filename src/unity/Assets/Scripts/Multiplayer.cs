@@ -14,12 +14,12 @@ public class Multiplayer : MonoBehaviour
     public GameObject otherPlayerObject;
     public GameObject otherTextPrefab;
     
-    public GameObject myPlayer;
+    //public GameObject myPlayer;
     public GameObject crena;
 
     private Vector3 prevPosition;
     //public Dictionary<string, GameObject> otherPlayers = new Dictionary<string, GameObject>();
-    public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
+    //public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
     public Dictionary<string, MessegeInfo> _messeges = new Dictionary<string, MessegeInfo>();
     public event Action<bool> AccountVerified;
 
@@ -43,7 +43,7 @@ public class Multiplayer : MonoBehaviour
         myColor = ExtensionMethods.RandomColor();
         myColor.a = 225;
         crena.GetComponent<Renderer>().material.SetColor("_EmissionColor", myColor);
-        myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
+        //myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
         //GeneralState.AceptAssets = true;
     }
     private void OnEnable()
@@ -85,13 +85,13 @@ public class Multiplayer : MonoBehaviour
                 {
                     string otherGUID = message.ToString().Split('@')[1];
                     //Debug.Log(" Deleted id: " + otherGUID);
-                    Destroy(infoPl[otherGUID].otherPlayer);
-                    infoPl.Remove(otherGUID);
+                    Destroy(NetworkPlayerManager.infoPl[otherGUID].otherPlayer);
+                    NetworkPlayerManager.infoPl.Remove(otherGUID);
                 }
                 if (message.ToString().Contains("players"))
                 {
-                    Players data = JsonUtility.FromJson<Players>(message);
-                    UpdateLocalData(data);
+                    Players playerInfo = JsonUtility.FromJson<Players>(message);
+                    NetworkPlayerManager.UpdateLocalData(playerInfo, otherPlayerObject);
 
                 }
                 if (message.ToString().Contains("messageS"))
@@ -138,7 +138,7 @@ public class Multiplayer : MonoBehaviour
                 Debug.Log("Error: " + w.error);
                 break;
             }
-            SendPositions();
+            NetworkPlayerManager.SendPositions(ref w, FormatMessege);
             yield return 0;
         }
 
@@ -149,7 +149,7 @@ public class Multiplayer : MonoBehaviour
     {
         w.Close();
         StopAllCoroutines();
-        foreach (KeyValuePair<string, InfoPlayers> entry in infoPl)
+        foreach (KeyValuePair<string, InfoPlayers> entry in NetworkPlayerManager.infoPl)
         {
             Destroy(entry.Value.otherPlayer);
         }
@@ -157,7 +157,7 @@ public class Multiplayer : MonoBehaviour
         {
             Destroy(entry.Value.textObject);
         }
-        infoPl.Clear();
+        NetworkPlayerManager.infoPl.Clear();
         _messeges.Clear();
         print("disconect3d");
     }
@@ -191,43 +191,6 @@ public class Multiplayer : MonoBehaviour
         }
     }
 
-    void UpdateLocalData(Players data)
-    {
-        // if number of players is not enough, create new ones
-        for (int i = 0; i < data.players.Count; i++)
-        {
-            string playerID = data.players[i].id.ToString();
-            //Debug.Log("data id " + data.players[i].rotation);
-            //Debug.Log(i + "data id " + playerID);
-            if (!infoPl.ContainsKey(playerID))
-            {
-                GameObject instance = Instantiate(otherPlayerObject, data.players[i].position, Quaternion.identity);
-                instance.name = playerID;
-                instance.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", data.players[i].color);
-                data.players[i].color.a = 225;
-                instance.GetComponentInChildren<SpriteRenderer>().color = data.players[i].color;
-                infoPl.Add(playerID, data.players[i]);
-                infoPl[playerID].otherPlayer = instance;
-            }
-            else
-            {
-                if (infoPl.ContainsKey(playerID))
-                {
-                    infoPl[playerID].position = data.players[i].position;
-                    infoPl[playerID].rotation = data.players[i].rotation;
-                }
-            }
-        }
-    }
-    private void SendPositions()
-    {
-        // check if player moved
-        if (Vector3.Distance(prevPosition, myPlayer.transform.position) > 0.1f)
-        {
-            w.SendString(FormatMessege(myPlayer.transform));
-            prevPosition = myPlayer.transform.position;
-        }
-    }
    
     public string FormatMessege (Transform _player)
     {
@@ -247,23 +210,8 @@ public class Multiplayer : MonoBehaviour
     }
 
 }
-// define classed needed to deserialize recieved data
-[Serializable]
-public class Players
-{
-    public List<InfoPlayers> players;
-}
-[Serializable]
-public class InfoPlayers
-{
-    public Vector3 position;
-    public Vector3 rotation;
-    public Color32 color;
-    public int timestamp;
-    public string id;
-    public GameObject otherPlayer;
 
-}
+
 
 [Serializable]
 public class TextMessages

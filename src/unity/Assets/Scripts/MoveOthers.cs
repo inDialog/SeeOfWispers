@@ -14,7 +14,7 @@ public class MoveOthers : MonoBehaviour
     {
         multiplayer = FindObjectOfType<Multiplayer>();
         animations = GetComponent<Animator>();
-        target = multiplayer.infoPl[this.name].position;
+        target = NetworkPlayerManager.infoPl[this.name].position;
 
     }
 
@@ -62,17 +62,14 @@ public class MoveOthers : MonoBehaviour
 
     void UpdatePosition()
     {
-        if (multiplayer.infoPl.ContainsKey(this.name))
+        if (NetworkPlayerManager.infoPl.ContainsKey(this.name))
         {
-          
-                target = multiplayer.infoPl[this.name].position;
-                float dist = Vector3.Distance(this.transform.position, target);
-                float step = dist * Time.deltaTime; // calculate distance to move
-                transform.position = Vector3.MoveTowards(transform.position, target, step);
-                transform.rotation = Quaternion.Euler(multiplayer.infoPl[this.name].rotation);
-                moving = true;
-          
-
+            target = NetworkPlayerManager.infoPl[this.name].position;
+            float dist = Vector3.Distance(this.transform.position, target);
+            float step = dist * Time.deltaTime; // calculate distance to move
+            transform.position = Vector3.MoveTowards(transform.position, target, step);
+            transform.rotation = Quaternion.Euler(NetworkPlayerManager.infoPl[this.name].rotation);
+            moving = true;
         }
     }
 }
