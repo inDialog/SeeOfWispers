@@ -140,6 +140,8 @@ public class UXManager : MonoBehaviour
             ////Fill in Values
             FindObjectOfType<ArtistLogIn>().SignInStart(true);
             upForm.FillInForms();
+            fittingRoomToggle.isOn = true;
+            StartFittingRoom(true);
         }
         else
         {
@@ -150,8 +152,7 @@ public class UXManager : MonoBehaviour
         logInForm.SetActive(false);
         uploadForm.SetActive(true);
         fittingRoom.log.text = "Welcome: " + ArtistInfo.artistKey;
-
-        SStartBirdMode();
+        //SStartBirdMode();
     }
 
     void ArtWorkPresent(GameObject gm, string st)
