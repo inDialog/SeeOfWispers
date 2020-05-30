@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\MoveII.cs" />
     <Compile Include="Assets\Scripts\MoveOthers.cs" />
     <Compile Include="Assets\Scripts\Multiplayer.cs" />
+    <Compile Include="Assets\Scripts\NetworkPlayerManager.cs" />
     <Compile Include="Assets\Scripts\PlatonicSolidBlend.cs" />
     <Compile Include="Assets\Scripts\Reaktion\Internal\Perlin.cs" />
     <Compile Include="Assets\Scripts\Reaktion\Utility\TurbulentMotion.cs" />

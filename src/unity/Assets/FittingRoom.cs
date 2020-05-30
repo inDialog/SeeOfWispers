@@ -191,7 +191,7 @@ public class FittingRoom : MonoBehaviour
         if (!state)
         {
             log.color = Color.white;
-            log.text = "ArtWork pos:" + artwork.localPosition + '\n'
+            log.text = "ArtWork pos:" + artwork.position + '\n'
          + "artwork scale: " + artwork.localScale;
         }
         else
@@ -200,8 +200,10 @@ public class FittingRoom : MonoBehaviour
             log.text = "ArtWork can be eighter :"
                 +'\n' + "   -> outside bounds"
                 +'\n' + "   -> to big "  
-                +'\n' + "   -> to far away from  the  center "
-                +'\n' + "ajust size and position";
+                +'\n' + "   -> to far away from the origin "
+                + '\n' + "  -> or to low<Y axis must be above -2> "
+
+                + '\n' + "ajust size and position";
             ;
 
         }

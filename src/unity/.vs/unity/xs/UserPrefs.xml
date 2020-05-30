@@ -1,21 +1,22 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UXManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/LinkToWebSitte.cs">
     <Files>
       <File FileName="Assets/FittingRoom.cs" Line="17" Column="38" />
-      <File FileName="Assets/UploadForm.cs" />
+      <File FileName="Assets/UploadForm.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Remap.cs" />
-      <File FileName="Assets/Scripts/UXTools.cs" />
-      <File FileName="Assets/InspectorManager.cs" Line="9" Column="39" />
+      <File FileName="Assets/Scripts/UXTools.cs" Line="219" Column="31" />
+      <File FileName="Assets/InspectorManager.cs" />
       <File FileName="Assets/UserExperienceManager.cs" />
       <File FileName="Assets/Scripts/Multiplayer.cs" />
-      <File FileName="Assets/ArtistInfo.cs" />
-      <File FileName="Assets/UXManager.cs" Line="22" Column="35" />
+      <File FileName="Assets/ArtistInfo.cs" Line="33" Column="38" />
+      <File FileName="Assets/UXManager.cs" Line="413" Column="1" />
       <File FileName="Assets/Scripts/MoveII.cs" />
       <File FileName="Assets/AssetManager.cs" />
       <File FileName="Assets/RadarController.cs" />
-      <File FileName="Assets/ColiderCheck.cs" />
-      <File FileName="Assets/Scripts/MoveOthers.cs" />
-      <File FileName="Assets/ArtistLogIn.cs" />
+      <File FileName="Assets/ColiderCheck.cs" Line="157" Column="1" />
+      <File FileName="Assets/Scripts/MoveOthers.cs" Line="65" Column="14" />
+      <File FileName="Assets/ArtistLogIn.cs" Line="1" Column="1" />
+      <File FileName="Assets/LinkToWebSitte.cs" Line="45" Column="65" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -23,11 +24,9 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d1ec57da-58f3-4034-8b56-b28bd9fa6673" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cba97b8d-891f-4f97-9ecd-12309fd51bd5" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/segalcalin/Documents/GitHub/SeeOfWispers/src/unity/Assets/UXManager.cs" relfile="Assets/UXManager.cs" line="400" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

@@ -229,6 +229,7 @@ public class UXManager : MonoBehaviour
     }
     void CheckForArtWorkAround(bool state)
     {
+        GeneralState.InRangeOfArtWork = state;
         if (state)
             Compas.image.color = Color.yellow;
         else

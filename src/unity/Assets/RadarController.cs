@@ -15,7 +15,7 @@ public class RadarController : MonoBehaviour
     List<GameObject> boxes = new List<GameObject>();
     BoxCollider bx;
     AssetManager asset;
-
+    bool colide;
     private void OnEnable()
     {
         bx = GetComponent<BoxCollider>();
@@ -28,7 +28,7 @@ public class RadarController : MonoBehaviour
         if (InRangeOfArtwork != null)
             InRangeOfArtwork(true);
         GeneralState.InRangeOfArtWork = true;
-
+        bool colide;
     }
     private void OnDisable()
     {
@@ -41,26 +41,32 @@ public class RadarController : MonoBehaviour
 
     {
         this.transform.position = mainCH.transform.position;
+
+        if (this.transform.position.y > GeneralState.Y_axisMax & colide == true)
+        {
+            if (InRangeOfArtwork != null)
+            {
+                InRangeOfArtwork(false);
+            }
+        }
+        else
+        {
+            if (InRangeOfArtwork != null)
+            {
+                InRangeOfArtwork(true);
+            }
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Base")
-        {
-            if (InRangeOfArtwork != null)
-                InRangeOfArtwork(true);
-            GeneralState.InRangeOfArtWork = true;
-        }
-
+            colide = true;
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Base")
-        {
-            if (InRangeOfArtwork != null)
-                InRangeOfArtwork(false);
-            GeneralState.InRangeOfArtWork = false;
-            //print("---");
-        }
+            colide = false;
 
     }
     void Clear()

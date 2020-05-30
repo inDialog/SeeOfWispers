@@ -98,9 +98,9 @@ public class ColiderCheck : MonoBehaviour
                     GeneralState.colided = SizeCheck();    //<- check if mesh size and center 
                 Debug.Log("Size Check :" + GeneralState.colided);
                 SetColor(GeneralState.colided);
-
                 break;
             }
+
 
             GeneralState.colided = CheckIfMeshIsContatined();  //<-  check if mesh center is contained in box
             SetColor(GeneralState.colided);
@@ -126,6 +126,8 @@ public class ColiderCheck : MonoBehaviour
         GameObject artwork = this.transform.GetChild(1).gameObject;
         Bounds bs = ObjectBounds(artwork.transform);
         bool temp = (bs.size.magnitude > GeneralState.maxColideSize.magnitude);
+        temp = bs.center.y < GeneralState.Y_axisMax;
+        Debug.Log(bs.center); 
         if (!temp)
             temp = Vector3.Distance(bs.center, artwork.transform.parent.position) > GeneralState.maxDistance;
         return temp;
@@ -146,16 +148,16 @@ public class ColiderCheck : MonoBehaviour
     {
         MeshCollider[] meshRenderes = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
         int i = 0;
+
+        bool tmp = false;
         while (i < meshRenderes.Length)
         {
-            if (bx.bounds.Contains(meshRenderes[i].bounds.center))
-            {
-                //Debug.Log("Bounds contain the point : " + meshRenderes[i].bounds);
-                return false;
-            }
+            Debug.Log(meshRenderes[i].bounds.center.y);
+            if (!bx.bounds.Contains(meshRenderes[i].bounds.center) || meshRenderes[i].bounds.center.y< GeneralState.Y_axisMax)
+                tmp = true;
             i++;
         }
-        return true;
+        return tmp;
     }
     bool StartTest1()
     {

@@ -21,10 +21,16 @@ public static class ArtistInfo
 public static class GeneralState
 {
     public static bool AceptAssets = false;
+
     public static bool InRangeOfArtWork = false;
+
     public static bool colided = false;
+
     public static Vector3 maxColideSize = Vector3.one * 20;
-    public static float maxDistance =20;
+
+    public static float maxDistance = 20;
+
+    public static float Y_axisMax = -2f;
 
     public static int artworkLayer =12;
     public static string artworkTag = "Base";
