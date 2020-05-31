@@ -141,7 +141,7 @@ public class UXManager : MonoBehaviour
             FindObjectOfType<ArtistLogIn>().SignInStart(true);
             upForm.FillInForms();
             fittingRoomToggle.isOn = true;
-            StartFittingRoom(true);
+            //StartFittingRoom(true);
         }
         else
         {
@@ -164,15 +164,6 @@ public class UXManager : MonoBehaviour
             GeneralState.AceptAssets = true;
             Debug.LogWarning("Test");
             upForm.UpdateExistingArtwork(true);
-        }
-        else
-        {
-            /// triggers fitting for artist  because artist has art
-            if (assetManger.InfoArtwork.ContainsKey(gm.name) & ArtistInfo.hasArt)
-            {
-                fittingRoomToggle.isOn = true;
-                StartFittingRoom(true);
-            }
         }
         /// ActivateInspectorMode <!----> < remarks
         inspectorTogggle.interactable = true;
@@ -198,8 +189,6 @@ public class UXManager : MonoBehaviour
             {
                 radar = Instantiate(PrefabRadar);
                 FindObjectOfType<RadarController>().InRangeOfArtwork += CheckForArtWorkAround;
-
-
             }
             else
             {
@@ -231,9 +220,15 @@ public class UXManager : MonoBehaviour
     {
         GeneralState.InRangeOfArtWork = state;
         if (state)
+        {
+            GeneralState.InRangeOfArtWork = true;
             Compas.image.color = Color.yellow;
+        }
         else
+        {
+            GeneralState.InRangeOfArtWork = false;
             Compas.image.color = Color.red;
+        }
 
     }
 
@@ -249,59 +244,37 @@ public class UXManager : MonoBehaviour
 
         if (state)
         {
-            /// Fitting Room
-            if (ArtistInfo.hasArt)
+            if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
             {
-                if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
-
-                    if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object != null)
-                        if (assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
-                        {
-                            ArtistInfo.busy = true;
-
-                            if (!assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
-                                assetManger.InfoArtwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
-
-                            FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
-
-                            cm_inspector.SetActive(true);
-                            cm_bird.SetActive(false);
-                            cam2Controller.target = assetManger.InfoArtwork[ArtistInfo.artistKey].@object.transform;
-                            Debug.Log("!");
-                            fittingRoom.StartCoroutine("StartFittingRoom");
-                            return;
-                        }
-            }
-            else
+                ArtistInfo.busy = true;
+                fittingRoom.StartCoroutine("StartFittingRoom");
                 return;
+            }
         }
         else
         {
-            DestroyColideCjeck();
-            StopSecondCamera();
-            if(uiAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name== "dropDown")
-            uiAnim.Play("GoUp");
-            fittingRoom.StopAllCoroutines();
             ArtistInfo.busy = false;
-
-            SStartBirdMode();
+            fittingRoom.DestroyColideCjeck();
+            StopSecondCamera();
+            if (uiAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "dropDown")
+                uiAnim.Play("GoUp");
+            fittingRoom.StopAllCoroutines();
+            fittingRoom.artwork = null;
             return;
         }
 
     }
-    void DestroyColideCjeck()
+  public void StartFittingRoomCamera(Transform target)
     {
-        if (ArtistInfo.hasArt)
-        {
-            if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey)& fittingRoom.coliderBox != null)
-            {
-                Destroy(assetManger.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
-                Destroy(fittingRoom.coliderBox);
-                fittingRoom.coliderBox = null;
-            }
+        cm_bird.SetActive(false);
 
-
-        }
+        if (ArtistInfo.colderSize != Vector3.zero)
+            cam2Controller.distance = ArtistInfo.colderSize.x;
+        else
+            cam2Controller.distance = 50f;/// todo calculate distance based on artwork size;
+        cam2Controller.target = target;
+        cam2Controller.teleport = true;
+        cm_inspector.SetActive(true);
 
     }
     /// <summary>
@@ -367,9 +340,10 @@ public class UXManager : MonoBehaviour
 
                 toggleGroup.SetAllTogglesOff();
                 if (fittingRoomToggle.isOn)
-                    StartFittingRoom(false);
+                    fittingRoomToggle.isOn = false;
                 else
                     SStartBirdMode();
+                StopRadar();
             }
         }
     }

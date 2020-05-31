@@ -27,7 +27,6 @@ public class RadarController : MonoBehaviour
         ShowBorder();
         if (InRangeOfArtwork != null)
             InRangeOfArtwork(true);
-        GeneralState.InRangeOfArtWork = true;
         bool colide;
     }
     private void OnDisable()
@@ -41,19 +40,18 @@ public class RadarController : MonoBehaviour
 
     {
         this.transform.position = mainCH.transform.position;
-
-        if (this.transform.position.y > GeneralState.Y_axisMax & colide == true)
+        if (colide == true | this.transform.position.y > GeneralState.Y_axisMax)
         {
             if (InRangeOfArtwork != null)
             {
-                InRangeOfArtwork(false);
+                InRangeOfArtwork(true);
             }
         }
         else
         {
             if (InRangeOfArtwork != null)
             {
-                InRangeOfArtwork(true);
+                InRangeOfArtwork(false);
             }
         }
 

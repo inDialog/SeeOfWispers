@@ -15,11 +15,12 @@ public class FittingRoom : MonoBehaviour
     public InputField[] XYZ_Move;
     public InputField[] XYZ_Rotate;
     public GameObject PublicInfoPagge;
-
+  public   GameObject artwork;
     AssetManager assetManager;
     UploadForm upload;
     public TMP_Text log;
-    Transform Artwork;
+  static int index = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,18 +37,18 @@ public class FittingRoom : MonoBehaviour
     {
         set
         {
-            value[0].text = Artwork.transform.localPosition.x.ToString();
-            value[1].text = Artwork.transform.localPosition.y.ToString();
-            value[2].text = Artwork.transform.localPosition.z.ToString();
+            value[0].text = artwork.transform.localPosition.x.ToString();
+            value[1].text = artwork.transform.localPosition.y.ToString();
+            value[2].text = artwork.transform.localPosition.z.ToString();
         }
     }
     InputField[] XYZ_R
     {
         set
         {
-            value[0].text = Artwork.transform.localEulerAngles.x.ToString();
-            value[1].text = Artwork.transform.localEulerAngles.y.ToString();
-            value[2].text = Artwork.transform.localEulerAngles.z.ToString();
+            value[0].text = artwork.transform.localEulerAngles.x.ToString();
+            value[1].text = artwork.transform.localEulerAngles.y.ToString();
+            value[2].text = artwork.transform.localEulerAngles.z.ToString();
         }
     }
     public void PositionXYZ()
@@ -145,7 +146,8 @@ public class FittingRoom : MonoBehaviour
     }
     public void UpdateArt()
     {
-        FindObjectOfType<ColiderCheck>().StartCoroutine("Check");
+        if(artwork.transform.root.GetComponent<ColiderCheck>())
+            artwork.transform.root.GetComponent<ColiderCheck>().StartCoroutine("Check");
         upload.UpdateExistingArtwork();
     }
 
@@ -186,29 +188,7 @@ public class FittingRoom : MonoBehaviour
         log.text = "Re-scale to:" + obj.transform.localScale + " and moving in the center of the platform";
         Debug.Log("Moved to the center" + target);
     }
-    void SetLog(Transform artwork,bool state)
-    {
-        if (!state)
-        {
-            log.color = Color.white;
-            log.text = "ArtWork pos:" + artwork.position + '\n'
-         + "artwork scale: " + artwork.localScale;
-        }
-        else
-        {
-            log.color = Color.red;
-            log.text = "ArtWork can be eighter :"
-                +'\n' + "   -> outside bounds"
-                +'\n' + "   -> to big "  
-                +'\n' + "   -> to far away from the origin "
-                + '\n' + "  -> or to low<Y axis must be above -2> "
 
-                + '\n' + "ajust size and position";
-            ;
-
-        }
-
-    }
 
     void RotateAroundPoint(Transform aTrans, Vector3 aPoint, Vector3 aAxis, float aAngle)
     {
@@ -222,36 +202,57 @@ public class FittingRoom : MonoBehaviour
     private IEnumerator StartFittingRoom()
     {
         log.text = "Starting Fitting room";
+        PublicInfoPagge.SetActive(false);
         while (true)
         {
-            PublicInfoPagge.SetActive(false);
-            if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
+            while (artwork == null)
             {
-                if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount > 1)
+                if (!assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
                 {
-                    if (Artwork == null)
-                        Artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).transform;
+                    yield return null;
+                    continue;
+                }
+                if (assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.childCount == 1)
+                {
+                    yield return null;
+                    continue;
+                }
+                artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(index).gameObject;
+                if (!assetManager.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>())
+                    assetManager.InfoArtwork[ArtistInfo.artistKey].@object.AddComponent<ColiderCheck>();
 
-                    if (EventSystem.current.currentSelectedGameObject!=null)
-                        if( EventSystem.current.currentSelectedGameObject.layer == 13)
-                        {
-                            yield return null;
-                            continue;
-                        }
+                artwork.transform.root.GetComponent<ColiderCheck>().StartCoroutine("Check");
+                yield return null;
+            }
+            if (!assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
+            {
+                artwork = null;
+                yield return null;
+                continue;
+            }
+            DisplayColider(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform);
 
-                    XYZ_M = XYZ_Move;
-                    XYZ_R = XYZ_Rotate;
-                    DisplayColider(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform);
+            FindObjectOfType<UXManager>().StartFittingRoomCamera(artwork.transform);
+            artwork.transform.root.GetChild(0).localPosition = new Vector3(0, -ArtistInfo.colderSize.y/1.8f, 0);
 
-                    if (Input.anyKey)
-                    {
-                        SetLog(Artwork, GeneralState.colided);
-                    }
-
-                    Controller();
+            if (EventSystem.current.currentSelectedGameObject != null)
+                if (EventSystem.current.currentSelectedGameObject.layer == 13)
+                {
+                    yield return null;
+                    continue;
                 }
 
+            XYZ_M = XYZ_Move;
+            XYZ_R = XYZ_Rotate;
+
+
+            if (Input.anyKey)
+            {
+                SetLog(artwork.transform, GeneralState.colided);
             }
+
+            Controller();
+
             yield return null;
         }
     }
@@ -263,7 +264,7 @@ public class FittingRoom : MonoBehaviour
             float verticalSpeed = 5.0F;
             float h = horizontalSpeed * Input.GetAxis("Mouse X");
             float v = verticalSpeed * Input.GetAxis("Mouse Y");
-            Artwork.transform.Rotate(v, h, 0);
+            artwork.transform.Rotate(v, h, 0);
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
@@ -300,7 +301,6 @@ public class FittingRoom : MonoBehaviour
 
     public void MoveArtwork(string direction)
     {
-        GameObject artwork = assetManager.InfoArtwork[ArtistInfo.artistKey].@object.transform.GetChild(1).gameObject;
         if (!ArtistInfo.hasArt) return;
         Vector3 addOn = artwork.transform.position;
         switch (direction)
@@ -329,6 +329,47 @@ public class FittingRoom : MonoBehaviour
         }
         artwork.transform.position = addOn;
         UpdateArt();
+
+    }
+   public void DestroyColideCjeck()
+    {
+        if (ArtistInfo.hasArt)
+        {
+            if (assetManager.InfoArtwork.ContainsKey(ArtistInfo.artistKey) & coliderBox != null)
+            {
+                Destroy(assetManager.InfoArtwork[ArtistInfo.artistKey].@object.GetComponent<ColiderCheck>());
+                Destroy(coliderBox);
+                coliderBox = null;
+                artwork = null;
+            }
+
+
+        }
+
+    }
+    void SetLog(Transform artwork, bool state)
+    {
+        if (!state)
+        {
+            log.color = Color.white;
+            log.text = "ArtWork pos:" + artwork.position + '\n'
+         + "artwork scale: " + artwork.localScale;
+        }
+        else
+        {
+            log.color = Color.red;
+            log.text = "ArtWork pos:" + artwork.position + '\n'
+       + "artwork scale: " + artwork.localScale + '\n';
+            log.text += "Posible Poroblems :"
+                + '\n' + "   -> outside bounds"
+                + '\n' + "   -> to big "
+                + '\n' + "   -> to far away from the origin "
+                + '\n' + "  -> or to low<Y axis must be above -2> "
+
+                + '\n' + "ajust size and position";
+            ;
+
+        }
 
     }
 }

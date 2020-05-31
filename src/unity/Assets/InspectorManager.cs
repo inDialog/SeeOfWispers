@@ -161,12 +161,21 @@ public class InspectorManager : MonoBehaviour
             Debug.LogWarning("There is not values for Camera Controller or Transform target in MoveCamera");
             return;
         }
-        if (ArtContainer.transform.childCount<1)
+        //if (ArtContainer.transform.childCount<1)
+        //{
+        //    Debug.LogWarning("No artwork container associated with this Art Container");
+        //    return;
+        //}
+        GameObject containerMesh;
+        if (ArtContainer.transform.childCount >= 2)
         {
-            Debug.LogWarning("No artwork container associated with this Art Container");
-            return;
+            containerMesh = ArtContainer.transform.GetChild(1).gameObject;
         }
-        GameObject containerMesh = ArtContainer.transform.GetChild(1).gameObject;
+        else
+        {
+            containerMesh = ArtContainer.transform.GetChild(0).gameObject;
+
+        }
         Bounds tmp_mesh_bounds = ExtensionMethods.ObjectBounds(containerMesh.transform);
         camCon.target = containerMesh.transform;
         camCon.targetOffset =   containerMesh.transform.position - tmp_mesh_bounds.center;

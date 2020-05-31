@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     public int zoomRate = 40;
     public float panSpeed = 0.3f;
     public float zoomDampening = 5.0f;
-
+    public bool teleport;
     private float xDeg = 0.0f;
     private float yDeg = 0.0f;
     private float currentDistance;
@@ -130,13 +130,19 @@ public class CameraController : MonoBehaviour
         //transform.position = position;
         if (target != null)
         {
-            position = target.position - (rotation * Vector3.forward * currentDistance + targetOffset);
 
+            position = target.position - (rotation * Vector3.forward * currentDistance + targetOffset);
+            if (teleport)
+            {
+                transform.position = position;
+                teleport = false;
+            }
             float distance = Vector3.Distance(transform.position, target.position);
             float step = 5 + distance / 100 * Time.deltaTime; // calculate distance to move
             transform.position = Vector3.MoveTowards(transform.position, position, step);
 
         }
+
     }
 
     private static float ClampAngle(float angle, float min, float max)

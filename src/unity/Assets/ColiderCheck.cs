@@ -77,14 +77,36 @@ public class ColiderCheck : MonoBehaviour
 
     private IEnumerator Check()
     {
+
         while (true)
         {
+            if(ArtistInfo.colderSize != Vector3.zero)
+            while (transform.childCount!=3)
+            {
+                Debug.Log(transform.childCount +"!!!!");
+                Debug.LogWarning("NoArt");
+                GeneralState.colided = true;
+                yield return null;
+            }
+            else
+            {
+                while (transform.childCount < 1)
+                {
+                    Debug.Log(transform.childCount + "!!!!");
+                    Debug.LogWarning("NoArt");
+                    GeneralState.colided = true;
+                    yield return null;
+                }
+            }
+
             rb.WakeUp();
 
             Debug.Log("Started Cehack" + ArtistInfo.colderSize);
 
             if (ArtistInfo.colderSize != Vector3.zero)
             {
+                Debug.Log(transform.childCount + "_|_");
+
                 if (!bx)
                     bx = this.gameObject.AddComponent<BoxCollider>();
 
@@ -94,8 +116,7 @@ public class ColiderCheck : MonoBehaviour
             else
             {
                 //bx.isTrigger = false;
-                if (colide == false)
-                    GeneralState.colided = SizeCheck();    //<- check if mesh size and center 
+                GeneralState.colided = SizeCheck();    //<- check if mesh size and center 
                 Debug.Log("Size Check :" + GeneralState.colided);
                 SetColor(GeneralState.colided);
                 break;
@@ -122,20 +143,25 @@ public class ColiderCheck : MonoBehaviour
 
     bool SizeCheck()
     {
+        int index = 1;
 
-        GameObject artwork = this.transform.GetChild(1).gameObject;
-        Bounds bs = ObjectBounds(artwork.transform);
-        bool temp = (bs.size.magnitude > GeneralState.maxColideSize.magnitude);
-        temp = bs.center.y < GeneralState.Y_axisMax;
-        Debug.Log(bs.center); 
-        if (!temp)
-            temp = Vector3.Distance(bs.center, artwork.transform.parent.position) > GeneralState.maxDistance;
+        GameObject artwork = this.transform.GetChild(index).gameObject;
+        Bounds bs = ObjectBounds(this.transform);
+        float dist = Vector3.Distance(bs.center, artwork.transform.parent.position);
+        Debug.Log(dist);
+        bool temp;
+        if (bs.size.magnitude > GeneralState.maxColideSize.magnitude || bs.center.y < GeneralState.Y_axisMax || dist > GeneralState.maxDistance)
+            temp = true;
+        else
+            temp = false;
         return temp;
     }
     Bounds ObjectBounds(Transform obj)
     {
         Bounds meshesBounds = new Bounds(obj.position, Vector3.zero);
+      
         MeshRenderer[] mrs = obj.GetComponentsInChildren<MeshRenderer>(true);
+
         for (int i = 0; i < mrs.Length; i++)
         {
             if (i == 0) meshesBounds = mrs[i].bounds;
@@ -146,15 +172,15 @@ public class ColiderCheck : MonoBehaviour
 
     bool CheckIfMeshIsContatined()
     {
-        MeshCollider[] meshRenderes = transform.GetChild(1).GetComponentsInChildren<MeshCollider>();
+        int index = 1;
+        MeshCollider[] meshRenderes = transform.GetChild(index).GetComponentsInChildren<MeshCollider>();
         int i = 0;
-
         bool tmp = false;
         while (i < meshRenderes.Length)
         {
-            Debug.Log(meshRenderes[i].bounds.center.y);
-            if (!bx.bounds.Contains(meshRenderes[i].bounds.center) || meshRenderes[i].bounds.center.y< GeneralState.Y_axisMax)
-                tmp = true;
+            //Debug.Log(meshRenderes[i].bounds.center.y);
+            if (!bx.bounds.Contains(meshRenderes[i].bounds.center))
+                return true;
             i++;
         }
         return tmp;
@@ -282,16 +308,13 @@ public class ColiderCheck : MonoBehaviour
         {
             GeneralState.colided = false;
             SetColor(GeneralState.colided);
-            colide = false;
         }
 
     }
-    bool colide;
     private void OnTriggerStay(Collider other)
     {
         if (other.GetType() == typeof(MeshCollider) & other.transform.root.name != ArtistInfo.artistKey & other.tag != "Player")
         {
-            colide = true;
             GeneralState.colided = true;
             SetColor(GeneralState.colided);
         }

@@ -112,10 +112,13 @@ public class AssetManager : MonoBehaviour
         bool[] importOption = ExtensionMethods.ConcertToBool(value[i].uploadOptions);
         ImportOptions optionsIm = ComposeOptions(value[i], importOption, value[i].verifiedStatus);
 
-       
+        infoArwork[_id].@object.transform.GetChild(0).localPosition += new Vector3(0, -infoArwork[_id].colideScale.y/1.8f, 0);
+
 
         if (importOption[0])
+        {
             infoArwork[_id].@object.GetComponent<BoxCollider>().size = value[i].colideScale;
+        }
         else
             Destroy(infoArwork[_id].@object.GetComponent<BoxCollider>());
 
@@ -125,14 +128,22 @@ public class AssetManager : MonoBehaviour
             moImporter.ImportModelAsync(value[i].id, value[i].url, infoArwork[_id].@object.transform, optionsIm);
             infoArwork[_id].SpawnState = "FullySpawn";
             artistName.Add(infoArwork[_id].description.Split('§')[0]);
+
+
         }
         else
         {
-            TestDowload(value[i].url, optionsIm, _id);
+            if (_id == ArtistInfo.artistKey)
+            {
+                TestDowload(value[i].url, optionsIm, _id);
+                infoArwork[_id].SpawnState = "OnlyPlatform";
+                if (value[i].verifiedStatus == "True")
+                    NewArtwork(true, "OnlyPlatform");
+                return;
+            }
             infoArwork[_id].SpawnState = "OnlyPlatform";
-            if (value[i].verifiedStatus == "True") 
-            NewArtwork(true, "OnlyPlatform");
-
+            if (value[i].verifiedStatus == "True")
+                NewArtwork(true, "OnlyPlatform");
         }
         if (!importOption[6])
         {
@@ -150,10 +161,8 @@ public class AssetManager : MonoBehaviour
     }
     void TestDowload(string path, ImportOptions optionsIm, string _id)
     {
-        if (_id==ArtistInfo.artistKey)
-        {
+
             moImporter.ImportModelAsync("Tester", path, infoArwork[_id].@object.transform,optionsIm);
-        }
     }
    public void BroadcastDeleteArtwork(string _key)
     {

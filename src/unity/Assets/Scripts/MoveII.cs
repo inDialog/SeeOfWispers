@@ -89,7 +89,7 @@ public class MoveII : MonoBehaviour
 				jumpTime += Time.deltaTime / 1.5f;
 			else jumpTime = 0.5f;
 			jumpTime = Mathf.Clamp(jumpTime, 0.1f, _rigidbody.mass);
-			if (transform.position.y > -1)
+			if (transform.position.y > 0)
 				jump = new Vector3(0, -gravity * jumpTime, 0);
 			else
 				if (_rigidbody.velocity != Vector3.zero)
