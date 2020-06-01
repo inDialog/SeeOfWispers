@@ -437,7 +437,7 @@ namespace AsImpL
             obj.transform.localPosition = buildOptions.localPosition;
             obj.transform.localRotation = Quaternion.Euler(buildOptions.localEulerAngles); ;
             obj.transform.localScale = buildOptions.localScale;
-            Debug.Log("Created new object "+ obj.name + "   with nr of children: " + obj.transform.childCount);
+            Debug.Log("Created new object "+ obj.name + "   with nr of children: " + obj.transform.childCount  +"|"+ buildOptions.verificationStatus);
      
             if (buildOptions.verificationStatus == "True")
             {
@@ -459,8 +459,7 @@ namespace AsImpL
             distances[1] = buildOptions.boxColiderSize.y - meshesBounds.size.y;
             distances[2] = buildOptions.boxColiderSize.z - meshesBounds.size.z;
 
-            if (distances[0] < 0 | distances[1] < 0 | distances[2] < 0)
-            {
+      
                 float[] temp = distances;
                 Array.Sort(temp);
                 int axis = Array.IndexOf(distances, temp[0]);
@@ -482,8 +481,7 @@ namespace AsImpL
 
                 Debug.Log("bounds size: " + meshesBounds.size + "ColideSize" + buildOptions.boxColiderSize + "distances" + distances[0]);
 
-                if (meshesBounds.center != obj.transform.position)
-                {
+              
                     for (int i = 0; i < mrs.Length; i++)
                     {
                         if (i == 0) meshesBounds = mrs[i].bounds;
@@ -495,8 +493,6 @@ namespace AsImpL
                     Debug.Log("Moved to the center" + target);
                     if(FindObjectOfType<FittingRoom>().log.IsActive())
                     FindObjectOfType<FittingRoom>().log.text = "Mesh out of bounds, rescling and moving in the center";
-                }
-            }
 
         }
 

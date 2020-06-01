@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.InteropServices;
 public class LinkToWebSitte : MonoBehaviour
 {
     Button GotoWWebsite;
@@ -21,7 +22,7 @@ public class LinkToWebSitte : MonoBehaviour
     }
     // Update is called once per frame
 #if UNITY_WEBGL && !UNITY_EDITOR
-         [DllImport("__Internal")]
+    [DllImport("__Internal")]
 	private static extern void openWindow(string url);
 
     void CustomButton_onClick(string urlArtis)

@@ -165,6 +165,11 @@ public class UXManager : MonoBehaviour
             Debug.LogWarning("Test");
             upForm.UpdateExistingArtwork(true);
         }
+        else
+            if (assetManger.InfoArtwork.ContainsKey(ArtistInfo.artistKey))
+        {
+            fittingRoomToggle.isOn = true;
+        }
         /// ActivateInspectorMode <!----> < remarks
         inspectorTogggle.interactable = true;
 
@@ -254,11 +259,11 @@ public class UXManager : MonoBehaviour
         else
         {
             ArtistInfo.busy = false;
-            fittingRoom.DestroyColideCjeck();
             StopSecondCamera();
             if (uiAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "dropDown")
                 uiAnim.Play("GoUp");
             fittingRoom.StopAllCoroutines();
+            fittingRoom.DestroyColideCjeck();
             fittingRoom.artwork = null;
             return;
         }

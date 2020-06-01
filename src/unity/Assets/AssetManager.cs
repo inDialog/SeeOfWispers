@@ -88,6 +88,7 @@ public class AssetManager : MonoBehaviour
                     if (_id == ArtistInfo.artistKey & value[i].verifiedStatus =="True")
                     {
                         ArtistInfo.hasArt = true;
+                        FindObjectOfType<UXManager>().fittingRoomToggle.isOn = false;
                     }
 
                     if (i == value.Count-1)
