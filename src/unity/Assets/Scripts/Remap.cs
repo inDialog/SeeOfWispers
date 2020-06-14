@@ -67,9 +67,9 @@ public static class ExtensionMethods
     public static string ComposeString(TMP_InputField[] inputFields)
     {
         string temp = "";
-        for (int i = 0; i < inputFields.Length; i++)
+        for (int i = 0; i < inputFields.Length-1; i++)
         {
-            if (i == inputFields.Length - 1)
+            if (i == inputFields.Length - 2)
                 temp += inputFields[i].text;
             else
                 temp += inputFields[i].text + "§";

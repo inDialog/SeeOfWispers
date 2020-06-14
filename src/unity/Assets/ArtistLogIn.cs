@@ -12,7 +12,7 @@ public class ArtistLogIn : MonoBehaviour
     public Button SignIn;
     public GameObject UploadToggle;
     public GameObject NewUserPOPUP;
-    public TMP_InputField[] IdText;
+    public InputField[] IdText;
 
     public TMP_InputField TextLogIn;
     // Start is called before the first frame update
@@ -56,7 +56,7 @@ public class ArtistLogIn : MonoBehaviour
         SetId = IdText;
     }
 
-    public TMP_InputField [] SetId
+    public InputField[] SetId
     {
         set
         {

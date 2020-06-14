@@ -29,6 +29,11 @@ public static class UXTools
         "to forget", "to be forgoten", "to forgive", "to force",
         "nothing","maybe","posibly","...","what we say it is" };
    static string ASCI = "|_!#$%&\'()*+,-./:;<=>?@[\\]^_`{}~";
+   static string DescriptionRosny = "L'exposition Retour à l'Anormal vous amène dans le Cyberespace pour découvrir les travaux des élèves de la Fabrique Artistique et Numérique Explorez une galaxie constituée des restitutions d'ateliers d'arts plastiques et numériques, des résidences d'artistes, des partenariats avec l'éducation nationale, l'IME et Ecole de la 2e chance. " + '\n' +
+       " Tout est organisé pour garder les pieds sur terre et permettre d'avoir la tête dans les toiles ! " + '\n' +
+        " Bonne exploration ! " + '\n';
+
+
     public static void UXTols(MonoBehaviour currentMono, GameObject MainCharacter, AssetManager assetManager)
     {
         forCoroutine = currentMono;
@@ -190,13 +195,19 @@ public static class UXTools
         madString += " <b>MA.D</b> is :<b>us</b>";
         inputField[1].text = madString;
     }
+    public static void FillInputTextRosny(Text[] inputField)
+    {
+        inputField[0].text = "Bienvenu dans la <b>FanZone</b>";
+        inputField[1].text = DescriptionRosny;
+    }
 
 
-        public static void FillInputText(string tmp_key, Text[] inputField)
+    public static void FillInputText(string tmp_key, Text[] inputField)
     {
         if (tmp_key == "Null")
         {
-            FillInputText(inputField);
+            //FillInputText(inputField);
+            FillInputTextRosny(inputField);
             return;
         }
         AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
@@ -205,6 +216,7 @@ public static class UXTools
             string[] des_art = _as.InfoArtwork[tmp_key].description.Split('§');
             inputField[0].text = FormtCartel(des_art);
             inputField[1].text = FormateDEscription(des_art);
+            if(des_art.Length>5)////todo check way the keyDisplay is coming in the description count 
             UxInfo.curentArtisUrl = des_art[5];
         }
         else

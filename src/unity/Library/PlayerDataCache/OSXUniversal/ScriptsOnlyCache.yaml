@@ -135,89 +135,89 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11336}
     - Class: 114
-      Script: {instanceID: 11358}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 11380}
+      Script: {instanceID: 11378}
     - Class: 114
-      Script: {instanceID: 11394}
+      Script: {instanceID: 11392}
+    - Class: 114
+      Script: {instanceID: 11450}
     - Class: 114
       Script: {instanceID: 11452}
     - Class: 114
-      Script: {instanceID: 11454}
+      Script: {instanceID: 11490}
     - Class: 114
-      Script: {instanceID: 11492}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11512}
+      Script: {instanceID: 11520}
     - Class: 114
-      Script: {instanceID: 11522}
+      Script: {instanceID: 11624}
     - Class: 114
-      Script: {instanceID: 11626}
+      Script: {instanceID: 11716}
     - Class: 114
-      Script: {instanceID: 11718}
+      Script: {instanceID: 11722}
     - Class: 114
-      Script: {instanceID: 11724}
+      Script: {instanceID: 11734}
     - Class: 114
-      Script: {instanceID: 11736}
+      Script: {instanceID: 11842}
     - Class: 114
-      Script: {instanceID: 11844}
+      Script: {instanceID: 11864}
     - Class: 114
-      Script: {instanceID: 11866}
+      Script: {instanceID: 11940}
     - Class: 114
-      Script: {instanceID: 11942}
+      Script: {instanceID: 11958}
     - Class: 114
-      Script: {instanceID: 11960}
+      Script: {instanceID: 11970}
     - Class: 114
-      Script: {instanceID: 11972}
+      Script: {instanceID: 12002}
     - Class: 114
-      Script: {instanceID: 12004}
+      Script: {instanceID: 12152}
     - Class: 114
-      Script: {instanceID: 12154}
+      Script: {instanceID: 12214}
     - Class: 114
-      Script: {instanceID: 12216}
+      Script: {instanceID: 12244}
     - Class: 114
-      Script: {instanceID: 12246}
+      Script: {instanceID: 12328}
     - Class: 114
-      Script: {instanceID: 12330}
+      Script: {instanceID: 12384}
     - Class: 114
-      Script: {instanceID: 12386}
+      Script: {instanceID: 12408}
     - Class: 114
-      Script: {instanceID: 12410}
+      Script: {instanceID: 12558}
     - Class: 114
-      Script: {instanceID: 12560}
+      Script: {instanceID: 12590}
     - Class: 114
       Script: {instanceID: 12592}
     - Class: 114
-      Script: {instanceID: 12594}
+      Script: {instanceID: 12598}
     - Class: 114
-      Script: {instanceID: 12600}
+      Script: {instanceID: 12610}
     - Class: 114
-      Script: {instanceID: 12612}
+      Script: {instanceID: 12644}
     - Class: 114
-      Script: {instanceID: 12646}
+      Script: {instanceID: 12648}
     - Class: 114
-      Script: {instanceID: 12650}
+      Script: {instanceID: 12664}
     - Class: 114
-      Script: {instanceID: 12666}
+      Script: {instanceID: 12674}
     - Class: 114
-      Script: {instanceID: 12676}
+      Script: {instanceID: 12884}
     - Class: 114
-      Script: {instanceID: 12886}
+      Script: {instanceID: 12954}
     - Class: 114
-      Script: {instanceID: 12956}
+      Script: {instanceID: 13108}
     - Class: 114
-      Script: {instanceID: 13110}
+      Script: {instanceID: 13128}
     - Class: 114
-      Script: {instanceID: 13130}
+      Script: {instanceID: 13202}
     - Class: 114
-      Script: {instanceID: 13204}
+      Script: {instanceID: 13232}
     - Class: 114
-      Script: {instanceID: 13234}
+      Script: {instanceID: 13242}
     - Class: 114
-      Script: {instanceID: 13244}
+      Script: {instanceID: 13276}
     - Class: 114
-      Script: {instanceID: 13278}
-    - Class: 114
-      Script: {instanceID: 13340}
+      Script: {instanceID: 13338}
     - Class: 114
       Script: {instanceID: 13358}
     - Class: 114
@@ -577,7 +577,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 3a9bbd5252658f4a25fbd411e991a8f3
+      Hash: 4bee69929b7b530574d7443c3dc400b7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ArtistLogIn
@@ -1082,4 +1082,4 @@ ScriptsOnlyBuild:
   platform: 2
   scenePathNames:
   - Assets/Scenes/Template.unity
-  playerPath: /Users/segalcalin/Documents/GitHub/SeeOfWispers/build_test.app
+  playerPath: /Users/segalcalin/Documents/GitHub/Server_S.O.W/Builds/stand_alone.app
