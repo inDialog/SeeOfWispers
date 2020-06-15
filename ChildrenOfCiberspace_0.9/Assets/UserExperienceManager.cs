@@ -1,0 +1,31 @@
+﻿using System;
+using UnityEngine;
+/// <summary>
+/// Things to do :
+///     Make the hovering and artist info in the same funtion
+///     The camera 
+/// </summary>
+public class UserExperienceManager : MonoBehaviour
+{
+    public GameObject MainCharacter;
+
+    public Action<string> Teleport;
+    private AssetManager assetManager;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        assetManager = FindObjectOfType<AssetManager>();
+        UXTools.UXTols(this, MainCharacter, assetManager);
+
+        //uxTools =  UXTools(this, MainCharacter, assetManager);
+    }
+    private void OnGUI()
+    {
+        //if (ArtistInfo.busy & !Application.isPlaying) return;
+        //Event e = Event.current;
+        //if (e.isMouse)
+        //    UXTools.MouseEvents(e);
+    }
+
+}

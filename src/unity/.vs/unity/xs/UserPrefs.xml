@@ -1,24 +1,10 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UXManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ArtistInfo.cs">
     <Files>
-      <File FileName="Assets/FittingRoom.cs" Line="236" Column="91" IsPinned="True" />
-      <File FileName="Assets/Scripts/UXTools.cs" Line="155" Column="37" IsPinned="True" />
-      <File FileName="Assets/ColiderCheck.cs" />
-      <File FileName="Assets/UXManager.cs" Line="100" Column="13" />
-      <File FileName="Assets/Scripts/Remap.cs" />
-      <File FileName="Assets/InspectorManager.cs" />
-      <File FileName="Assets/Scripts/Multiplayer.cs" />
-      <File FileName="Assets/UserExperienceManager.cs" />
-      <File FileName="Assets/ArtistInfo.cs" />
-      <File FileName="Assets/AssetManager.cs" />
-      <File FileName="Assets/AsImpL/Scripts/ObjectImporter.cs" />
-      <File FileName="Assets/AsImpL/Scripts/Loaders/Loader.cs" />
-      <File FileName="Assets/UploadForm.cs" Line="180" Column="1" />
-      <File FileName="Assets/LinkToWebSitte.cs" />
-      <File FileName="Assets/AsImpL/Scripts/ImportOptions.cs" />
-      <File FileName="Assets/AsImpL/Scripts/Dataset/ObjectBuilder.cs" />
-      <File FileName="Assets/WebGLSupport/WebGLInput/WebGLInput.cs" />
-      <File FileName="Assets/ArtistLogIn.cs" />
+      <File FileName="Assets/CameraMode.cs" Line="28" Column="62" />
+      <File FileName="Assets/Scripts/MoveII.cs" />
+      <File FileName="Assets/Scripts/Multiplayer.cs" Line="230" Column="1" />
+      <File FileName="Assets/ArtistInfo.cs" Line="35" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -26,7 +12,7 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e116339d-b5e9-422f-bd0b-851c829e7f5a" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="01767a97-4d79-4ed2-ad2c-5b59c86c740b" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

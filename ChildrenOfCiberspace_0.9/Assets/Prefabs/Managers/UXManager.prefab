@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &457775907219744138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 457775907219744136}
+  - component: {fileID: 457775907219744137}
+  - component: {fileID: 457775907219744143}
+  m_Layer: 0
+  m_Name: UXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &457775907219744136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457775907219744138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &457775907219744137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457775907219744138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea64f53f25744c679b92a08b2be3be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherPlayerObject: {fileID: 20792778915938659, guid: f6eedfe73508445aa981643bbccef11a,
+    type: 3}
+  otherTextPrefab: {fileID: 1748460105126253228, guid: 592187df9670e4f88804e96adc8af185,
+    type: 3}
+  crena: {fileID: 0}
+  myColor:
+    serializedVersion: 2
+    rgba: 4280885194
+  Urls:
+  - ws://localhost:3002
+  - ws://www.in-dialog.com:3002/socket.io/?EIO=4&transport=websocket
+  ind: 1
+  url: 
+  assetManager: {fileID: 0}
+--- !u!114 &457775907219744143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457775907219744138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90731531a6ef44970a9a7e6067498ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logInForm: {fileID: 0}
+  uploadForm: {fileID: 0}
+  OptionsUpload: {fileID: 0}
+  WorningPopUp: {fileID: 0}
+  PrefabRadar: {fileID: 7783651024995212347, guid: 637c56825f3924fd0895065c1fda9c37,
+    type: 3}
+  SpanArtwork: {fileID: 0}
+  fittingRoomToggle: {fileID: 0}
+  inspectorTogggle: {fileID: 0}
+  fpCameraToggle: {fileID: 0}
+  DopDownnTogles:
+  - {fileID: 0}
+  - {fileID: 0}
+  PublicArtistInfo: {fileID: 0}
+  fittingRoomUi: {fileID: 0}
+  uiAnim: {fileID: 0}
+  ArtWorkRequest: {fileID: 0}
+  Compas: {fileID: 0}
