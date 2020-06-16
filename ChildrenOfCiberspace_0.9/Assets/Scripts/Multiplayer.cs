@@ -75,7 +75,7 @@ public class Multiplayer : MonoBehaviour
             // check if message is not empty
             if (message != null)
             {
-                Debug.Log(message.ToString());
+                //Debug.Log(message.ToString());
                 if (message.ToString() == "Conceted")
                 {
                     w.SendString(myGUID + "\t" + ExtensionMethods.StringToCollor(myColor) + "\t" + "color");

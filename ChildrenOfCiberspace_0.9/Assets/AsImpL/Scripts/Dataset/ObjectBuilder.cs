@@ -58,19 +58,22 @@ namespace AsImpL
             if (materialData == null || materialData.Count == 0)
             {
                 string shaderName = "VertexLit";
-                if (hasColors)
-                {
-                    shaderName = "Unlit/Simple Vertex Colors Shader";
-                    if (Shader.Find(shaderName) == null)
-                    {
-                        shaderName = "Mobile/Particles/Alpha Blended";
-                    }
-                    Debug.Log("No material library defined. Using vertex colors.");
-                }
-                else
-                {
-                    //Debug.LogWarning("No material library defined. Using a default material.");
-                }
+                //if (hasColors)
+                //{
+                //    shaderName = "Unlit/Simple Vertex Colors Shader";
+                //    if (Shader.Find(shaderName) == null)
+                //    {
+                //        shaderName = "Mobile/Particles/Alpha Blended";
+                //    }
+                //    Debug.Log("No material library defined. Using vertex colors.");
+                //}
+                //else
+                //{
+                //    //Debug.LogWarning("No material library defined. Using a default material.");
+                //}
+                //shaderName = "Mobile/Particles/Alpha Blended";
+                shaderName = "Universal Render Pipeline/Lit";
+
                 currMaterials.Add("default", new Material(Shader.Find(shaderName)));
             }
         }
