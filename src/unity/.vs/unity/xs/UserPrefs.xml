@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{C3DA89E1-70C6-7D6C-993E-C8F831D35880}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Multiplayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CameraMode.cs">
     <Files>
       <File FileName="Assets/CameraMode.cs" Line="28" Column="62" />
-      <File FileName="Assets/Scripts/MoveII.cs" />
+      <File FileName="Assets/Scripts/MoveII.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Multiplayer.cs" Line="230" Column="1" />
       <File FileName="Assets/ArtistInfo.cs" Line="35" Column="23" />
     </Files>
@@ -12,7 +12,7 @@
     <String>Assembly-CSharp-Editor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="01767a97-4d79-4ed2-ad2c-5b59c86c740b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b3ca3231-6d6b-434b-a1b7-9fa1e686ff67" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

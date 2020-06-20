@@ -34,7 +34,7 @@ public static class GeneralState
 
     public static int artworkLayer =12;
     public static string artworkTag = "Base";
-
+    public static string ownerOfDoman = "<b>Chateau Virtuel</b>";
 }
 
 

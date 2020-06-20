@@ -36,7 +36,7 @@ public class InspectorManager : MonoBehaviour
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
         inputfields_ArtistInfo = PublicArtistInfo.GetComponentsInChildren<Text>();
         InspectorMode.SetActive(false);
-        UXTools.FillInputText(inputfields_ArtistInfo);
+        UXTools.FillInputTextOthers(inputfields_ArtistInfo);
 
     }
     void FillTextOnCollision(string key)

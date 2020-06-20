@@ -32,7 +32,7 @@ public static class UXTools
    static string DescriptionRosny = "L'exposition Retour à l'Anormal vous amène dans le Cyberespace pour découvrir les travaux des élèves de la Fabrique Artistique et Numérique Explorez une galaxie constituée des restitutions d'ateliers d'arts plastiques et numériques, des résidences d'artistes, des partenariats avec l'éducation nationale, l'IME et Ecole de la 2e chance. " + '\n' +
        " Tout est organisé pour garder les pieds sur terre et permettre d'avoir la tête dans les toiles ! " + '\n' +
         " Bonne exploration ! " + '\n';
-
+    static string DescriptionChateao = "Under Construction";
 
     public static void UXTols(MonoBehaviour currentMono, GameObject MainCharacter, AssetManager assetManager)
     {
@@ -152,53 +152,53 @@ public static class UXTools
 
 
 
-    public static void FillInputText(Text[] inputField)
-    {
-        inputField[0].text = "Welcome to <b>MA.D</b>";
-        string madString = "Some may ask what is MA.D?";
-        madString += '\n';
-        madString += '\n';
-        madString += "MA:D is .... MA:D is:";
-        madString += '\n';
-        madString += '\n';
-        madString += '\n';
+    //public static void FillInputText(Text[] inputField)
+    //{
+    //    inputField[0].text = "Welcome to <b>MA.D</b>";
+    //    string madString = "Some may ask what is MA.D?";
+    //    madString += '\n';
+    //    madString += '\n';
+    //    madString += "MA:D is .... MA:D is:";
+    //    madString += '\n';
+    //    madString += '\n';
+    //    madString += '\n';
 
-        int lenth = Random.Range(3, dictonery.Length);
-        int j = 0;
-        while ( j != lenth-1)
-        {
-            RandomizeArray(dictonery);
-            for (int i = 0; i < dictonery[i].Length - 2; i++)
-            {
-                int randm2 = (int)Random.Range(1, dictonery[i + 1].Length - 1);
-                madString += " <b>MA.D</b> is : ";
-                Random.InitState(Random.Range(0, 100000));
-                if (randm2 % 2 == 0| randm2 % 9 == 0)
-                    for (int x = 0; x < (int)Random.Range(1, 120); x++)
-                    {
-                        if (randm2 % 13 == 0)
-                        {
-                            madString += ASCI[0] + ASCI[1];
-                            continue;
-                        }
-                        madString += ASCI[Random.Range(0, ASCI.Length - 1)];
-                    }
-                else
-                    madString += dictonery[i];
+    //    int lenth = Random.Range(3, dictonery.Length);
+    //    int j = 0;
+    //    while ( j != lenth-1)
+    //    {
+    //        RandomizeArray(dictonery);
+    //        for (int i = 0; i < dictonery[i].Length - 2; i++)
+    //        {
+    //            int randm2 = (int)Random.Range(1, dictonery[i + 1].Length - 1);
+    //            madString += " <b>MA.D</b> is : ";
+    //            Random.InitState(Random.Range(0, 100000));
+    //            if (randm2 % 2 == 0| randm2 % 9 == 0)
+    //                for (int x = 0; x < (int)Random.Range(1, 120); x++)
+    //                {
+    //                    if (randm2 % 13 == 0)
+    //                    {
+    //                        madString += ASCI[0] + ASCI[1];
+    //                        continue;
+    //                    }
+    //                    madString += ASCI[Random.Range(0, ASCI.Length - 1)];
+    //                }
+    //            else
+    //                madString += dictonery[i];
 
-                madString += '\n';
-            }
-            madString += '\n';
-            madString += '\n';
-            j++;
-        }
-        madString += " <b>MA.D</b> is :<b>us</b>";
-        inputField[1].text = madString;
-    }
-    public static void FillInputTextRosny(Text[] inputField)
+    //            madString += '\n';
+    //        }
+    //        madString += '\n';
+    //        madString += '\n';
+    //        j++;
+    //    }
+    //    madString += " <b>MA.D</b> is :<b>us</b>";
+    //    inputField[1].text = madString;
+    //}
+    public static void FillInputTextOthers(Text[] inputField)
     {
-        inputField[0].text = "Bienvenu dans la <b>FanZone</b>";
-        inputField[1].text = DescriptionRosny;
+        inputField[0].text = "Bienvenu dans la "+GeneralState.ownerOfDoman;
+        inputField[1].text = DescriptionChateao;
     }
 
 
@@ -207,7 +207,7 @@ public static class UXTools
         if (tmp_key == "Null")
         {
             //FillInputText(inputField);
-            FillInputTextRosny(inputField);
+            FillInputTextOthers(inputField);
             return;
         }
         AssetManager _as = GameObject.FindObjectOfType<AssetManager>();

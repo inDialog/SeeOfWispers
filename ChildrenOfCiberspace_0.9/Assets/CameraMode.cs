@@ -12,8 +12,8 @@ public class CameraMode : MonoBehaviour
     StructuredVolumeSampling volumeSampling;
     MoveII moveII;
     public bool stop;
-    int origginalMask;
-    public  LayerMask lm;
+    LayerMask origginalMask;
+    public LayerMask lm;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,12 +41,12 @@ public class CameraMode : MonoBehaviour
             {
                 item.enabled = false;
             }
-            moveII.small = true;
+            moveII.WalkingOnly = true;
             float speed = 30 * Time.deltaTime;
             transform.localRotation = Quaternion.Euler(Vector3.zero);
             this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, originalState.transform.up - (originalState.transform.forward * 3), speed);
             this.transform.parent.transform.localScale = Vector3.Lerp(this.transform.parent.transform.localScale, originalState.transform.localScale / 25, 2 * Time.deltaTime);//Crane Scale
-            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, originalFOV *2f, 2 * Time.deltaTime);//Camera Field of View
+            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, originalFOV * 2f, 2 * Time.deltaTime);//Camera Field of View
             if (this.transform.parent.transform.localScale == originalState.transform.localScale)
                 break;
 
@@ -58,7 +58,7 @@ public class CameraMode : MonoBehaviour
             yield return null;
         }
     }
-  
+
     public IEnumerator ScaleUp()
     {
         while (true)
@@ -68,7 +68,7 @@ public class CameraMode : MonoBehaviour
             {
                 item.enabled = true;
             }
-            moveII.small = false;
+            moveII.WalkingOnly = false;
             transform.localRotation = originalState.transform.rotation;
 
             float speed = 30 * Time.deltaTime;
@@ -84,19 +84,21 @@ public class CameraMode : MonoBehaviour
     }
     public IEnumerator ZoomIn()
     {
+        StopCoroutine("ZoomOut");
+
         while (true)
         {
             if (transform.localPosition != Pos_FirstPerson)
             {
                 float speed = 10 * Time.deltaTime;
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, Pos_FirstPerson, speed);
-                mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView,80, 2 * Time.deltaTime);//Camera Field of View
+                mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, 80, 2 * Time.deltaTime);//Camera Field of View
+                mainCamera.cullingMask = lm;
             }
             else
             {
                 FreeCam();
-                mainCamera.cullingMask = lm;
-                if(Input.GetKey(KeyCode.Escape))
+                if (Input.GetKey(KeyCode.Escape))
                 {
                     ZoomOut();
                     break;
@@ -108,11 +110,12 @@ public class CameraMode : MonoBehaviour
     }
     public IEnumerator ZoomOut()
     {
+        StopCoroutine("ZoomIn");
         while (true)
         {
             mainCamera.cullingMask = origginalMask;
             float speed = 30 * Time.deltaTime;
-            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalState.transform.localRotation, speed*5);
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, originalState.transform.localRotation, speed * 5);
             transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, originalState.transform.localPosition, speed);
             mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, originalFOV, 2 * Time.deltaTime);//Camera Field of View
             if (this.transform.localPosition == originalState.transform.position & mainCamera.fieldOfView <= 45.1f)
@@ -141,7 +144,7 @@ public class CameraMode : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Camera mycam = GetComponent<Camera>();
-            float sensitivity = 0.05f;
+            float sensitivity = 0.01f;
             Vector3 vp = mycam.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mycam.nearClipPlane));
             vp.x -= 0.5f;
             vp.y -= 0.5f;

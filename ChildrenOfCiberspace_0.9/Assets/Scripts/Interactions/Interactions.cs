@@ -84,7 +84,6 @@ public class Interactions : MonoBehaviour
             camera.transform.localPosition = Vector3.MoveTowards(camera.transform.localPosition, Pos_FirstPerson, speed);
             camera.GetComponent<StructuredVolumeSampling>().enabled = false;
             RenderSettings.skybox = mat1;
-            mainCamera.transform.parent.GetComponent<MoveII>().stop = true;
 
         }
         else
@@ -110,7 +109,6 @@ public class Interactions : MonoBehaviour
             {
             mainCamera.transform.localRotation = originalRot ;
 
-                mainCamera.transform.parent.GetComponent<MoveII>().stop = false;
                 break;
             }
             yield return null;
