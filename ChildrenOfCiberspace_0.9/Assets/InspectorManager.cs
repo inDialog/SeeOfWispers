@@ -15,6 +15,7 @@ public class InspectorManager : MonoBehaviour
     private TMP_Dropdown dropDown;
     private TMP_InputField searchField;
     public Text[] inputfields_ArtistInfo;
+    private RawImage imgHolderArtist;
     private int count;
     private bool MoveAlsoCharacter;
 
@@ -35,13 +36,30 @@ public class InspectorManager : MonoBehaviour
         searchField.onEndEdit.AddListener(SearchForArtist);
         FindObjectOfType<ArtistTextManager>().Colided += FillTextOnCollision;
         inputfields_ArtistInfo = PublicArtistInfo.GetComponentsInChildren<Text>();
+        imgHolderArtist = PublicArtistInfo.GetComponentInChildren<RawImage>();
         InspectorMode.SetActive(false);
         UXTools.FillInputTextOthers(inputfields_ArtistInfo);
-
     }
-    void FillTextOnCollision(string key)
+    void FillTextOnCollision(string key, MonoBehaviour forCor)
     {
-        UXTools.FillInputText(key, inputfields_ArtistInfo);
+        if (key != "Null")
+        {
+            if (this.isActiveAndEnabled)
+            {
+                UXTools.FillInputText(key, inputfields_ArtistInfo, this, imgHolderArtist);
+            }
+            else if (!this.isActiveAndEnabled && forCor != null)
+            {
+                UXTools.FillInputText(key, inputfields_ArtistInfo, forCor, imgHolderArtist);
+            }
+        }
+        else if (key == "Null")
+        {
+            imgHolderArtist.texture = null;
+            Color currColor = imgHolderArtist.color;
+            currColor.a = 0;
+            imgHolderArtist.color = currColor;
+        }
     }
     private void OnDisable()
     {
@@ -54,7 +72,7 @@ public class InspectorManager : MonoBehaviour
             InspectorMode.SetActive(true);
             MoveCamera(cam2Controller, assetManger.InfoArtwork.ElementAt(count).Value.@object);
             InstantiateDropDown(assetManger.artistName); //Instantiate DropDown with the values received at enable
-            UXTools.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo);
+            UXTools.FillInputText(GETartistKey(dropDown.options[0].text), inputfields_ArtistInfo, this, imgHolderArtist);
             MoveAlsoCharacter = true;
         }
     }
@@ -110,7 +128,7 @@ public class InspectorManager : MonoBehaviour
         if (key != "")
         {
             MoveCamera(cam2Controller, assetManger.InfoArtwork[key].@object);
-            UXTools.FillInputText(key, inputfields_ArtistInfo);
+            UXTools.FillInputText(key, inputfields_ArtistInfo, this, imgHolderArtist);
         }
         else
             Debug.LogWarning("No value found for this given name in DropDown");

@@ -101,11 +101,14 @@ public static class ExtensionMethods
     }
     public static Color32 RandomColor()
     {
-        return new Color32(
+        Color32 myColor;
+        myColor = new Color32(
         (byte)UnityEngine.Random.Range(0, 200),
         (byte)UnityEngine.Random.Range(0, 200),
         (byte)UnityEngine.Random.Range(0, 200),
         225);
+        myColor.a = 225;
+        return myColor;
     }
     public static string StringToCollor(Color32 Color)
     {

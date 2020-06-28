@@ -67,7 +67,7 @@ public class TextManager : MonoBehaviour
                                 objectText.transform.SetPositionAndRotation(transform.position - (transform.up * -1), this.transform.rotation);
                                 objectText.GetComponent<TextMeshPro>().text = myTextMesh.text;
                             }
-                            multiplayer.w.SendString(multiplayer.FormatMessege(objectText.transform, myTextMesh.text, "TextMessage"));
+                            multiplayer.w.SendString(multiplayer.FromatMessageText(objectText.transform, myTextMesh.text, "TextMessage"));
                         }
                         else
                         {

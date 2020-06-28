@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public static class UxInfo
@@ -150,6 +151,58 @@ public static class UXTools
         }
     }
 
+    public static IEnumerator GetArtistImage(string pathObj, RawImage imageHolder, MonoBehaviour stopCor)
+    {
+        Texture2D textureLoaded = null;
+        imageHolder.texture = null;
+        string texPath = GetArtistImagePath(pathObj);
+        if (texPath == null)
+        {
+            Debug.LogError("The path of the artist image is NULL");
+            stopCor.StopAllCoroutines();
+        }
+        using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(texPath))
+        {
+            yield return uwr.SendWebRequest();
+
+            if (uwr.isNetworkError || uwr.isHttpError)
+            {
+                Debug.LogWarning(uwr.error);
+                stopCor.StopAllCoroutines();
+            }
+            else
+            {
+                textureLoaded = DownloadHandlerTexture.GetContent(uwr);
+            }
+            if (textureLoaded != null && imageHolder.texture == null)
+            {
+                Color currColor = imageHolder.color;
+                currColor.a = 1;
+                imageHolder.color = currColor;
+                imageHolder.texture = textureLoaded as Texture;
+                stopCor.StopAllCoroutines();
+            }
+            else if (textureLoaded == null)
+            {
+                Color currColor = imageHolder.color;
+                currColor.a = 0;
+                imageHolder.color = currColor;
+                stopCor.StopAllCoroutines();
+            }
+        }
+    }
+
+    private static string GetArtistImagePath(string url_obj)
+    {
+        string url_img = null;
+        if (url_obj == null)
+        {
+            Debug.LogError("The path of the OBJ is NULL");
+            return url_img;
+        }
+        url_img = url_obj.Remove(url_obj.LastIndexOf('/') + 1) + "ArtistImage.jpg";
+        return url_img;
+    }
 
 
     //public static void FillInputText(Text[] inputField)
@@ -202,7 +255,7 @@ public static class UXTools
     }
 
 
-    public static void FillInputText(string tmp_key, Text[] inputField)
+    public static void FillInputText(string tmp_key, Text[] inputField, MonoBehaviour forCour, RawImage artistImageHolder)
     {
         if (tmp_key == "Null")
         {
@@ -213,6 +266,7 @@ public static class UXTools
         AssetManager _as = GameObject.FindObjectOfType<AssetManager>();
         if (_as.InfoArtwork.ContainsKey(tmp_key))
         {
+            forCour.StartCoroutine(GetArtistImage(_as.InfoArtwork[tmp_key].url, artistImageHolder ,forCour));
             string[] des_art = _as.InfoArtwork[tmp_key].description.Split('§');
             inputField[0].text = FormtCartel(des_art);
             inputField[1].text = FormateDEscription(des_art);
