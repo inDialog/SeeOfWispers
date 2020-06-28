@@ -5,57 +5,63 @@ using System.Collections.Generic;
 using TMPro;
 using AsImpL;
 
-
-
-
 public class Multiplayer : MonoBehaviour
 {
-    // define public game object used to visualize other players
+    // define public game object used to visualize other players and their public text
     public GameObject otherPlayerObject;
     public GameObject otherTextPrefab;
     
-    //public GameObject myPlayer;
+    // The prefab of the player
     public GameObject crena;
 
-    private Vector3 prevPosition;
-    //public Dictionary<string, GameObject> otherPlayers = new Dictionary<string, GameObject>();
-    //public Dictionary<string, InfoPlayers> infoPl = new Dictionary<string, InfoPlayers>();
+    // The dictionary that keeps track of the artworks with the keys of artists
     public Dictionary<string, MessegeInfo> _messeges = new Dictionary<string, MessegeInfo>();
+
+    // The action that tells the client that server has verified his key
     public event Action<bool> AccountVerified;
 
-
+    // The color of the player
     public Color32 myColor;
-    //WebSocket w = new WebSocket(new Uri("ws://www.in-dialog.com:3002/socket.io/?EIO=4&transport=websocket"));
-    //"ws://localhost:8000"
-    /// <summary>
-    /// URL manager todo UI for selecting multiple rooms;
-    /// </summary>
+
+    // URL array for selecting multiple rooms;
     public string[] Urls = new string [2];
+    // The index that represents the rooms id;
     public int ind;
+    // The url that is used for the websocket
     public string url;
 
+    // The reference for the asset manager
     public AssetManager assetManager;
+    // The websocket connection reference
     public WebSocket w;
+    // The session id
     public System.Guid myGUID;
 
+    /// <summary>
+    /// In start, the color of the player its getting assigned
+    /// </summary>
     private void Start()
     {
         myColor = ExtensionMethods.RandomColor();
-        myColor.a = 225;
         crena.GetComponent<Renderer>().material.SetColor("_EmissionColor", myColor);
-        //myPlayer.GetComponentInChildren<SpriteRenderer>().color = myColor;
-        //GeneralState.AceptAssets = true;
     }
+    /// <summary>
+    /// Asssigning and Initializez the websocket and the session id 
+    /// </summary>
     private void OnEnable()
     {
         url = Urls[ind];
         w = new WebSocket(new Uri(url));
-        myGUID = System.Guid.NewGuid();
+        myGUID = System.Guid.NewGuid(); 
         //print(myGUID.ToString());
         StartCoroutine("Multyplayer");
     }
-
-
+    /// <summary>
+    /// Its connecting to the websocket and
+    /// manages all the information that it is received from the server
+    /// As well it send to server the possition of the player
+    /// if there is an message error from the connection, the loop its being braked
+    /// </summary>
     IEnumerator Multyplayer()
     {
         //if (Time.frameCount % 60 == 0)
@@ -69,7 +75,6 @@ public class Multiplayer : MonoBehaviour
         // wait for messages
         while (true)
         {
-
             // read message
             string message = w.RecvString();
             // check if message is not empty
@@ -92,7 +97,6 @@ public class Multiplayer : MonoBehaviour
                 {
                     Players playerInfo = JsonUtility.FromJson<Players>(message);
                     NetworkPlayerManager.UpdateLocalData(playerInfo, otherPlayerObject);
-
                 }
                 if (message.ToString().Contains("messageS"))
                 {
@@ -107,14 +111,12 @@ public class Multiplayer : MonoBehaviour
                     Artworks listArtworks = JsonUtility.FromJson<Artworks>(message);
                     assetManager.UpdateArtwork = listArtworks.artWroks;
                     Debug.Log("ArtworkOnTheServer: " + listArtworks.artWroks.Count);
-
                 }
                 if (message.ToString().Contains("DeleteArtWroks"))
                 {
                     if (message.Split('@')[1]!=ArtistInfo.artistKey) 
                     assetManager.DeletArtWork(message.Split('@')[1]);
                 }
-
                 if (message.ToString().Contains("artKey"))
                 {
                     string artKey = message.Split('@')[1];
@@ -131,20 +133,23 @@ public class Multiplayer : MonoBehaviour
                 message = null;
                 //Debug.Log("otherPlayers: " + otherPlayers.Count);
             }
-
             // if connection error, break the loop
             if (w.error != null)
             {
                 Debug.Log("Error: " + w.error);
                 break;
             }
-            NetworkPlayerManager.SendPositions(ref w, FormatMessege);
+            // Sending the position of the player to the server
+            NetworkPlayerManager.SendPositions(ref w, FormatMessagePlayer);
             yield return 0;
         }
-
         // if error, close connection
         w.Close();
     }
+    /// <summary>
+    /// In onDisable the websocket its closed and the coroutine its stopped
+    /// And at the same time all the other player and their messaages its getting deletted
+    /// </summary>
     private void OnDisable()
     {
         w.Close();
@@ -155,17 +160,20 @@ public class Multiplayer : MonoBehaviour
         }
         foreach (KeyValuePair<string, MessegeInfo> entry in _messeges)
         {
-            Destroy(entry.Value.textObject);
+            Destroy(entry.Value.textObject); 
         }
         NetworkPlayerManager.infoPl.Clear();
         _messeges.Clear();
         print("disconect3d");
     }
+    /// <summary>
+    /// It updates or creates new messages that the player wants to display publicly
+    /// </summary>
+    /// <param name="inMeseges"></param>
     void UpdateText(TextMessages inMeseges)
     {
         for (int i = 0; i < inMeseges.messageS.Count; i++)
         {
-            //Debug.Log(" xxxxx : " + inMeseges.messageS[i].position);/
             if (!_messeges.ContainsKey(inMeseges.messageS[i].id))
             {
                 if (myGUID.ToString() != inMeseges.messageS[i].id)
@@ -190,18 +198,35 @@ public class Multiplayer : MonoBehaviour
 
         }
     }
-
-   
-    public string FormatMessege (Transform _player)
+    /// <summary>
+    /// For sending the player position 
+    /// It takes the player position as a transforms and
+    /// returns the string in the specific format in order to be send to the server
+    /// </summary>
+    /// <param name="_player"></param>
+    /// <returns></returns>
+    public string FormatMessagePlayer(Transform _player)
     {
         return myGUID + "\t" + _player.position.x + "\t" + _player.position.y + "\t" + _player.position.z
         +"\t" + 0 + "\t" + _player.rotation.eulerAngles.y + "\t" +0;
     }
-    public string FormatMessege(Transform _player,string msg,string type)
+    /// <summary>
+    /// For sending the player public message
+    /// It takes the player transform, the message and its type
+    /// in order to returns the string in the specific format for the server to be understood
+    /// </summary>
+    /// <param name="_player"></param>
+    /// <param name="msg"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public string FromatMessageText(Transform _player,string msg,string type)
     {
         return myGUID + "\t" + _player.position.x + "\t" + _player.position.y + "\t" + _player.position.z
         + "\t" + 0 + "\t" + _player.rotation.eulerAngles.y + "\t" + 0 + "\t" + msg + "\t" + type;
     }
+    /// <summary>
+    /// It sends to the server a request to get the ArtWorks informationn
+    /// </summary>
     public void askForArtwork()
     {
         GeneralState.AceptAssets = true;
@@ -212,12 +237,18 @@ public class Multiplayer : MonoBehaviour
 }
 
 
-
+/// <summary>
+/// A class that containts the list of all public text messages
+/// </summary>
 [Serializable]
 public class TextMessages
 {
     public List<MessegeInfo> messageS;
 }
+
+/// <summary>
+/// A class that has all the information regarding the Public texts
+/// </summary>
 [Serializable]
 public class MessegeInfo
 {
